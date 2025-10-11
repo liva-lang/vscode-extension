@@ -1,0 +1,187 @@
+{
+    "Function declaration": {
+        "prefix": "fn",
+        "body": [
+            "fn ${1:function_name}(${2:parameters}) -> ${3:ReturnType} {",
+            "    ${4:// function body}",
+            "}"
+        ],
+        "description": "Create a function declaration"
+    },
+    "One-liner function": {
+        "prefix": "fn1",
+        "body": [
+            "fn ${1:function_name}(${2:parameters}) -> ${3:ReturnType} => ${4:expression}"
+        ],
+        "description": "Create a one-liner function"
+    },
+    "Variable declaration": {
+        "prefix": "let",
+        "body": [
+            "let ${1:variable_name}${2:: ${3:Type}} = ${4:value}"
+        ],
+        "description": "Create a mutable variable"
+    },
+    "Constant declaration": {
+        "prefix": "const",
+        "body": [
+            "const ${1:CONSTANT_NAME}${2:: ${3:Type}} = ${4:value}"
+        ],
+        "description": "Create a constant"
+    },
+    "If statement": {
+        "prefix": "if",
+        "body": [
+            "if ${1:condition} {",
+            "    ${2:// true branch}",
+            "}"
+        ],
+        "description": "Create an if statement"
+    },
+    "If-else statement": {
+        "prefix": "ife",
+        "body": [
+            "if ${1:condition} {",
+            "    ${2:// true branch}",
+            "} else {",
+            "    ${3:// false branch}",
+            "}"
+        ],
+        "description": "Create an if-else statement"
+    },
+    "While loop": {
+        "prefix": "while",
+        "body": [
+            "while ${1:condition} {",
+            "    ${2:// loop body}",
+            "}"
+        ],
+        "description": "Create a while loop"
+    },
+    "For loop": {
+        "prefix": "for",
+        "body": [
+            "for ${1:item} in ${2:iterable} {",
+            "    ${3:// loop body}",
+            "}"
+        ],
+        "description": "Create a for loop"
+    },
+    "Switch statement": {
+        "prefix": "switch",
+        "body": [
+            "switch ${1:expression} {",
+            "    case ${2:value} -> ${3:// case body}",
+            "    default -> ${4:// default case}",
+            "}"
+        ],
+        "description": "Create a switch statement"
+    },
+    "Async function": {
+        "prefix": "async",
+        "body": [
+            "async fn ${1:function_name}(${2:parameters}) -> ${3:ReturnType} {",
+            "    ${4:// async function body}",
+            "}"
+        ],
+        "description": "Create an async function"
+    },
+    "Parallel function": {
+        "prefix": "parallel",
+        "body": [
+            "parallel fn ${1:function_name}(${2:parameters}) -> ${3:ReturnType} {",
+            "    ${4:// parallel function body}",
+            "}"
+        ],
+        "description": "Create a parallel function"
+    },
+    "Task declaration": {
+        "prefix": "task",
+        "body": [
+            "task ${1:task_name}(${2:parameters}) -> ${3:ReturnType} {",
+            "    ${4:// task body}",
+            "}"
+        ],
+        "description": "Create a task declaration"
+    },
+    "Fire expression": {
+        "prefix": "fire",
+        "body": [
+            "fire ${1:expression}"
+        ],
+        "description": "Create a fire expression"
+    },
+    "Try-catch": {
+        "prefix": "try",
+        "body": [
+            "try {",
+            "    ${1:// code that might throw}",
+            "} catch ${2:error} {",
+            "    ${3:// error handling}",
+            "}"
+        ],
+        "description": "Create a try-catch block"
+    },
+    "Import statement": {
+        "prefix": "import",
+        "body": [
+            "import \"${1:module_path}\""
+        ],
+        "description": "Create an import statement"
+    },
+    "Use statement": {
+        "prefix": "use",
+        "body": [
+            "use ${1:module}::*"
+        ],
+        "description": "Create a use statement"
+    },
+    "Rust crate integration": {
+        "prefix": "rust",
+        "body": [
+            "rust {",
+            "    ${1:// Rust code}",
+            "}"
+        ],
+        "description": "Embed Rust code"
+    },
+    "Type declaration": {
+        "prefix": "type",
+        "body": [
+            "type ${1:TypeName} = ${2:definition}"
+        ],
+        "description": "Create a type alias"
+    },
+    "Test function": {
+        "prefix": "test",
+        "body": [
+            "test ${1:test_name}() {",
+            "    ${2:// test code}",
+            "}"
+        ],
+        "description": "Create a test function"
+    },
+    "Class declaration": {
+        "prefix": "class",
+        "body": [
+            "class ${1:ClassName} {",
+            "    ${2:// class members}",
+            "}"
+        ],
+        "description": "Create a class"
+    },
+    "Private member": {
+        "prefix": "__",
+        "body": [
+            "__${1:member_name}"
+        ],
+        "description": "Create a private member"
+    },
+    "Protected member": {
+        "prefix": "_",
+        "body": [
+            "_${1:member_name}"
+        ],
+        "description": "Create a protected member"
+    }
+}

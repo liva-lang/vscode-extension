@@ -1,0 +1,29 @@
+// Ejemplo básico de Liva para probar la extensión
+
+// Función principal
+fn main() -> number {
+    // Variables
+    let nombre = "Mundo"
+    const saludo = "¡Hola"
+
+    // Impresión
+    println!("{} {}!", saludo, nombre)
+
+    // Retorno
+    return 0
+}
+
+// Función de utilidad
+fn saludar(nombre: string) -> string {
+    return "¡Hola, " + nombre + "!"
+}
+
+// Uso de tipos
+type Punto = {
+    x: number,
+    y: number
+}
+
+fn crear_punto(x: number, y: number) -> Punto {
+    return { x, y }
+}

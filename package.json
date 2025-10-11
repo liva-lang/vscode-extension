@@ -1,0 +1,125 @@
+{
+  "name": "liva-vscode",
+  "displayName": "Liva Language Support",
+  "description": "Liva programming language support for Visual Studio Code and Cursor",
+  "version": "0.0.1",
+  "publisher": "liva-lang",
+  "engines": {
+    "vscode": "^1.80.0"
+  },
+  "categories": [
+    "Programming Languages"
+  ],
+  "keywords": [
+    "liva",
+    "programming-language",
+    "rust",
+    "compiler"
+  ],
+  "contributes": {
+    "languages": [
+      {
+        "id": "liva",
+        "aliases": [
+          "Liva",
+          "liva"
+        ],
+        "extensions": [
+          ".liva"
+        ],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "liva",
+        "scopeName": "source.liva",
+        "path": "./syntaxes/liva.tmLanguage.json"
+      }
+    ],
+    "snippets": [
+      {
+        "language": "liva",
+        "path": "./snippets/liva.json"
+      }
+    ],
+    "configuration": {
+      "type": "object",
+      "title": "Liva",
+      "properties": {
+        "liva.compiler.path": {
+          "type": "string",
+          "default": "livac",
+          "description": "Path to the Liva compiler executable"
+        },
+        "liva.compiler.outputDirectory": {
+          "type": "string",
+          "default": "./target/liva_build",
+          "description": "Default output directory for compiled binaries"
+        },
+        "liva.compiler.autoBuild": {
+          "type": "boolean",
+          "default": true,
+          "description": "Automatically build on save"
+        }
+      }
+    },
+    "commands": [
+      {
+        "command": "liva.compile",
+        "title": "Compile Liva File"
+      },
+      {
+        "command": "liva.run",
+        "title": "Run Liva Program"
+      },
+      {
+        "command": "liva.check",
+        "title": "Check Liva Syntax"
+      }
+    ],
+    "menus": {
+      "explorer/context": [
+        {
+          "when": "resourceExtname == .liva",
+          "command": "liva.compile",
+          "group": "liva"
+        },
+        {
+          "when": "resourceExtname == .liva",
+          "command": "liva.run",
+          "group": "liva"
+        }
+      ],
+      "editor/context": [
+        {
+          "when": "resourceExtname == .liva",
+          "command": "liva.compile",
+          "group": "liva"
+        }
+      ]
+    }
+  },
+  "activationEvents": [
+    "onLanguage:liva"
+  ],
+  "main": "./out/extension.js",
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src --ext ts"
+  },
+  "devDependencies": {
+    "@types/node": "16.x",
+    "@types/vscode": "^1.80.0",
+    "@typescript-eslint/eslint-plugin": "^6.4.1",
+    "@typescript-eslint/parser": "^6.4.1",
+    "eslint": "^8.47.0",
+    "typescript": "^5.1.6"
+  },
+  "dependencies": {
+    "@vscode/vsce": "^2.22.0"
+  }
+}
