@@ -89,7 +89,7 @@
             "patterns": [
                 {
                     "name": "keyword.control.liva",
-                    "match": "\\b(let|const|import|use|rust|type|test|if|else|while|for|in|switch|case|default|throw|try|catch|return|async|parallel|task|fire)\\b"
+                    "match": "\\b(let|const|import|use|rust|type|test|if|else|while|for|in|switch|case|default|throw|try|catch|return|async|await|parallel|par|task|fire|move|seq|vec|boost|with|ordered|chunk|threads|simdWidth|prefetch|reduction|schedule|detect|auto|safe|fast|static|dynamic|as)\\b"
                 },
                 {
                     "name": "keyword.operator.logical.liva",
