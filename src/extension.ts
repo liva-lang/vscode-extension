@@ -14,6 +14,14 @@ export function activate(context: vscode.ExtensionContext) {
     // Clear diagnostics on activation
     livaDiagnostics.clear();
 
+    // Validate all open Liva documents on activation
+    vscode.workspace.textDocuments.forEach(async (document) => {
+        if (document.languageId === 'liva' || document.fileName.endsWith('.liva')) {
+            console.log(`[Liva] Found open Liva document on activation: ${document.fileName}`);
+            await validateLivaFile(document);
+        }
+    });
+
     // Register commands
     const compileCommand = vscode.commands.registerCommand('liva.compile', async (fileUri?: vscode.Uri) => {
         const filePath = fileUri?.fsPath || vscode.window.activeTextEditor?.document.fileName;
@@ -48,7 +56,7 @@ export function activate(context: vscode.ExtensionContext) {
         await checkLivaSyntax(filePath);
     });
 
-    // File watcher for auto-build
+    // File watcher for auto-build on save
     const fileWatcher = vscode.workspace.onDidSaveTextDocument(async (document) => {
         if (document.languageId === 'liva' && getConfig<boolean>('autoBuild', true)) {
             const filePath = document.fileName;
@@ -56,10 +64,35 @@ export function activate(context: vscode.ExtensionContext) {
         }
     });
 
-    context.subscriptions.push(compileCommand, runCommand, checkCommand, fileWatcher);
+    // Real-time validation while typing (with debounce)
+    let validationTimeout: NodeJS.Timeout | undefined;
+    const changeListener = vscode.workspace.onDidChangeTextDocument((event) => {
+        if (event.document.languageId === 'liva' && getConfig<boolean>('liveValidation', true)) {
+            // Clear previous timeout
+            if (validationTimeout) {
+                clearTimeout(validationTimeout);
+            }
+
+            // Debounce: validate 500ms after user stops typing
+            validationTimeout = setTimeout(async () => {
+                await validateLivaFile(event.document);
+            }, 500);
+        }
+    });
+
+    // Validate on document open
+    const openListener = vscode.workspace.onDidOpenTextDocument(async (document) => {
+        if (document.languageId === 'liva' && getConfig<boolean>('liveValidation', true)) {
+            await validateLivaFile(document);
+        }
+    });
+
+    context.subscriptions.push(compileCommand, runCommand, checkCommand, fileWatcher, changeListener, openListener, livaDiagnostics);
 }
 
-export function deactivate() {}
+export function deactivate() {
+    livaDiagnostics.clear();
+}
 
 async function compileLivaFile(filePath: string, silent: boolean = false): Promise<void> {
     const compilerPath = getConfig<string>('compiler.path', 'livac');
@@ -76,7 +109,7 @@ async function compileLivaFile(filePath: string, silent: boolean = false): Promi
         }
 
         const { stdout, stderr } = await execAsync(
-            `"${compilerPath}" "${filePath}" --output "${outputDir}"`
+            `"${compilerPath}" "${filePath}" --output "${outputDir}" --json`
         );
 
         if (stdout && !silent) {
@@ -88,7 +121,7 @@ async function compileLivaFile(filePath: string, silent: boolean = false): Promi
         }
 
     } catch (error: any) {
-        const errorMessage = error.message || error.toString();
+        const errorMessage = error.stderr || error.stdout || error.message || error.toString();
 
         // Parse compiler errors and show as diagnostics
         const diagnostics = parseCompilerErrors(errorMessage, filePath);
@@ -97,7 +130,7 @@ async function compileLivaFile(filePath: string, silent: boolean = false): Promi
         }
 
         if (!silent) {
-            vscode.window.showErrorMessage(`Compilation failed: ${errorMessage}`);
+            vscode.window.showErrorMessage(`Compilation failed: ${diagnostics.length > 0 ? diagnostics[0].message : errorMessage}`);
         }
         console.error('Liva compilation error:', error);
     }
@@ -145,7 +178,7 @@ async function checkLivaSyntax(filePath: string): Promise<void> {
         vscode.window.showInformationMessage(`Checking syntax of ${path.basename(filePath)}...`);
 
         const { stdout, stderr } = await execAsync(
-            `"${compilerPath}" "${filePath}" --check`
+            `"${compilerPath}" "${filePath}" --check --json`
         );
 
         if (stdout) {
@@ -157,7 +190,7 @@ async function checkLivaSyntax(filePath: string): Promise<void> {
         }
 
     } catch (error: any) {
-        const errorMessage = error.message || error.toString();
+        const errorMessage = error.stderr || error.stdout || error.message || error.toString();
 
         // Parse compiler errors and show as diagnostics
         const diagnostics = parseCompilerErrors(errorMessage, filePath);
@@ -165,8 +198,85 @@ async function checkLivaSyntax(filePath: string): Promise<void> {
             livaDiagnostics.set(vscode.window.activeTextEditor.document.uri, diagnostics);
         }
 
-        vscode.window.showErrorMessage(`Syntax check failed: ${errorMessage}`);
+        vscode.window.showErrorMessage(`Syntax check failed: ${diagnostics.length > 0 ? diagnostics[0].message : errorMessage}`);
         console.error('Liva syntax check error:', error);
+    }
+}
+
+async function validateLivaFile(document: vscode.TextDocument): Promise<void> {
+    console.log(`[Liva] validateLivaFile called for: ${document.fileName}, languageId: ${document.languageId}`);
+    
+    // Only validate Liva files
+    if (document.languageId !== 'liva' && !document.fileName.endsWith('.liva')) {
+        console.log(`[Liva] Skipping validation - not a Liva file`);
+        return;
+    }
+
+    // Check if live validation is enabled
+    const liveValidationEnabled = getConfig('liveValidation', true);
+    console.log(`[Liva] Live validation enabled: ${liveValidationEnabled}`);
+    if (!liveValidationEnabled) {
+        return;
+    }
+
+    const compilerPath = getConfig<string>('compiler.path', 'livac');
+    const originalFilePath = document.uri.fsPath;
+    
+    console.log(`[Liva] Compiler path: ${compilerPath}`);
+    console.log(`[Liva] Original file path: ${originalFilePath}`);
+    console.log(`[Liva] Document is dirty (unsaved): ${document.isDirty}`);
+
+    // Clear previous diagnostics for this file
+    livaDiagnostics.delete(document.uri);
+
+    // Create a temporary file with the current buffer content
+    const fs = require('fs');
+    const os = require('os');
+    const tmpDir = os.tmpdir();
+    const tmpFilePath = path.join(tmpDir, `liva_validate_${Date.now()}_${path.basename(originalFilePath)}`);
+    
+    try {
+        // Write current document content to temp file
+        fs.writeFileSync(tmpFilePath, document.getText(), 'utf8');
+        console.log(`[Liva] Created temp file: ${tmpFilePath}`);
+        
+        const command = `"${compilerPath}" "${tmpFilePath}" --check --json`;
+        console.log(`[Liva] Executing command: ${command}`);
+        
+        const { stdout, stderr } = await execAsync(command);
+
+        console.log(`[Liva] Command stdout: ${stdout}`);
+        console.log(`[Liva] Command stderr: ${stderr}`);
+
+        // If compilation succeeds, clear diagnostics (no errors)
+        if (stdout && !stderr) {
+            livaDiagnostics.set(document.uri, []);
+        }
+
+    } catch (error: any) {
+        console.log(`[Liva] Command failed with error:`, error);
+        const errorMessage = error.stderr || error.stdout || error.message || error.toString();
+        console.log(`[Liva] Error message: ${errorMessage}`);
+
+        // Parse compiler errors and show as diagnostics
+        // Use original file path for diagnostic mapping
+        const diagnostics = parseCompilerErrors(errorMessage, originalFilePath);
+        console.log(`[Liva] Parsed ${diagnostics.length} diagnostics`);
+        
+        if (diagnostics.length > 0) {
+            console.log(`[Liva] Setting diagnostics:`, diagnostics);
+            livaDiagnostics.set(document.uri, diagnostics);
+        }
+    } finally {
+        // Clean up temp file
+        try {
+            if (fs.existsSync(tmpFilePath)) {
+                fs.unlinkSync(tmpFilePath);
+                console.log(`[Liva] Cleaned up temp file: ${tmpFilePath}`);
+            }
+        } catch (cleanupError) {
+            console.error(`[Liva] Failed to clean up temp file:`, cleanupError);
+        }
     }
 }
 
@@ -177,6 +287,35 @@ function getConfig<T>(section: string, defaultValue: T): T {
 
 function parseCompilerErrors(errorMessage: string, filePath: string): vscode.Diagnostic[] {
     const diagnostics: vscode.Diagnostic[] = [];
+    
+    console.log(`[Liva] parseCompilerErrors called with message length: ${errorMessage.length}`);
+    console.log(`[Liva] Raw error message: ${errorMessage.substring(0, 500)}`);
+    
+    // Try to parse as JSON first (new format with --json flag)
+    try {
+        // The error message might have compiler output before JSON, so extract JSON
+        const jsonMatch = errorMessage.match(/\{.*"location".*\}/s);
+        if (jsonMatch) {
+            const jsonString = jsonMatch[0];
+            console.log(`[Liva] Found JSON in output: ${jsonString}`);
+            const jsonError = JSON.parse(jsonString);
+            
+            if (jsonError.location && jsonError.code) {
+                console.log(`[Liva] Parsed JSON error successfully`);
+                const diagnostic = createDiagnosticFromJson(jsonError, filePath);
+                if (diagnostic) {
+                    console.log(`[Liva] Created diagnostic from JSON:`, diagnostic);
+                    diagnostics.push(diagnostic);
+                }
+                return diagnostics;
+            }
+        }
+    } catch (e) {
+        console.log(`[Liva] Failed to parse JSON:`, e);
+        // Not JSON, fallback to text parsing
+    }
+    
+    // Fallback to text-based parsing (legacy format)
     const lines = errorMessage.split('\n');
 
     // Read the source file to get line information
@@ -221,4 +360,61 @@ function parseCompilerErrors(errorMessage: string, filePath: string): vscode.Dia
     }
 
     return diagnostics;
+}
+
+interface LivaErrorJson {
+    location?: {
+        file: string;
+        line: number;
+        column?: number;
+        source_line?: string;
+    };
+    code: string;
+    title: string;
+    message: string;
+    help?: string;
+}
+
+function createDiagnosticFromJson(errorJson: LivaErrorJson, filePath: string): vscode.Diagnostic | null {
+    if (!errorJson.location || !errorJson.location.line) {
+        return null;
+    }
+
+    // VS Code uses 0-based line numbers
+    const lineNumber = errorJson.location.line - 1;
+    
+    // Try to read the file to get the correct line length
+    let lineLength = 0;
+    try {
+        const fileContent = require('fs').readFileSync(filePath, 'utf8');
+        const fileLines = fileContent.split('\n');
+        lineLength = fileLines[lineNumber]?.length || 0;
+    } catch (e) {
+        lineLength = 100; // Fallback
+    }
+
+    const range = new vscode.Range(
+        new vscode.Position(lineNumber, 0),
+        new vscode.Position(lineNumber, lineLength)
+    );
+
+    // Build the diagnostic message
+    let message = `${errorJson.code}: ${errorJson.title}`;
+    if (errorJson.message) {
+        message += `\n\n${errorJson.message}`;
+    }
+    if (errorJson.help) {
+        message += `\n\n💡 ${errorJson.help}`;
+    }
+
+    const diagnostic = new vscode.Diagnostic(
+        range,
+        message,
+        vscode.DiagnosticSeverity.Error
+    );
+
+    diagnostic.code = errorJson.code;
+    diagnostic.source = 'Liva Compiler';
+
+    return diagnostic;
 }
