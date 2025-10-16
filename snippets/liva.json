@@ -183,5 +183,33 @@
             "_${1:member_name}"
         ],
         "description": "Create a protected member"
+    },
+    "If fail statement": {
+        "prefix": "iff",
+        "body": [
+            "if ${1:condition} fail \"${2:message}\""
+        ],
+        "description": "Create an if fail statement"
+    },
+    "Ternary fail expression": {
+        "prefix": "tf",
+        "body": [
+            "${1:condition} ? fail \"${2:message}\" : ${3:expr}"
+        ],
+        "description": "Create a ternary fail expression"
+    },
+    "Fallible let binding": {
+        "prefix": "letf",
+        "body": [
+            "let ${1:value}, ${2:err} = ${3:expr}"
+        ],
+        "description": "Create a fallible let binding"
+    },
+    "Fail statement": {
+        "prefix": "fail",
+        "body": [
+            "fail \"${1:message}\""
+        ],
+        "description": "Create a fail statement"
     }
 }
