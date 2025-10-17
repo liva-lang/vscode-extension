@@ -1,29 +1,74 @@
 // Ejemplo básico de Liva para probar la extensión
 
 // Función principal
-fn main() -> number {
+main() {
     // Variables
     let nombre = "Mundo"
     const saludo = "¡Hola"
 
-    // Impresión
-    println!("{} {}!", saludo, nombre)
+    // String template
+    print($"{saludo} {nombre}!")
 
-    // Retorno
-    return 0
+    // Arrays
+    let numeros = [1, 2, 3, 4, 5]
+
+    // For loop secuencial
+    print("\nLoop secuencial:")
+    for seq x in numeros {
+        print($"Seq: {x}")
+    }
+
+    // For loop paralelo
+    print("\nLoop paralelo:")
+    for par x in numeros {
+        print($"Par: {x}")
+    }
+
+    // For loop vectorizado
+    print("\nLoop vectorizado:")
+    for vec x in numeros {
+        print($"Vec: {x}")
+    }
+
+    // For loop paralelo vectorizado (SIMD)
+    print("\nLoop paralelo vectorizado:")
+    for parvec x in numeros with simdWidth 4 {
+        print($"ParVec: {x}")
+    }
+
+    // For loop con opciones
+    for par x in numeros with chunk 2 threads 4 {
+        print($"Processing {x}")
+    }
+
+    print("\n¡Ejemplo completado!")
 }
 
 // Función de utilidad
-fn saludar(nombre: string) -> string {
-    return "¡Hola, " + nombre + "!"
+saludar(nombre: string) => $"¡Hola, {nombre}!"
+
+// Uso de clases
+Person {
+    constructor(nombre: string, edad: int) {
+        this.nombre = nombre
+        this.edad = edad
+    }
+
+    nombre: string
+    edad: int
+
+    esAdulto() => this.edad >= 18
 }
 
-// Uso de tipos
-type Punto = {
-    x: number,
-    y: number
-}
-
-fn crear_punto(x: number, y: number) -> Punto {
-    return { x, y }
+// Función con concurrencia
+procesarDatos() {
+    let datos = [1, 2, 3, 4, 5]
+    
+    // Ejecutar de forma asíncrona
+    let resultado = async calcular(datos)
+    print($"Resultado: {resultado}")
+    
+    // Ejecutar en paralelo
+    let paralelo = par procesarHeavy(datos)
+    print($"Procesado: {paralelo}")
 }

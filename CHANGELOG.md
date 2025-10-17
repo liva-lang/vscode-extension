@@ -1,5 +1,28 @@
 # Changelog
 
+## [0.0.6] - 2025-10-17
+
+### Changed
+- **Updated concurrency keywords**: Changed `boost` to `parvec` for parallel vectorization
+  - The keyword `parvec` is more descriptive and clearly indicates parallel + vectorization
+  - Updated syntax highlighting to recognize `parvec` instead of `boost`
+  - Better semantic meaning: par (parallel) + vec (vectorization) = parvec
+
+### Added
+- **Enhanced loop snippets**:
+  - `forseq`: Sequential for loop
+  - `forpar`: Parallel for loop
+  - `forvec`: Vectorized for loop
+  - `forparvec`: Parallel vectorized for loop with SIMD options
+  - `forwith`: For loop with policy options (dropdown selection)
+- **Documentation improvements**:
+  - Added section explaining data-parallel loop policies in README
+  - Updated example.liva with comprehensive demonstrations of all loop policies
+  - Examples now show `seq`, `par`, `vec`, and `parvec` usage
+
+### Fixed
+- Updated syntax highlighting to recognize the new `parvec` keyword
+
 ## [0.0.5] - 2024-10-16
 
 ### Added

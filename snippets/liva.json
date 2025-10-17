@@ -67,6 +67,51 @@
         ],
         "description": "Create a for loop"
     },
+    "For seq loop": {
+        "prefix": "forseq",
+        "body": [
+            "for seq ${1:item} in ${2:iterable} {",
+            "    ${3:// sequential loop body}",
+            "}"
+        ],
+        "description": "Create a sequential for loop"
+    },
+    "For par loop": {
+        "prefix": "forpar",
+        "body": [
+            "for par ${1:item} in ${2:iterable} {",
+            "    ${3:// parallel loop body}",
+            "}"
+        ],
+        "description": "Create a parallel for loop"
+    },
+    "For vec loop": {
+        "prefix": "forvec",
+        "body": [
+            "for vec ${1:item} in ${2:iterable} {",
+            "    ${3:// vector loop body}",
+            "}"
+        ],
+        "description": "Create a vectorized for loop"
+    },
+    "For parvec loop": {
+        "prefix": "forparvec",
+        "body": [
+            "for parvec ${1:item} in ${2:iterable} with simdWidth ${3:4} {",
+            "    ${4:// parallel vectorized loop body}",
+            "}"
+        ],
+        "description": "Create a parallel vectorized for loop with SIMD"
+    },
+    "For loop with options": {
+        "prefix": "forwith",
+        "body": [
+            "for ${1|seq,par,vec,parvec|} ${2:item} in ${3:iterable} with ${4:chunk} ${5:2} {",
+            "    ${6:// loop body with options}",
+            "}"
+        ],
+        "description": "Create a for loop with policy options"
+    },
     "Switch statement": {
         "prefix": "switch",
         "body": [

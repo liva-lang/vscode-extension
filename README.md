@@ -57,6 +57,40 @@ code --install-extension liva-vscode-0.0.1.vsix
 - **Liva: Run Program** - Compiles and runs the program
 - **Liva: Check Syntax** - Verifies syntax without compiling
 
+### Language Features
+
+#### Data-Parallel Loop Policies
+
+Liva supports different execution policies for loops:
+
+- **`seq`** - Sequential execution (default)
+- **`par`** - Parallel execution using multiple threads
+- **`vec`** - Vectorized execution using SIMD
+- **`parvec`** - Combined parallel and vectorized execution
+
+Example:
+```liva
+// Sequential
+for seq x in items {
+    print(x)
+}
+
+// Parallel
+for par x in items with chunk 2 threads 4 {
+    process(x)
+}
+
+// Vectorized
+for vec x in items with simdWidth 4 {
+    compute(x)
+}
+
+// Parallel + Vectorized
+for parvec x in items with simdWidth 4 ordered {
+    heavyComputation(x)
+}
+```
+
 ### Keyboard Shortcuts
 
 Commands can be executed from:
