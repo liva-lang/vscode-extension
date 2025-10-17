@@ -11,14 +11,17 @@ Liva programming language support for Visual Studio Code and Cursor.
 - **Compiler configuration** with customizable options
 - **Integrated compilation and execution** commands
 - **Automatic compilation** on save (optional)
+- **Real-time error diagnostics** 🆕 with precise location highlighting
+- **Error tooltips** 🆕 with detailed information and suggestions
+- **Problems panel integration** 🆕 with all compilation errors
 - **Comment support** (line and block)
 - **Auto-closing** of parentheses and automatic indentation
 
 ### 🚧 In development
 
-- **Real-time compiler error diagnostics**
 - **Automatic Liva code formatting**
 - **Intelligent autocompletion** based on context
+- **Quick fixes** for common errors
 
 ## Installation
 
@@ -115,6 +118,45 @@ You can customize the extension behavior in VS Code settings:
 - `liva.compiler.path`: Path to the Liva compiler executable (default: `livac`)
 - `liva.compiler.outputDirectory`: Output directory for compiled binaries
 - `liva.compiler.autoBuild`: Automatically compile on file save
+- `liva.liveValidation`: Enable real-time validation while typing (default: `true`) 🆕
+
+## 🔴 Error Reporting
+
+The extension integrates with Liva's advanced error reporting system to provide:
+
+### Real-time Error Detection
+
+Errors are detected and displayed as you type (with a 500ms debounce), showing:
+
+- **Red underlines** at the exact location of errors
+- **Detailed tooltips** when hovering over errors with:
+  - Error code (e.g., E0001)
+  - Error title and description
+  - Helpful suggestions for fixing the error
+- **Problems panel** with a list of all errors for quick navigation
+
+### Example Error Display
+
+When you write invalid code:
+
+```liva
+let x = 10
+let x = 20  // Error: Variable 'x' already defined
+```
+
+You'll see:
+- A red squiggly underline under the second `x`
+- Tooltip showing: `E0001: Variable 'x' already defined in this scope`
+- Suggestion: `💡 Consider using a different name or removing the previous declaration of 'x'`
+
+### Error Categories
+
+- **E1xxx** - Lexer errors (invalid tokens)
+- **E2xxx** - Parser errors (syntax problems)
+- **E0xxx** - Semantic errors (logic issues)
+- **E3xxx** - Code generation errors
+
+For more details, see the [compiler documentation](https://github.com/liva-lang/livac/blob/main/docs/ERROR_CODES.md).
 
 ## Requirements
 

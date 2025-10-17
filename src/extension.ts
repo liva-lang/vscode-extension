@@ -382,6 +382,7 @@ function createDiagnosticFromJson(errorJson: LivaErrorJson, filePath: string): v
 
     // VS Code uses 0-based line numbers
     const lineNumber = errorJson.location.line - 1;
+    const column = errorJson.location.column ? errorJson.location.column - 1 : 0;
     
     // Try to read the file to get the correct line length
     let lineLength = 0;
@@ -393,14 +394,28 @@ function createDiagnosticFromJson(errorJson: LivaErrorJson, filePath: string): v
         lineLength = 100; // Fallback
     }
 
-    const range = new vscode.Range(
-        new vscode.Position(lineNumber, 0),
-        new vscode.Position(lineNumber, lineLength)
-    );
+    // Create a range that highlights the specific error location
+    // If we have column information, highlight from that column for a few characters
+    // Otherwise, highlight the entire line
+    let range: vscode.Range;
+    if (errorJson.location.column && errorJson.location.column > 0) {
+        // Highlight approximately 3 characters from the error position
+        const endColumn = Math.min(column + 3, lineLength);
+        range = new vscode.Range(
+            new vscode.Position(lineNumber, column),
+            new vscode.Position(lineNumber, endColumn)
+        );
+    } else {
+        // Highlight the entire line
+        range = new vscode.Range(
+            new vscode.Position(lineNumber, 0),
+            new vscode.Position(lineNumber, lineLength)
+        );
+    }
 
     // Build the diagnostic message
     let message = `${errorJson.code}: ${errorJson.title}`;
-    if (errorJson.message) {
+    if (errorJson.message && errorJson.message !== errorJson.title) {
         message += `\n\n${errorJson.message}`;
     }
     if (errorJson.help) {
