@@ -10,6 +10,7 @@ const completionProvider_1 = require("./providers/completionProvider");
 const hoverProvider_1 = require("./providers/hoverProvider");
 const signatureHelpProvider_1 = require("./providers/signatureHelpProvider");
 const definitionProvider_1 = require("./providers/definitionProvider");
+const symbolProvider_1 = require("./providers/symbolProvider");
 const execAsync = (0, util_1.promisify)(child_process_1.exec);
 // Diagnostic collection for Liva errors
 const livaDiagnostics = vscode.languages.createDiagnosticCollection('liva');
@@ -89,7 +90,9 @@ function activate(context) {
     const definitionProvider = vscode.languages.registerDefinitionProvider('liva', new definitionProvider_1.LivaDefinitionProvider());
     // Register reference provider
     const referenceProvider = vscode.languages.registerReferenceProvider('liva', new definitionProvider_1.LivaReferenceProvider());
-    context.subscriptions.push(compileCommand, runCommand, checkCommand, fileWatcher, changeListener, openListener, livaDiagnostics, completionProvider, hoverProvider, signatureHelpProvider, definitionProvider, referenceProvider);
+    // Register document symbol provider
+    const symbolProvider = vscode.languages.registerDocumentSymbolProvider('liva', new symbolProvider_1.LivaDocumentSymbolProvider());
+    context.subscriptions.push(compileCommand, runCommand, checkCommand, fileWatcher, changeListener, openListener, livaDiagnostics, completionProvider, hoverProvider, signatureHelpProvider, definitionProvider, referenceProvider, symbolProvider);
 }
 function deactivate() {
     livaDiagnostics.clear();

@@ -6,6 +6,7 @@ import { LiveCompletionProvider } from './providers/completionProvider';
 import { LivaHoverProvider } from './providers/hoverProvider';
 import { LivaSignatureHelpProvider } from './providers/signatureHelpProvider';
 import { LivaDefinitionProvider, LivaReferenceProvider } from './providers/definitionProvider';
+import { LivaDocumentSymbolProvider } from './providers/symbolProvider';
 
 const execAsync = promisify(exec);
 
@@ -126,6 +127,12 @@ export function activate(context: vscode.ExtensionContext) {
         new LivaReferenceProvider()
     );
 
+    // Register document symbol provider
+    const symbolProvider = vscode.languages.registerDocumentSymbolProvider(
+        'liva',
+        new LivaDocumentSymbolProvider()
+    );
+
     context.subscriptions.push(
         compileCommand, 
         runCommand, 
@@ -138,7 +145,8 @@ export function activate(context: vscode.ExtensionContext) {
         hoverProvider,
         signatureHelpProvider,
         definitionProvider,
-        referenceProvider
+        referenceProvider,
+        symbolProvider
     );
 }
 
