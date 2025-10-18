@@ -5,6 +5,7 @@ import { promisify } from 'util';
 import { LiveCompletionProvider } from './providers/completionProvider';
 import { LivaHoverProvider } from './providers/hoverProvider';
 import { LivaSignatureHelpProvider } from './providers/signatureHelpProvider';
+import { LivaDefinitionProvider, LivaReferenceProvider } from './providers/definitionProvider';
 
 const execAsync = promisify(exec);
 
@@ -113,6 +114,18 @@ export function activate(context: vscode.ExtensionContext) {
         ',', // Trigger on comma (next parameter)
     );
 
+    // Register definition provider
+    const definitionProvider = vscode.languages.registerDefinitionProvider(
+        'liva',
+        new LivaDefinitionProvider()
+    );
+
+    // Register reference provider
+    const referenceProvider = vscode.languages.registerReferenceProvider(
+        'liva',
+        new LivaReferenceProvider()
+    );
+
     context.subscriptions.push(
         compileCommand, 
         runCommand, 
@@ -123,7 +136,9 @@ export function activate(context: vscode.ExtensionContext) {
         livaDiagnostics,
         completionProvider,
         hoverProvider,
-        signatureHelpProvider
+        signatureHelpProvider,
+        definitionProvider,
+        referenceProvider
     );
 }
 
