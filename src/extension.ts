@@ -2,6 +2,7 @@ import * as vscode from 'vscode';
 import * as path from 'path';
 import { exec } from 'child_process';
 import { promisify } from 'util';
+import { LiveCompletionProvider } from './providers/completionProvider';
 
 const execAsync = promisify(exec);
 
@@ -87,7 +88,25 @@ export function activate(context: vscode.ExtensionContext) {
         }
     });
 
-    context.subscriptions.push(compileCommand, runCommand, checkCommand, fileWatcher, changeListener, openListener, livaDiagnostics);
+    // Register completion provider
+    const completionProvider = vscode.languages.registerCompletionItemProvider(
+        'liva',
+        new LiveCompletionProvider(),
+        '.', // Trigger completion on dot for member access
+        ' ', // Trigger on space for keywords
+        '(', // Trigger on opening paren for function calls
+    );
+
+    context.subscriptions.push(
+        compileCommand, 
+        runCommand, 
+        checkCommand, 
+        fileWatcher, 
+        changeListener, 
+        openListener, 
+        livaDiagnostics,
+        completionProvider
+    );
 }
 
 export function deactivate() {

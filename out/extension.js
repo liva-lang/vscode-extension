@@ -6,6 +6,7 @@ const vscode = require("vscode");
 const path = require("path");
 const child_process_1 = require("child_process");
 const util_1 = require("util");
+const completionProvider_1 = require("./providers/completionProvider");
 const execAsync = (0, util_1.promisify)(child_process_1.exec);
 // Diagnostic collection for Liva errors
 const livaDiagnostics = vscode.languages.createDiagnosticCollection('liva');
@@ -72,7 +73,11 @@ function activate(context) {
             await validateLivaFile(document);
         }
     });
-    context.subscriptions.push(compileCommand, runCommand, checkCommand, fileWatcher, changeListener, openListener, livaDiagnostics);
+    // Register completion provider
+    const completionProvider = vscode.languages.registerCompletionItemProvider('liva', new completionProvider_1.LiveCompletionProvider(), '.', // Trigger completion on dot for member access
+    ' ', // Trigger on space for keywords
+    '(');
+    context.subscriptions.push(compileCommand, runCommand, checkCommand, fileWatcher, changeListener, openListener, livaDiagnostics, completionProvider);
 }
 function deactivate() {
     livaDiagnostics.clear();
