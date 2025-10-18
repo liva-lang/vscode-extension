@@ -1,0 +1,153 @@
+// Test file for interface validation in VSCode extension
+
+// ============================================================================
+// INTERFACE DEFINITIONS
+// ============================================================================
+
+// Simple interface with method signatures only
+Animal {
+    makeSound(): string
+    getName(): string
+    getAge(): int
+}
+
+// Another interface
+Drawable {
+    draw(): void
+    getBounds(): string
+}
+
+// Interface with parameters
+Comparable {
+    compareTo(other: Self): int
+    equals(other: Self): bool
+}
+
+// ============================================================================
+// VALID IMPLEMENTATIONS (No errors)
+// ============================================================================
+
+// ✅ Class implementing all methods correctly
+Dog : Animal {
+    constructor(name: string, age: int) {
+        this.name = name
+        this.age = age
+    }
+    
+    name: string
+    age: int
+    
+    makeSound() => "Woof!"
+    getName() => this.name
+    getAge() => this.age
+}
+
+// ✅ Class implementing multiple interfaces correctly
+Circle : Drawable, Comparable {
+    constructor(radius: float) {
+        this.radius = radius
+    }
+    
+    radius: float
+    
+    draw() {
+        print("Drawing circle")
+    }
+    
+    getBounds() => $"Circle(r={this.radius})"
+    
+    compareTo(other: Circle) => (this.radius - other.radius) as int
+    equals(other: Circle) => this.radius == other.radius
+}
+
+// ============================================================================
+// INVALID IMPLEMENTATIONS (Should show red underlines)
+// ============================================================================
+
+// ❌ Missing method: getAge() - Should show error
+Cat : Animal {
+    constructor(name: string) {
+        this.name = name
+    }
+    
+    name: string
+    
+    makeSound() => "Meow!"
+    getName() => this.name
+    // Missing: getAge()
+}
+
+// ❌ Missing multiple methods - Should show multiple errors
+Rectangle : Drawable, Comparable {
+    constructor(width: float, height: float) {
+        this.width = width
+        this.height = height
+    }
+    
+    width: float
+    height: float
+    
+    draw() {
+        print("Drawing rectangle")
+    }
+    // Missing: getBounds() from Drawable
+    // Missing: compareTo() from Comparable
+    // Missing: equals() from Comparable
+}
+
+// ❌ Interface not found - Should show warning
+Bird : Flyable {
+    constructor(name: string) {
+        this.name = name
+    }
+    
+    name: string
+}
+
+// ============================================================================
+// REGULAR CLASSES (No interface, no validation)
+// ============================================================================
+
+// ✅ Regular class without interface - no validation needed
+Person {
+    constructor(name: string, age: int) {
+        this.name = name
+        this.age = age
+    }
+    
+    name: string
+    age: int
+    
+    greet() => $"Hello, I'm {this.name}"
+}
+
+// ============================================================================
+// EDGE CASES
+// ============================================================================
+
+// ✅ Class with extra methods beyond interface - OK
+Robot : Animal {
+    constructor(id: int) {
+        this.id = id
+    }
+    
+    id: int
+    
+    makeSound() => "Beep boop"
+    getName() => $"Robot-{this.id}"
+    getAge() => 0
+    
+    // Extra methods are fine
+    reboot() {
+        print("Rebooting...")
+    }
+}
+
+// Main function to test
+main() {
+    let dog = Dog("Buddy", 5)
+    print(dog.makeSound())
+    
+    let cat = Cat("Whiskers")
+    print(cat.makeSound())
+}

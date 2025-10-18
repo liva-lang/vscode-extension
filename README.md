@@ -69,6 +69,7 @@
 - ✅ **Real-time error diagnostics**
 - ✅ **Error tooltips** with suggestions
 - ✅ **Problems panel integration**
+- ✅ **Interface validation** - Real-time checking of interface implementations
 
 ### 🚧 Coming Soon (Phase 3+)
 
@@ -166,6 +167,7 @@ Shape : Drawable, Comparable {
 - Class = has fields and method implementations
 - Use `:` to implement one or more interfaces (comma-separated)
 - Maps cleanly to Rust traits
+- **Real-time validation**: Extension shows red underlines if class doesn't implement all interface methods
 
 #### Data-Parallel Loop Policies
 
@@ -227,11 +229,51 @@ You can customize the extension behavior in VS Code settings:
 
 ## 🔴 Error Reporting
 
-The extension integrates with Liva's advanced error reporting system to provide:
+The extension provides comprehensive error detection and reporting:
 
-### Real-time Error Detection
+### Real-time Interface Validation ⚡
 
-Errors are detected and displayed as you type (with a 500ms debounce), showing:
+The extension validates interface implementations **as you type**, providing instant feedback:
+
+**What it checks:**
+- ✅ All methods from interfaces are implemented in classes
+- ✅ Interface names exist and are defined
+- ✅ Multi-interface implementations (comma-separated)
+- ✅ Distinguishes interfaces (signatures only) from classes (has fields)
+
+**Example:**
+```liva
+// Define interface
+Animal {
+    makeSound(): string
+    getName(): string
+}
+
+// ❌ Missing getName() - Shows red underline
+Dog : Animal {
+    makeSound() => "Woof!"
+    // Error: Class 'Dog' does not implement method 'getName' from interface 'Animal'
+    // 💡 Add this method to the class or remove the interface
+}
+
+// ✅ All methods implemented - No errors
+Cat : Animal {
+    makeSound() => "Meow!"
+    getName() => "Kitty"
+}
+```
+
+**Features:**
+- **Red squiggly underlines** on class declaration when methods are missing
+- **Detailed error messages** showing exactly which method is missing
+- **Required signature** displayed in error tooltip
+- **Helpful suggestions** to fix the issue
+- **Fast validation** with 300ms debounce after typing
+- **No false positives** - distinguishes between interfaces and classes correctly
+
+### Compiler Error Detection
+
+Errors from the Liva compiler are detected and displayed as you type (with a 500ms debounce), showing:
 
 - **Red underlines** at the exact location of errors
 - **Detailed tooltips** when hovering over errors with:

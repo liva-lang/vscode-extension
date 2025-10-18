@@ -7,6 +7,7 @@ import { LivaHoverProvider } from './providers/hoverProvider';
 import { LivaSignatureHelpProvider } from './providers/signatureHelpProvider';
 import { LivaDefinitionProvider, LivaReferenceProvider } from './providers/definitionProvider';
 import { LivaDocumentSymbolProvider } from './providers/symbolProvider';
+import { InterfaceValidationProvider } from './providers/interfaceValidator';
 
 const execAsync = promisify(exec);
 
@@ -132,6 +133,10 @@ export function activate(context: vscode.ExtensionContext) {
         'liva',
         new LivaDocumentSymbolProvider()
     );
+
+    // Register interface validator for real-time validation
+    const interfaceValidator = new InterfaceValidationProvider();
+    interfaceValidator.activate(context);
 
     context.subscriptions.push(
         compileCommand, 

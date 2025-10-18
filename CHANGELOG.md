@@ -4,6 +4,34 @@
 
 ### Added
 
+#### Real-time Interface Validation ⚡
+- **Live validation** of interface implementations as you type
+- **Red underlines** for missing method implementations
+- **Instant feedback** when class doesn't implement all interface methods
+- **Detailed error messages** showing:
+  - Which method is missing
+  - Required method signature
+  - Which interface requires it
+  - Helpful suggestion to fix
+- **Multi-interface support**: Validates all interfaces in comma-separated list
+- **Interface detection**: Automatically distinguishes interfaces (signatures only) from classes (has fields/constructor)
+- **Debounced validation**: 300ms delay after typing stops for performance
+- **Warning for undefined interfaces**: Shows warning if interface name not found
+
+**Example validation:**
+```liva
+Animal {
+    makeSound(): string
+    getName(): string
+}
+
+// ❌ Error: Missing getName() method
+Dog : Animal {
+    makeSound() => "Woof!"
+    // Red underline appears on class declaration line
+}
+```
+
 #### Interface Syntax Support
 - **Interface snippets**:
   - `interface`: Full interface declaration with method signatures
