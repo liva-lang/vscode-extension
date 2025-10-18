@@ -244,13 +244,8 @@
                     }
                 },
                 {
-                    "comment": "Private identifiers (double underscore)",
+                    "comment": "Private identifiers (single underscore)",
                     "name": "variable.language.private.liva",
-                    "match": "__[a-zA-Z_][a-zA-Z0-9_]*\\b"
-                },
-                {
-                    "comment": "Protected/internal identifiers (single underscore)",
-                    "name": "variable.language.protected.liva",
                     "match": "_[a-zA-Z_][a-zA-Z0-9_]*\\b"
                 },
                 {

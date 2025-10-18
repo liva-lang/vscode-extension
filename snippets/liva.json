@@ -358,13 +358,6 @@
         ],
         "description": "Create a private member"
     },
-    "Protected member": {
-        "prefix": "_",
-        "body": [
-            "_${1:member_name}"
-        ],
-        "description": "Create a protected member"
-    },
     "If fail statement": {
         "prefix": "iff",
         "body": [
