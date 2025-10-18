@@ -7,6 +7,7 @@ const path = require("path");
 const child_process_1 = require("child_process");
 const util_1 = require("util");
 const completionProvider_1 = require("./providers/completionProvider");
+const hoverProvider_1 = require("./providers/hoverProvider");
 const execAsync = (0, util_1.promisify)(child_process_1.exec);
 // Diagnostic collection for Liva errors
 const livaDiagnostics = vscode.languages.createDiagnosticCollection('liva');
@@ -77,7 +78,9 @@ function activate(context) {
     const completionProvider = vscode.languages.registerCompletionItemProvider('liva', new completionProvider_1.LiveCompletionProvider(), '.', // Trigger completion on dot for member access
     ' ', // Trigger on space for keywords
     '(');
-    context.subscriptions.push(compileCommand, runCommand, checkCommand, fileWatcher, changeListener, openListener, livaDiagnostics, completionProvider);
+    // Register hover provider
+    const hoverProvider = vscode.languages.registerHoverProvider('liva', new hoverProvider_1.LivaHoverProvider());
+    context.subscriptions.push(compileCommand, runCommand, checkCommand, fileWatcher, changeListener, openListener, livaDiagnostics, completionProvider, hoverProvider);
 }
 function deactivate() {
     livaDiagnostics.clear();

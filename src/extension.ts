@@ -3,6 +3,7 @@ import * as path from 'path';
 import { exec } from 'child_process';
 import { promisify } from 'util';
 import { LiveCompletionProvider } from './providers/completionProvider';
+import { LivaHoverProvider } from './providers/hoverProvider';
 
 const execAsync = promisify(exec);
 
@@ -97,6 +98,12 @@ export function activate(context: vscode.ExtensionContext) {
         '(', // Trigger on opening paren for function calls
     );
 
+    // Register hover provider
+    const hoverProvider = vscode.languages.registerHoverProvider(
+        'liva',
+        new LivaHoverProvider()
+    );
+
     context.subscriptions.push(
         compileCommand, 
         runCommand, 
@@ -105,7 +112,8 @@ export function activate(context: vscode.ExtensionContext) {
         changeListener, 
         openListener, 
         livaDiagnostics,
-        completionProvider
+        completionProvider,
+        hoverProvider
     );
 }
 
