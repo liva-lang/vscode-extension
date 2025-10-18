@@ -2,7 +2,7 @@
   "name": "liva-vscode",
   "displayName": "Liva Language Support",
   "description": "Complete programming language support for Liva in Visual Studio Code and Cursor. Features include syntax highlighting, snippets, compiler integration, and automatic building.",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "publisher": "liva-lang",
   "repository": {
     "type": "git",

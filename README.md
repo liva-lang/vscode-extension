@@ -1,27 +1,53 @@
 # Liva Language Support
 
-Liva programming language support for Visual Studio Code and Cursor.
+**Version 0.0.7** - Complete programming language support for Liva in Visual Studio Code and Cursor.
+
+## 🎉 What's New in 0.0.7
+
+### Phase 1: Enhanced Syntax & Snippets - COMPLETE ✅
+
+- **🎨 Enhanced Syntax Highlighting**: Full support for Liva v0.6 features
+  - String template interpolation: `$"text {expression}"`
+  - Concurrency keywords: `async`, `par`, `task`, `fire`, `await`
+  - Enhanced numeric literals: hex (`0xFF`), binary (`0b1010`), scientific notation
+  - Better function and operator highlighting
+
+- **📝 56 Comprehensive Snippets**: Speed up your coding
+  - Function snippets: `fn`, `fnb`, `fnt`, `fn1`
+  - Concurrency patterns: `async`, `par`, `taska`, `taskp`, `await`, `firea`, `firep`
+  - Error handling: `letf`, `leta`, `letp`, `iferr`, `iff`, `fail`
+  - Full snippet list in [CHANGELOG.md](CHANGELOG.md)
+
+- **⚙️ Enhanced Language Configuration**:
+  - Smart auto-closing pairs with context awareness
+  - Code folding support with region markers
+  - Better indentation for nested structures
+  - Multi-line comment continuation
 
 ## Features
 
 ### ✅ Implemented
 
-- **Syntax highlighting** complete for `.liva` files
-- **Snippets** for common language constructs
-- **Compiler configuration** with customizable options
+- **Syntax highlighting** complete for `.liva` files with v0.6 features
+- **56 snippets** for all language constructs (functions, concurrency, error handling, etc.)
+- **String template support** with interpolation highlighting
+- **Compiler integration** with customizable options
 - **Integrated compilation and execution** commands
 - **Automatic compilation** on save (optional)
-- **Real-time error diagnostics** 🆕 with precise location highlighting
-- **Error tooltips** 🆕 with detailed information and suggestions
-- **Problems panel integration** 🆕 with all compilation errors
-- **Comment support** (line and block)
-- **Auto-closing** of parentheses and automatic indentation
+- **Real-time error diagnostics** with precise location highlighting
+- **Error tooltips** with detailed information and suggestions
+- **Problems panel integration** with all compilation errors
+- **Code folding** with region markers
+- **Smart auto-closing** and automatic indentation
+- **Comment support** (line and block with continuation)
 
-### 🚧 In development
+### 🚧 Coming Soon (Phase 2+)
 
-- **Automatic Liva code formatting**
-- **Intelligent autocompletion** based on context
-- **Quick fixes** for common errors
+- **IntelliSense** - Intelligent autocompletion and hover information
+- **Code actions** - Quick fixes and refactoring
+- **Debugging support** - Breakpoints and step-through debugging
+- **Test integration** - Run and debug tests directly in VS Code
+- **Code formatting** - Automatic Liva code formatting
 
 ## Installation
 

@@ -1,5 +1,106 @@
 # Changelog
 
+## [0.0.7] - 2025-10-18
+
+### 🎨 Phase 1: Enhanced Syntax & Snippets - COMPLETE ✅
+
+Major improvements to developer experience with enhanced syntax highlighting, comprehensive snippets, and better language configuration.
+
+### Added
+
+#### Phase 1.1: Enhanced Syntax Highlighting
+- **String template interpolation**: Full support for `$"text {expression}"` syntax
+  - Proper highlighting of embedded expressions within templates
+  - Escape sequence support
+- **Categorized keywords**: Better organization by purpose
+  - Control flow: `if`, `else`, `while`, `for`, `switch`, `return`, `break`, `continue`
+  - Concurrency: `async`, `await`, `par`, `task`, `fire`
+  - Parallel policies: `parvec`, `with`, `ordered`, `chunk`, `threads`, `simdWidth`
+  - Declarations: `let`, `const`, `constructor`, `this`
+  - Error handling: `fail`, `throw`, `try`, `catch`, `Err`, `Ok`
+- **Enhanced numeric literals**:
+  - Hexadecimal: `0xFF`, `0x1A2B3C`
+  - Binary: `0b1010`, `0b11110000`
+  - Scientific notation: `1.5e10`, `2.5e-3`
+- **Function highlighting**:
+  - Function definitions with proper name highlighting
+  - Function call recognition
+- **Operator improvements**:
+  - Arrow function: `=>`
+  - Type annotation: `->`
+  - Range: `..`
+  - Assignment variants: `+=`, `-=`, `*=`, `/=`, `%=`
+- **Null/None literals**: `null`, `None`
+
+#### Phase 1.2: Comprehensive Snippets (56 total)
+- **Function snippets**:
+  - `fn`: One-liner function with arrow
+  - `fnb`: Block function
+  - `fnt`: Function with return type
+  - `fn1`: Typed one-liner function
+- **Control flow snippets**:
+  - `if`, `ife`, `ifelif`: If statements
+  - `while`: While loop
+  - `for`, `forr`: For loops
+  - `forseq`, `forpar`, `forparp`: For loop policies
+  - `forvec`, `forparvec`: Vectorized loops
+  - `switch`: Switch statement
+  - `tern`: Ternary expression
+- **Concurrency snippets** (NEW):
+  - `async`, `par`: Async/parallel calls
+  - `taska`, `taskp`: Task handles
+  - `await`: Await task
+  - `firea`, `firep`: Fire and forget
+  - `asyncm`: Multi-async pattern
+  - `parpat`: Parallel computation pattern
+- **Error handling snippets**:
+  - `letf`: Fallible binding
+  - `leta`, `letp`: Error binding with async/par
+  - `iferr`, `iferrp`: Error checking
+  - `iff`: If fail
+  - `tf`: Ternary fail
+  - `fail`: Fail statement
+- **Classes & objects**:
+  - `class`, `classt`: Class declarations
+  - `main`: Main function
+  - `obj`, `arr`, `arrobj`: Literals
+- **Utilities**:
+  - `st`: String template
+  - `pr`, `prs`: Print statements
+  - `cb`, `todo`, `fixme`: Comments
+
+#### Phase 1.3: Enhanced Language Configuration
+- **Better auto-closing pairs**:
+  - Context-aware closing (notIn: string, comment)
+  - Auto-close before specific characters
+- **Code folding support**:
+  - Region markers: `// #region` / `// #endregion`
+- **Improved indentation rules**:
+  - Better handling of nested structures
+  - Smart bracket/paren/brace indentation
+- **OnEnter rules**:
+  - Multi-line comment continuation (`/** */`)
+  - Control flow statement indentation
+  - Special handling for async/par/task/fire
+
+### Changed
+- Updated syntax highlighting to use semantic categories instead of flat keyword list
+- Improved word pattern for better identifier recognition
+- Enhanced bracket matching for all pair types
+
+### Testing
+- Added comprehensive test file: `test_syntax_highlighting.liva`
+  - Tests all 15 major syntax categories
+  - ~330 lines covering every language feature
+  - Validates string templates, concurrency, error binding, etc.
+
+### Migration Notes
+- No breaking changes
+- All existing code remains compatible
+- New features are opt-in via snippets
+
+---
+
 ## [0.0.6] - 2025-10-17
 
 ### Changed
