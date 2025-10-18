@@ -1,5 +1,27 @@
 # Changelog
 
+## [Unreleased]
+
+### Added
+
+#### Interface Syntax Support
+- **Interface snippets**:
+  - `interface`: Full interface declaration with method signatures
+  - `iface`: Simple interface with one method
+  - `classi`: Class implementing single interface
+  - `classim`: Class implementing multiple interfaces
+- **Enhanced syntax highlighting**:
+  - Class/interface implementation detection with `:` syntax
+  - Better highlighting for `ClassName : Interface1, Interface2` patterns
+- **Documentation**:
+  - Added interface examples to README
+  - Updated example.liva with interface patterns (commented for future implementation)
+  
+### Technical Details
+- Added `class-interface-declaration` pattern to syntax grammar
+- Captures interface names in implementation declarations
+- Prepared for semantic validation of interface implementations
+
 ## [0.1.0] - 2025-10-18
 
 ### 🚀 Phase 2: IntelliSense & Code Intelligence - COMPLETE ✅

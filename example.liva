@@ -47,7 +47,11 @@ main() {
 // Función de utilidad
 saludar(nombre: string) => $"¡Hola, {nombre}!"
 
-// Uso de clases
+// ============================================================================
+// CLASES
+// ============================================================================
+
+// Basic class
 Person {
     constructor(nombre: string, edad: int) {
         this.nombre = nombre
@@ -57,8 +61,41 @@ Person {
     nombre: string
     edad: int
 
+    // Methods
+    greet() => $"¡Hola!"
+    introduce() => $"Soy {this.nombre} y tengo {this.edad} años"
     esAdulto() => this.edad >= 18
 }
+
+// Class with private fields
+BankAccount {
+    constructor(balance: number) {
+        this.__balance = balance
+    }
+    
+    __balance: number  // Private
+    
+    deposit(amount: number) {
+        this.__balance = this.__balance + amount
+    }
+    
+    getBalance() => this.__balance
+}
+
+// ============================================================================
+// INTERFACES (Future feature - syntax documented)
+// ============================================================================
+
+// NOTE: Interface syntax for future implementation:
+// 
+// Greetable {
+//     greet(): string
+//     introduce(): string
+// }
+// 
+// Person : Greetable {
+//     // ... implements interface
+// }
 
 // Función con concurrencia
 procesarDatos() {

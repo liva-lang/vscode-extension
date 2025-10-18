@@ -282,6 +282,66 @@
         ],
         "description": "Create a class with typed fields and constructor"
     },
+    "Interface declaration": {
+        "prefix": "interface",
+        "body": [
+            "${1:InterfaceName} {",
+            "    ${2:method}(${3:param}: ${4:Type}): ${5:ReturnType}",
+            "    ${6:anotherMethod}(): ${7:ReturnType}",
+            "}"
+        ],
+        "description": "Create an interface with method signatures"
+    },
+    "Simple interface": {
+        "prefix": "iface",
+        "body": [
+            "${1:InterfaceName} {",
+            "    ${2:method}(): ${3:ReturnType}",
+            "}"
+        ],
+        "description": "Create a simple interface"
+    },
+    "Class implementing interface": {
+        "prefix": "classi",
+        "body": [
+            "${1:ClassName} : ${2:InterfaceName} {",
+            "    constructor(${3:parameters}) {",
+            "        ${4:// initialization}",
+            "    }",
+            "    ",
+            "    ${5:field}: ${6:Type}",
+            "    ",
+            "    // Interface implementation",
+            "    ${7:method}(${8:param}: ${9:Type}): ${10:ReturnType} {",
+            "        ${11:// implementation}",
+            "    }",
+            "}"
+        ],
+        "description": "Create a class implementing an interface"
+    },
+    "Class implementing multiple interfaces": {
+        "prefix": "classim",
+        "body": [
+            "${1:ClassName} : ${2:Interface1}, ${3:Interface2} {",
+            "    constructor(${4:parameters}) {",
+            "        ${5:// initialization}",
+            "    }",
+            "    ",
+            "    ${6:field}: ${7:Type}",
+            "    ",
+            "    // ${2:Interface1} implementation",
+            "    ${8:method1}(): ${9:ReturnType} {",
+            "        ${10:// implementation}",
+            "    }",
+            "    ",
+            "    // ${3:Interface2} implementation",
+            "    ${11:method2}(): ${12:ReturnType} {",
+            "        ${13:// implementation}",
+            "    }",
+            "}"
+        ],
+        "description": "Create a class implementing multiple interfaces"
+    },
     "Main function": {
         "prefix": "main",
         "body": [

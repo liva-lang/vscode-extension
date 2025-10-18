@@ -116,6 +116,57 @@ code --install-extension liva-vscode-0.0.1.vsix
 
 ### Language Features
 
+#### Classes and Interfaces
+
+Liva supports object-oriented programming with classes and interfaces:
+
+**Classes:**
+```liva
+Person {
+    constructor(name: string, age: int) {
+        this.name = name
+        this.age = age
+    }
+    
+    name: string
+    age: int
+    
+    greet() => $"Hello, I'm {this.name}"
+}
+```
+
+**Interfaces:**
+```liva
+// Interface: only method signatures (no fields, no constructor)
+Drawable {
+    draw(): void
+    getBounds(): string
+}
+
+// Class implementing interface
+Circle : Drawable {
+    radius: float
+    
+    constructor(radius: float) {
+        this.radius = radius
+    }
+    
+    draw() => println("Drawing circle")
+    getBounds() => $"Circle(r={this.radius})"
+}
+
+// Multiple interfaces
+Shape : Drawable, Comparable {
+    // Must implement all interface methods
+}
+```
+
+**Key points:**
+- Interface = only method signatures (no implementation, no fields)
+- Class = has fields and method implementations
+- Use `:` to implement one or more interfaces (comma-separated)
+- Maps cleanly to Rust traits
+
 #### Data-Parallel Loop Policies
 
 Liva supports different execution policies for loops:
