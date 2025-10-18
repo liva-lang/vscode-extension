@@ -12,19 +12,81 @@
         { "open": "{", "close": "}" },
         { "open": "[", "close": "]" },
         { "open": "(", "close": ")" },
-        { "open": "\"", "close": "\"" },
-        { "open": "'", "close": "'" }
+        { "open": "\"", "close": "\"", "notIn": ["string"] },
+        { "open": "'", "close": "'", "notIn": ["string", "comment"] },
+        { "open": "`", "close": "`", "notIn": ["string", "comment"] },
+        { "open": "/**", "close": " */", "notIn": ["string"] }
     ],
+    "autoCloseBefore": ";:.,=}])>` \n\t",
     "surroundingPairs": [
         { "open": "{", "close": "}" },
         { "open": "[", "close": "]" },
         { "open": "(", "close": ")" },
         { "open": "\"", "close": "\"" },
-        { "open": "'", "close": "'" }
+        { "open": "'", "close": "'" },
+        { "open": "`", "close": "`" },
+        { "open": "<", "close": ">" }
     ],
-    "indentationRules": {
-        "increaseIndentPattern": "\\{\\s*$",
-        "decreaseIndentPattern": "^\\s*\\}"
+    "folding": {
+        "markers": {
+            "start": "^\\s*//\\s*#?region\\b",
+            "end": "^\\s*//\\s*#?endregion\\b"
+        }
     },
+    "indentationRules": {
+        "increaseIndentPattern": "^((?!\\/\\/).)*(\\{[^}\"'`]*|\\([^)\"'`]*|\\[[^\\]\"'`]*)$",
+        "decreaseIndentPattern": "^((?!.*?\\/\\*).*\\*/)?\\s*[\\)\\}\\]].*$"
+    },
+    "onEnterRules": [
+        {
+            "beforeText": "^\\s*\\/\\*\\*(?!\\/)([^\\*]|\\*(?!\\/))*$",
+            "afterText": "^\\s*\\*\\/$",
+            "action": {
+                "indent": "indentOutdent",
+                "appendText": " * "
+            }
+        },
+        {
+            "beforeText": "^\\s*\\/\\*\\*(?!\\/)([^\\*]|\\*(?!\\/))*$",
+            "action": {
+                "indent": "none",
+                "appendText": " * "
+            }
+        },
+        {
+            "beforeText": "^(\\t|( {2}))*[ \\t]*\\*[ \\t]*$",
+            "previousLineText": "(?=^(\\s*(\\/\\*\\*|\\*)).*)(?=(?!(\\s*\\*\\/)))",
+            "action": {
+                "indent": "none",
+                "appendText": "* "
+            }
+        },
+        {
+            "beforeText": "^(\\t|( {2}))*[ \\t]*\\*\\/\\s*$",
+            "action": {
+                "indent": "none",
+                "removeText": 1
+            }
+        },
+        {
+            "beforeText": "^(\\t|( {2}))*[ \\t]*\\*[^/]*\\*\\/\\s*$",
+            "action": {
+                "indent": "none",
+                "removeText": 1
+            }
+        },
+        {
+            "beforeText": "^\\s*(if|else if|while|for)\\s*\\([^)]*\\)\\s*$",
+            "action": {
+                "indent": "indent"
+            }
+        },
+        {
+            "beforeText": "^\\s*(async|par|task|fire)\\s+",
+            "action": {
+                "indent": "none"
+            }
+        }
+    ],
     "wordPattern": "(-?\\d*\\.\\d\\w*)|([^\\`\\~\\!\\@\\#\\%\\^\\&\\*\\(\\)\\-\\=\\+\\[\\{\\]\\}\\|\\;\\:\\'\\\"\\,\\.\\<\\>\\/\\?\\s]+)"
 }
