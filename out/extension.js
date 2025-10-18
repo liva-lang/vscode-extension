@@ -8,6 +8,7 @@ const child_process_1 = require("child_process");
 const util_1 = require("util");
 const completionProvider_1 = require("./providers/completionProvider");
 const hoverProvider_1 = require("./providers/hoverProvider");
+const signatureHelpProvider_1 = require("./providers/signatureHelpProvider");
 const execAsync = (0, util_1.promisify)(child_process_1.exec);
 // Diagnostic collection for Liva errors
 const livaDiagnostics = vscode.languages.createDiagnosticCollection('liva');
@@ -80,7 +81,10 @@ function activate(context) {
     '(');
     // Register hover provider
     const hoverProvider = vscode.languages.registerHoverProvider('liva', new hoverProvider_1.LivaHoverProvider());
-    context.subscriptions.push(compileCommand, runCommand, checkCommand, fileWatcher, changeListener, openListener, livaDiagnostics, completionProvider, hoverProvider);
+    // Register signature help provider
+    const signatureHelpProvider = vscode.languages.registerSignatureHelpProvider('liva', new signatureHelpProvider_1.LivaSignatureHelpProvider(), '(', // Trigger on opening parenthesis
+    ',');
+    context.subscriptions.push(compileCommand, runCommand, checkCommand, fileWatcher, changeListener, openListener, livaDiagnostics, completionProvider, hoverProvider, signatureHelpProvider);
 }
 function deactivate() {
     livaDiagnostics.clear();

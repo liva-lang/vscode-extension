@@ -4,6 +4,7 @@ import { exec } from 'child_process';
 import { promisify } from 'util';
 import { LiveCompletionProvider } from './providers/completionProvider';
 import { LivaHoverProvider } from './providers/hoverProvider';
+import { LivaSignatureHelpProvider } from './providers/signatureHelpProvider';
 
 const execAsync = promisify(exec);
 
@@ -104,6 +105,14 @@ export function activate(context: vscode.ExtensionContext) {
         new LivaHoverProvider()
     );
 
+    // Register signature help provider
+    const signatureHelpProvider = vscode.languages.registerSignatureHelpProvider(
+        'liva',
+        new LivaSignatureHelpProvider(),
+        '(', // Trigger on opening parenthesis
+        ',', // Trigger on comma (next parameter)
+    );
+
     context.subscriptions.push(
         compileCommand, 
         runCommand, 
@@ -113,7 +122,8 @@ export function activate(context: vscode.ExtensionContext) {
         openListener, 
         livaDiagnostics,
         completionProvider,
-        hoverProvider
+        hoverProvider,
+        signatureHelpProvider
     );
 }
 
