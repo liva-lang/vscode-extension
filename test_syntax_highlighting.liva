@@ -1,0 +1,369 @@
+// ============================================================================
+// LIVA SYNTAX HIGHLIGHTING TEST FILE
+// ============================================================================
+// This file tests all syntax highlighting improvements for Phase 1.1
+
+// ============================================================================
+// 1. STRING TEMPLATES - NEW! $"text {expr}"
+// ============================================================================
+
+main() {
+  let name = "Alice"
+  let age = 25
+  let height = 1.75
+  
+  // String template interpolation
+  let greeting = $"Hello {name}! You are {age} years old."
+  let info = $"Name: {name}, Age: {age}, Height: {height}m"
+  let calculation = $"Sum: {10 + 20}, Product: {5 * 4}"
+  
+  // Regular strings
+  let simple = "Regular double-quoted string"
+  let single = 'Single quoted string'
+  
+  print(greeting)
+  print(info)
+  print(calculation)
+
+  // ============================================================================
+  // 2. NUMERIC LITERALS - ENHANCED!
+  // ============================================================================
+  
+  // Decimal integers
+  let decimal = 42
+  let with_underscores = 1_000_000
+  
+  // Floating point
+  let pi = 3.14159
+  let scientific = 1.5e10
+  let tiny = 2.5e-3
+  
+  // Hexadecimal
+  let hex_color = 0xFF00AA
+  let hex_value = 0x1A2B3C
+  
+  // Binary
+  let binary = 0b1010_1100
+  let flags = 0b11110000
+
+  // ============================================================================
+  // 3. CONCURRENCY KEYWORDS - NEW v0.6!
+  // ============================================================================
+  
+  // Async operations
+  let user = async fetchUser(1)
+  let data = async loadData()
+  
+  // Parallel operations
+  let result = par heavyComputation(100)
+  let processed = par processData(data)
+  
+  // Task handles
+  let taskA = task async fetchUser(2)
+  let taskB = task par compute(50)
+  
+  // Fire and forget
+  fire async logEvent("System started")
+  fire par backgroundCleanup()
+  
+  // Await task results
+  let userResult = await taskA
+  let computeResult = await taskB
+
+  // ============================================================================
+  // 4. ERROR BINDING WITH CONCURRENCY - Phase 1 Feature!
+  // ============================================================================
+  
+  // Error binding with regular function
+  let value, err = divide(10, 2)
+  
+  // Error binding with async
+  let asyncValue, asyncErr = async fetchData()
+  
+  // Error binding with par
+  let parValue, parErr = par compute(100)
+  
+  // Check errors
+  if err != "" {
+    print($"Error: {err}")
+  }
+  
+  if asyncErr != "" {
+    print($"Async error: {asyncErr}")
+  }
+
+  // ============================================================================
+  // 5. PARALLEL EXECUTION POLICIES - Data Parallel For!
+  // ============================================================================
+  
+  let items = [1, 2, 3, 4, 5, 6, 7, 8]
+  
+  // Parallel for with policies
+  for par item in items with chunk 2 threads 4 {
+    print($"Processing {item} in parallel")
+  }
+  
+  // Vector parallel for
+  for parvec value in items with simdWidth 4 ordered {
+    print($"Vector lane: {value}")
+  }
+  
+  // Sequential for (default)
+  for seq item in items {
+    print($"Sequential: {item}")
+  }
+
+  // ============================================================================
+  // 6. CONTROL FLOW - All variations
+  // ============================================================================
+  
+  // If/else
+  if age >= 18 and isActive {
+    print("Adult and active")
+  } else if age >= 18 {
+    print("Adult but inactive")
+  } else {
+    print("Minor")
+  }
+  
+  // While loop
+  let counter = 0
+  while counter < 5 {
+    print($"Count: {counter}")
+    counter = counter + 1
+  }
+  
+  // For loop with range
+  for i in 0..10 {
+    print($"Index: {i}")
+  }
+  
+  // Switch statement
+  switch status {
+    case "active": print("Active user")
+    case "inactive": print("Inactive user")
+    default: print("Unknown status")
+  }
+  
+  // Break and continue
+  for i in 0..100 {
+    if i == 10 break
+    if i % 2 == 0 continue
+    print(i)
+  }
+
+  // ============================================================================
+  // 7. FALLIBILITY SYSTEM - fail keyword
+  // ============================================================================
+  
+  // Fail in function
+  if username == "" fail "Username cannot be empty"
+  if password == "" fail "Password is required"
+  
+  // Fail in ternary
+  let result = age >= 18 ? "Can vote" : fail "Too young"
+  
+  // Try/catch (if supported)
+  try {
+    let data = riskyOperation()
+  } catch err {
+    print($"Caught error: {err}")
+  }
+
+  // ============================================================================
+  // 8. FUNCTION DEFINITIONS - All styles
+  // ============================================================================
+  
+  // One-liner function with arrow
+  add(a, b) => a + b
+  multiply(x, y) => x * y
+  isAdult(age) => age >= 18
+  
+  // Block function
+  calculateTotal(items) {
+    let total = 0.0
+    for item in items {
+      total = total + item.price
+    }
+    return total
+  }
+  
+  // Async function
+  fetchUser(id: number): string {
+    print($"Fetching user {id}")
+    return $"User {id}"
+  }
+  
+  // Fallible function
+  divide(a: number, b: number): number {
+    if b == 0 fail "Division by zero"
+    return a / b
+  }
+
+  // ============================================================================
+  // 9. CLASS DEFINITION - constructor, fields, methods
+  // ============================================================================
+  
+  Person {
+    constructor(name: string, age: int) {
+      this.name = name
+      this.age = age
+    }
+    
+    name: string
+    age: int
+    
+    isAdult() => this.age >= 18
+    
+    greet() {
+      print($"Hello, I'm {this.name}")
+    }
+  }
+  
+  // Using the class
+  let person = Person("Alice", 30)
+  let adult = person.isAdult()
+  person.greet()
+
+  // ============================================================================
+  // 10. OPERATORS - All types
+  // ============================================================================
+  
+  // Arithmetic
+  let sum = 10 + 5
+  let diff = 20 - 8
+  let prod = 6 * 7
+  let quot = 100 / 4
+  let mod = 17 % 3
+  
+  // Comparison
+  let eq = a == b
+  let neq = a != b
+  let lt = a < b
+  let gt = a > b
+  let lte = a <= b
+  let gte = a >= b
+  
+  // Logical (words)
+  let andResult = true and false
+  let orResult = true or false
+  let notResult = not true
+  
+  // Logical (symbols)
+  let andSym = true && false
+  let orSym = true || false
+  let notSym = !true
+  
+  // Bitwise
+  let bitAnd = 0xFF & 0x0F
+  let bitOr = 0xFF | 0x0F
+  let bitXor = 0xFF ^ 0x0F
+  let leftShift = 1 << 8
+  let rightShift = 256 >> 2
+  let bitNot = ~0xFF
+  
+  // Assignment
+  let x = 10
+  x += 5
+  x -= 2
+  x *= 3
+  x /= 2
+  x %= 4
+  
+  // Range
+  let range = 0..100
+  
+  // Arrow (function)
+  square(x) => x * x
+  
+  // Type arrow
+  processData(input: string) -> Result {
+    return Ok(input)
+  }
+
+  // ============================================================================
+  // 11. TYPES - Primitive and Custom
+  // ============================================================================
+  
+  // Primitive types
+  let num: number = 42
+  let flt: float = 3.14
+  let bool_val: bool = true
+  let chr: char = 'A'
+  let str: string = "text"
+  
+  // Integer types
+  let i8_val: i8 = 127
+  let i16_val: i16 = 32767
+  let i32_val: i32 = 2147483647
+  let i64_val: i64 = 9223372036854775807
+  let u8_val: u8 = 255
+  let u32_val: u32 = 4294967295
+  
+  // Float types
+  let f32_val: f32 = 3.14
+  let f64_val: f64 = 2.718281828
+  
+  // Custom types (PascalCase)
+  let user: User = User("Alice", 30)
+  let result: Result = Ok("Success")
+  let option: Option = Some(42)
+
+  // ============================================================================
+  // 12. CONSTANTS AND DECLARATIONS
+  // ============================================================================
+  
+  // Let (mutable)
+  let mutable = 10
+  mutable = 20
+  
+  // Const (immutable)
+  const MAX_USERS = 100
+  const API_VERSION = "v1.0"
+  const PI = 3.14159
+
+  // ============================================================================
+  // 13. SPECIAL IDENTIFIERS
+  // ============================================================================
+  
+  // Private (double underscore)
+  let __private_field = "internal use only"
+  
+  // Protected (single underscore)
+  let _protected_field = "protected access"
+  
+  // Public (normal)
+  let public_field = "public access"
+  
+  // This keyword
+  greet() {
+    print($"Hello from {this.name}")
+  }
+
+  // ============================================================================
+  // 14. BOOLEAN AND NULL LITERALS
+  // ============================================================================
+  
+  let is_true = true
+  let is_false = false
+  let nullable = null
+  let none_value = None
+
+  // ============================================================================
+  // 15. COMMENTS
+  // ============================================================================
+  
+  // Single line comment
+  let x = 10 // inline comment
+  
+  /* 
+   * Multi-line comment
+   * spanning multiple lines
+   * with documentation
+   */
+  let y = 20
+  
+  /* Inline block comment */ let z = 30
+
+  print("✅ All syntax highlighting features tested!")
+}

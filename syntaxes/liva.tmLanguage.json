@@ -46,6 +46,37 @@
         "strings": {
             "patterns": [
                 {
+                    "comment": "String template with interpolation $\"text {expr}\"",
+                    "name": "string.template.liva",
+                    "begin": "\\$\"",
+                    "end": "\"",
+                    "patterns": [
+                        {
+                            "name": "meta.embedded.expression.liva",
+                            "begin": "\\{",
+                            "end": "\\}",
+                            "patterns": [
+                                {
+                                    "include": "#literals"
+                                },
+                                {
+                                    "include": "#keywords"
+                                },
+                                {
+                                    "include": "#identifiers"
+                                },
+                                {
+                                    "include": "#operators"
+                                }
+                            ]
+                        },
+                        {
+                            "name": "constant.character.escape.liva",
+                            "match": "\\\\."
+                        }
+                    ]
+                },
+                {
                     "name": "string.quoted.double.liva",
                     "begin": "\"",
                     "end": "\"",
@@ -72,30 +103,81 @@
         "literals": {
             "patterns": [
                 {
-                    "name": "constant.numeric.integer.liva",
+                    "comment": "Floating point literals",
+                    "name": "constant.numeric.float.liva",
+                    "match": "\\b\\d[\\d_]*\\.\\d[\\d_]*([eE][+-]?\\d+)?\\b"
+                },
+                {
+                    "comment": "Integer literals (decimal)",
+                    "name": "constant.numeric.integer.decimal.liva",
                     "match": "\\b\\d[\\d_]*\\b"
                 },
                 {
-                    "name": "constant.numeric.float.liva",
-                    "match": "\\b\\d[\\d_]*\\.\\d[\\d_]*\\b"
+                    "comment": "Hexadecimal literals",
+                    "name": "constant.numeric.integer.hexadecimal.liva",
+                    "match": "\\b0[xX][0-9a-fA-F_]+\\b"
                 },
                 {
+                    "comment": "Binary literals",
+                    "name": "constant.numeric.integer.binary.liva",
+                    "match": "\\b0[bB][01_]+\\b"
+                },
+                {
+                    "comment": "Boolean literals",
                     "name": "constant.language.boolean.liva",
                     "match": "\\b(true|false)\\b"
+                },
+                {
+                    "comment": "Null/None literal",
+                    "name": "constant.language.null.liva",
+                    "match": "\\b(null|None)\\b"
                 }
             ]
         },
         "keywords": {
             "patterns": [
                 {
+                    "comment": "Control flow keywords",
+                    "name": "keyword.control.flow.liva",
+                    "match": "\\b(if|else|while|for|in|switch|case|default|return|break|continue)\\b"
+                },
+                {
+                    "comment": "Fail keyword - special error handling",
                     "name": "keyword.control.flow.fail.liva",
                     "match": "\\bfail\\b"
                 },
                 {
-                    "name": "keyword.control.liva",
-                    "match": "\\b(let|const|import|use|rust|type|test|if|else|while|for|in|switch|case|default|throw|try|catch|return|async|await|parallel|par|task|fire|move|seq|vec|parvec|with|ordered|chunk|threads|simdWidth|prefetch|reduction|schedule|detect|auto|safe|fast|static|dynamic|as)\\b"
+                    "comment": "Concurrency keywords - async/par/task/fire/await",
+                    "name": "keyword.control.concurrency.liva",
+                    "match": "\\b(async|await|par|task|fire)\\b"
                 },
                 {
+                    "comment": "Parallel execution policies",
+                    "name": "keyword.control.parallel.liva",
+                    "match": "\\b(parvec|with|ordered|chunk|threads|simdWidth|prefetch|reduction|schedule|detect)\\b"
+                },
+                {
+                    "comment": "Declaration keywords",
+                    "name": "keyword.declaration.liva",
+                    "match": "\\b(let|const|constructor|this)\\b"
+                },
+                {
+                    "comment": "Module and import keywords",
+                    "name": "keyword.other.liva",
+                    "match": "\\b(import|use|rust|type|test|as|move)\\b"
+                },
+                {
+                    "comment": "Execution mode keywords",
+                    "name": "keyword.other.execution.liva",
+                    "match": "\\b(seq|vec|auto|safe|fast|static|dynamic)\\b"
+                },
+                {
+                    "comment": "Error handling keywords",
+                    "name": "keyword.control.exception.liva",
+                    "match": "\\b(throw|try|catch|Err|Ok)\\b"
+                },
+                {
+                    "comment": "Logical operators - and/or/not",
                     "name": "keyword.operator.logical.liva",
                     "match": "\\b(and|or|not)\\b"
                 }
@@ -116,14 +198,35 @@
         "identifiers": {
             "patterns": [
                 {
+                    "comment": "Function definitions with arrow syntax",
+                    "match": "\\b([a-zA-Z_][a-zA-Z0-9_]*)\\s*\\(",
+                    "captures": {
+                        "1": {
+                            "name": "entity.name.function.liva"
+                        }
+                    }
+                },
+                {
+                    "comment": "Function calls",
+                    "match": "\\b([a-zA-Z_][a-zA-Z0-9_]*)\\s*(?=\\()",
+                    "captures": {
+                        "1": {
+                            "name": "entity.name.function.call.liva"
+                        }
+                    }
+                },
+                {
+                    "comment": "Private identifiers (double underscore)",
                     "name": "variable.language.private.liva",
                     "match": "__[a-zA-Z_][a-zA-Z0-9_]*\\b"
                 },
                 {
+                    "comment": "Protected/internal identifiers (single underscore)",
                     "name": "variable.language.protected.liva",
                     "match": "_[a-zA-Z_][a-zA-Z0-9_]*\\b"
                 },
                 {
+                    "comment": "Regular identifiers",
                     "name": "variable.other.liva",
                     "match": "\\b[a-zA-Z_][a-zA-Z0-9_]*\\b"
                 }
@@ -132,28 +235,44 @@
         "operators": {
             "patterns": [
                 {
-                    "name": "keyword.operator.assignment.liva",
-                    "match": "="
+                    "comment": "Arrow function operator",
+                    "name": "keyword.operator.arrow.liva",
+                    "match": "=>"
                 },
                 {
-                    "name": "keyword.operator.arithmetic.liva",
-                    "match": "(\\+|\\-|\\*|/|%)"
+                    "comment": "Type annotation arrow",
+                    "name": "keyword.operator.type.liva",
+                    "match": "->"
                 },
                 {
-                    "name": "keyword.operator.comparison.liva",
-                    "match": "(==|!=|<|>|<=|>=)"
-                },
-                {
-                    "name": "keyword.operator.logical.liva",
-                    "match": "(&&|\\|\\||!)"
-                },
-                {
+                    "comment": "Range operator",
                     "name": "keyword.operator.range.liva",
                     "match": "\\.\\."
                 },
                 {
-                    "name": "keyword.operator.arrow.liva",
-                    "match": "->"
+                    "comment": "Comparison operators",
+                    "name": "keyword.operator.comparison.liva",
+                    "match": "(==|!=|<=|>=|<|>)"
+                },
+                {
+                    "comment": "Logical operators (symbols)",
+                    "name": "keyword.operator.logical.liva",
+                    "match": "(&&|\\|\\||!)"
+                },
+                {
+                    "comment": "Arithmetic operators",
+                    "name": "keyword.operator.arithmetic.liva",
+                    "match": "(\\+|\\-|\\*|/|%)"
+                },
+                {
+                    "comment": "Assignment operators",
+                    "name": "keyword.operator.assignment.liva",
+                    "match": "(=|\\+=|\\-=|\\*=|/=|%=)"
+                },
+                {
+                    "comment": "Bitwise operators",
+                    "name": "keyword.operator.bitwise.liva",
+                    "match": "(&|\\||\\^|<<|>>|~)"
                 }
             ]
         },
