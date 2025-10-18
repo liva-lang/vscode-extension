@@ -1,53 +1,81 @@
 # Liva Language Support
 
-**Version 0.0.7** - Complete programming language support for Liva in Visual Studio Code and Cursor.
+**Version 0.1.0** - Complete IDE experience for Liva in Visual Studio Code and Cursor.
 
-## 🎉 What's New in 0.0.7
+## 🎉 What's New in 0.1.0
 
-### Phase 1: Enhanced Syntax & Snippets - COMPLETE ✅
+### Phase 2: IntelliSense & Code Intelligence - COMPLETE ✅
 
-- **🎨 Enhanced Syntax Highlighting**: Full support for Liva v0.6 features
-  - String template interpolation: `$"text {expression}"`
-  - Concurrency keywords: `async`, `par`, `task`, `fire`, `await`
-  - Enhanced numeric literals: hex (`0xFF`), binary (`0b1010`), scientific notation
-  - Better function and operator highlighting
+**Full IntelliSense support!** Professional-grade code intelligence features:
 
+- **🔮 Intelligent Code Completion** (Ctrl+Space)
+  - 100+ completion items for keywords, types, functions
+  - Context-aware suggestions
+  - Snippet support for complex patterns
+  - Concurrency keywords with examples
+
+- **📖 Hover Information**
+  - Keyword descriptions with usage examples
+  - Type information with value ranges
+  - Function signatures and documentation
+  - Concurrency model explanations
+
+- **✍️ Signature Help** (Ctrl+Shift+Space)
+  - Real-time parameter hints while typing
+  - 30+ built-in function signatures
+  - Active parameter highlighting
+  - Parameter descriptions
+
+- **🎯 Code Navigation**
+  - Go to Definition (F12)
+  - Peek Definition (Alt+F12)
+  - Find All References (Shift+F12)
+  - Go to Symbol in File (Ctrl+Shift+O)
+
+- **📑 Document Outline**
+  - Hierarchical code structure
+  - Outline view in Explorer
+  - Breadcrumbs navigation
+  - Functions, classes, constants
+
+### Phase 1: Enhanced Syntax & Snippets (v0.0.7)
+
+- **🎨 Enhanced Syntax Highlighting**: Full Liva v0.6 support
 - **📝 56 Comprehensive Snippets**: Speed up your coding
-  - Function snippets: `fn`, `fnb`, `fnt`, `fn1`
-  - Concurrency patterns: `async`, `par`, `taska`, `taskp`, `await`, `firea`, `firep`
-  - Error handling: `letf`, `leta`, `letp`, `iferr`, `iff`, `fail`
-  - Full snippet list in [CHANGELOG.md](CHANGELOG.md)
-
-- **⚙️ Enhanced Language Configuration**:
-  - Smart auto-closing pairs with context awareness
-  - Code folding support with region markers
-  - Better indentation for nested structures
-  - Multi-line comment continuation
+- **⚙️ Enhanced Language Configuration**: Smart auto-closing and indentation
 
 ## Features
 
-### ✅ Implemented
+### ✅ Fully Implemented
 
-- **Syntax highlighting** complete for `.liva` files with v0.6 features
-- **56 snippets** for all language constructs (functions, concurrency, error handling, etc.)
-- **String template support** with interpolation highlighting
-- **Compiler integration** with customizable options
-- **Integrated compilation and execution** commands
-- **Automatic compilation** on save (optional)
-- **Real-time error diagnostics** with precise location highlighting
-- **Error tooltips** with detailed information and suggestions
-- **Problems panel integration** with all compilation errors
-- **Code folding** with region markers
-- **Smart auto-closing** and automatic indentation
-- **Comment support** (line and block with continuation)
+**IntelliSense & Code Intelligence (Phase 2):**
+- ✅ **Code completion** with intelligent suggestions
+- ✅ **Hover information** for symbols and keywords
+- ✅ **Signature help** with parameter hints
+- ✅ **Go to definition** and peek definition
+- ✅ **Find all references** across file
+- ✅ **Document symbols** and outline view
 
-### 🚧 Coming Soon (Phase 2+)
+**Syntax & Language Support (Phase 1):**
+- ✅ **Advanced syntax highlighting** with v0.6 features
+- ✅ **56 snippets** for all language constructs
+- ✅ **String template support** with interpolation
+- ✅ **Code folding** with region markers
+- ✅ **Smart auto-closing** and indentation
 
-- **IntelliSense** - Intelligent autocompletion and hover information
+**Compiler Integration:**
+- ✅ **Integrated compilation** and execution
+- ✅ **Automatic compilation** on save
+- ✅ **Real-time error diagnostics**
+- ✅ **Error tooltips** with suggestions
+- ✅ **Problems panel integration**
+
+### 🚧 Coming Soon (Phase 3+)
+
 - **Code actions** - Quick fixes and refactoring
-- **Debugging support** - Breakpoints and step-through debugging
-- **Test integration** - Run and debug tests directly in VS Code
-- **Code formatting** - Automatic Liva code formatting
+- **Debugging support** - Breakpoints and step-through
+- **Test integration** - Run and debug tests
+- **Code formatting** - Automatic formatting
 
 ## Installation
 
