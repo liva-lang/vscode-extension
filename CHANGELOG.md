@@ -2,9 +2,150 @@
 
 ## [Unreleased]
 
+## [0.2.0] - 2025-10-20
+
+### 🎉 Standard Library Snippets - COMPLETE ✅
+
+Added comprehensive IntelliSense snippets for Liva's Phase 2 Standard Library implementation (37 functions).
+
 ### Added
 
-#### Real-time Interface Validation ⚡
+#### Array Method Snippets (9 methods)
+- **`map`**: Transform array elements with mapping function
+- **`filter`**: Filter array elements with predicate
+- **`reduce`**: Reduce array to single value with accumulator
+- **`foreach`**: Iterate over array with side effects
+- **`find`**: Find first matching element
+- **`some`**: Check if any element matches predicate
+- **`every`**: Check if all elements match predicate
+- **`indexof`**: Find index of value in array
+- **`includes`**: Check if array contains value
+- **`chain`**: Multi-step array pipeline (filter → map → reduce)
+
+#### String Method Snippets (11 methods)
+- **`split`**: Split string into array by delimiter
+- **`replace`**: Replace substring with new value
+- **`upper`**: Convert to uppercase
+- **`lower`**: Convert to lowercase
+- **`trim`**: Remove leading/trailing whitespace
+- **`trimstart`**: Remove leading whitespace
+- **`trimend`**: Remove trailing whitespace
+- **`starts`**: Check if string starts with prefix
+- **`ends`**: Check if string ends with suffix
+- **`substr`**: Extract substring by range
+- **`charat`**: Get character at index
+- **`sindexof`**: Find index of substring
+
+#### Math Function Snippets (9 functions)
+- **`sqrt`**: Square root calculation
+- **`pow`**: Power (base^exponent)
+- **`abs`**: Absolute value
+- **`floor`**: Round down to integer
+- **`ceil`**: Round up to integer
+- **`round`**: Round to nearest integer
+- **`min`**: Minimum of two values
+- **`max`**: Maximum of two values
+- **`random`**: Random float [0, 1)
+
+#### Type Conversion Snippets (5 patterns)
+- **`parseint`**: Parse string to integer with error binding
+- **`parsefloat`**: Parse string to float with error binding
+- **`tostring`**: Convert value to string
+- **`parseintp`**: Parse integer with error checking pattern
+- **`parsefloatp`**: Parse float with error checking pattern
+
+#### Console/IO Snippets (9 patterns)
+- **`log`**: console.log() - print to stdout
+- **`logt`**: console.log() with string template
+- **`err`**: console.error() - print to stderr
+- **`errt`**: console.error() with string template
+- **`warn`**: console.warn() - print warning
+- **`warnt`**: console.warn() with string template
+- **`readline`**: Read line from stdin
+- **`prompt`**: Display prompt and read input
+- **`inputpat`**: Interactive input with validation pattern
+
+### Changed
+- **Updated version**: 0.1.0 → 0.2.0
+- **Updated description**: Added "standard library" to extension description
+- **Enhanced keywords**: Added stdlib-related keywords (standard-library, arrays, strings, math, async, parallel)
+
+### Developer Experience Improvements
+
+- **43 new snippets** for standard library functions
+- **IntelliSense support**: All stdlib functions now auto-complete
+- **Code patterns**: Complex patterns like error checking and method chaining
+- **Documentation**: Each snippet includes clear description
+- **Productivity boost**: Quickly access array methods, string operations, math functions, I/O, and conversions
+
+### Statistics
+- **Total snippets**: 103 (60 existing + 43 new)
+- **Array snippets**: 9 methods + 1 chain pattern
+- **String snippets**: 11 methods
+- **Math snippets**: 9 functions
+- **Conversion snippets**: 3 functions + 2 patterns
+- **I/O snippets**: 5 functions + 4 template patterns
+
+### Usage Examples
+
+**Array operations:**
+```liva
+// Type 'map' → Tab
+numbers.map(x => x * 2)
+
+// Type 'chain' → Tab
+numbers
+    .filter(x => x > 0)
+    .map(x => x * 2)
+    .reduce((acc, x) => acc + x, 0)
+```
+
+**String operations:**
+```liva
+// Type 'split' → Tab
+text.split(",")
+
+// Type 'upper' → Tab
+name.toLowerCase()
+```
+
+**Math functions:**
+```liva
+// Type 'sqrt' → Tab
+Math.sqrt(16.0)
+
+// Type 'pow' → Tab
+Math.pow(2.0, 3.0)
+```
+
+**Type conversion with error handling:**
+```liva
+// Type 'parseintp' → Tab
+let num, err = parseInt("42")
+if err == "" {
+    // use num
+} else {
+    console.error($"Parse error: {err}")
+}
+```
+
+**Interactive I/O:**
+```liva
+// Type 'inputpat' → Tab
+let input = prompt("Enter a number: ")
+let num, err = parseInt(input)
+if err == "" {
+    console.log($"You entered: {num}")
+} else {
+    console.error($"Invalid input: {err}")
+}
+```
+
+---
+
+## [0.1.0] - 2025-10-18
+
+
 - **Live validation** of interface implementations as you type
 - **Red underlines** for missing method implementations
 - **Instant feedback** when class doesn't implement all interface methods

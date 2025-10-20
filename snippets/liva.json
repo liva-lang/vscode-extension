@@ -533,5 +533,340 @@
             "let ${9:combined} = ${7:result1} + ${8:result2}"
         ],
         "description": "Parallel computation pattern with task handles"
+    },
+    "Array map": {
+        "prefix": "map",
+        "body": [
+            "${1:array}.map(${2:x} => ${3:x * 2})"
+        ],
+        "description": "Transform array elements"
+    },
+    "Array filter": {
+        "prefix": "filter",
+        "body": [
+            "${1:array}.filter(${2:x} => ${3:x > 0})"
+        ],
+        "description": "Filter array elements"
+    },
+    "Array reduce": {
+        "prefix": "reduce",
+        "body": [
+            "${1:array}.reduce((${2:acc}, ${3:x}) => ${4:acc + x}, ${5:0})"
+        ],
+        "description": "Reduce array to single value"
+    },
+    "Array forEach": {
+        "prefix": "foreach",
+        "body": [
+            "${1:array}.forEach(${2:x} => ${3:print(x)})"
+        ],
+        "description": "Iterate over array with side effects"
+    },
+    "Array find": {
+        "prefix": "find",
+        "body": [
+            "${1:array}.find(${2:x} => ${3:x > 10})"
+        ],
+        "description": "Find first matching element"
+    },
+    "Array some": {
+        "prefix": "some",
+        "body": [
+            "${1:array}.some(${2:x} => ${3:x > 0})"
+        ],
+        "description": "Check if any element matches"
+    },
+    "Array every": {
+        "prefix": "every",
+        "body": [
+            "${1:array}.every(${2:x} => ${3:x > 0})"
+        ],
+        "description": "Check if all elements match"
+    },
+    "Array indexOf": {
+        "prefix": "indexof",
+        "body": [
+            "${1:array}.indexOf(${2:value})"
+        ],
+        "description": "Find index of value in array"
+    },
+    "Array includes": {
+        "prefix": "includes",
+        "body": [
+            "${1:array}.includes(${2:value})"
+        ],
+        "description": "Check if array contains value"
+    },
+    "Array chain": {
+        "prefix": "chain",
+        "body": [
+            "${1:array}",
+            "    .filter(${2:x} => ${3:x > 0})",
+            "    .map(${4:x} => ${5:x * 2})",
+            "    .reduce((${6:acc}, ${7:x}) => ${8:acc + x}, ${9:0})"
+        ],
+        "description": "Chain multiple array operations"
+    },
+    "String split": {
+        "prefix": "split",
+        "body": [
+            "${1:string}.split(\"${2:,}\")"
+        ],
+        "description": "Split string into array"
+    },
+    "String replace": {
+        "prefix": "replace",
+        "body": [
+            "${1:string}.replace(\"${2:old}\", \"${3:new}\")"
+        ],
+        "description": "Replace substring"
+    },
+    "String toUpperCase": {
+        "prefix": "upper",
+        "body": [
+            "${1:string}.toUpperCase()"
+        ],
+        "description": "Convert to uppercase"
+    },
+    "String toLowerCase": {
+        "prefix": "lower",
+        "body": [
+            "${1:string}.toLowerCase()"
+        ],
+        "description": "Convert to lowercase"
+    },
+    "String trim": {
+        "prefix": "trim",
+        "body": [
+            "${1:string}.trim()"
+        ],
+        "description": "Remove leading/trailing whitespace"
+    },
+    "String trimStart": {
+        "prefix": "trimstart",
+        "body": [
+            "${1:string}.trimStart()"
+        ],
+        "description": "Remove leading whitespace"
+    },
+    "String trimEnd": {
+        "prefix": "trimend",
+        "body": [
+            "${1:string}.trimEnd()"
+        ],
+        "description": "Remove trailing whitespace"
+    },
+    "String startsWith": {
+        "prefix": "starts",
+        "body": [
+            "${1:string}.startsWith(\"${2:prefix}\")"
+        ],
+        "description": "Check if string starts with prefix"
+    },
+    "String endsWith": {
+        "prefix": "ends",
+        "body": [
+            "${1:string}.endsWith(\"${2:suffix}\")"
+        ],
+        "description": "Check if string ends with suffix"
+    },
+    "String substring": {
+        "prefix": "substr",
+        "body": [
+            "${1:string}.substring(${2:0}, ${3:5})"
+        ],
+        "description": "Extract substring"
+    },
+    "String charAt": {
+        "prefix": "charat",
+        "body": [
+            "${1:string}.charAt(${2:0})"
+        ],
+        "description": "Get character at index"
+    },
+    "String indexOf": {
+        "prefix": "sindexof",
+        "body": [
+            "${1:string}.indexOf(\"${2:substring}\")"
+        ],
+        "description": "Find index of substring"
+    },
+    "Math sqrt": {
+        "prefix": "sqrt",
+        "body": [
+            "Math.sqrt(${1:16.0})"
+        ],
+        "description": "Square root"
+    },
+    "Math pow": {
+        "prefix": "pow",
+        "body": [
+            "Math.pow(${1:2.0}, ${2:3.0})"
+        ],
+        "description": "Power (base^exp)"
+    },
+    "Math abs": {
+        "prefix": "abs",
+        "body": [
+            "Math.abs(${1:-10.5})"
+        ],
+        "description": "Absolute value"
+    },
+    "Math floor": {
+        "prefix": "floor",
+        "body": [
+            "Math.floor(${1:3.7})"
+        ],
+        "description": "Round down"
+    },
+    "Math ceil": {
+        "prefix": "ceil",
+        "body": [
+            "Math.ceil(${1:3.2})"
+        ],
+        "description": "Round up"
+    },
+    "Math round": {
+        "prefix": "round",
+        "body": [
+            "Math.round(${1:3.5})"
+        ],
+        "description": "Round to nearest"
+    },
+    "Math min": {
+        "prefix": "min",
+        "body": [
+            "Math.min(${1:10.5}, ${2:20.3})"
+        ],
+        "description": "Minimum value"
+    },
+    "Math max": {
+        "prefix": "max",
+        "body": [
+            "Math.max(${1:10.5}, ${2:20.3})"
+        ],
+        "description": "Maximum value"
+    },
+    "Math random": {
+        "prefix": "random",
+        "body": [
+            "Math.random()"
+        ],
+        "description": "Random number [0, 1)"
+    },
+    "parseInt": {
+        "prefix": "parseint",
+        "body": [
+            "let ${1:num}, ${2:err} = parseInt(\"${3:42}\")"
+        ],
+        "description": "Parse string to integer with error binding"
+    },
+    "parseFloat": {
+        "prefix": "parsefloat",
+        "body": [
+            "let ${1:value}, ${2:err} = parseFloat(\"${3:3.14}\")"
+        ],
+        "description": "Parse string to float with error binding"
+    },
+    "toString": {
+        "prefix": "tostring",
+        "body": [
+            "toString(${1:42})"
+        ],
+        "description": "Convert value to string"
+    },
+    "parseInt with check": {
+        "prefix": "parseintp",
+        "body": [
+            "let ${1:num}, ${2:err} = parseInt(\"${3:42}\")",
+            "if ${2:err} == \"\" {",
+            "    ${4:// use num}",
+            "} else {",
+            "    ${5:console.error(\\$\"Parse error: {${2:err}}\")}",
+            "}"
+        ],
+        "description": "Parse integer with error checking"
+    },
+    "parseFloat with check": {
+        "prefix": "parsefloatp",
+        "body": [
+            "let ${1:value}, ${2:err} = parseFloat(\"${3:3.14}\")",
+            "if ${2:err} == \"\" {",
+            "    ${4:// use value}",
+            "} else {",
+            "    ${5:console.error(\\$\"Parse error: {${2:err}}\")}",
+            "}"
+        ],
+        "description": "Parse float with error checking"
+    },
+    "console.log": {
+        "prefix": "log",
+        "body": [
+            "console.log(${1:expression})"
+        ],
+        "description": "Print to stdout"
+    },
+    "console.log template": {
+        "prefix": "logt",
+        "body": [
+            "console.log(\\$\"${1:text}: {${2:variable}}\")"
+        ],
+        "description": "Print string template to stdout"
+    },
+    "console.error": {
+        "prefix": "err",
+        "body": [
+            "console.error(${1:expression})"
+        ],
+        "description": "Print error to stderr"
+    },
+    "console.error template": {
+        "prefix": "errt",
+        "body": [
+            "console.error(\\$\"${1:Error}: {${2:message}}\")"
+        ],
+        "description": "Print error template to stderr"
+    },
+    "console.warn": {
+        "prefix": "warn",
+        "body": [
+            "console.warn(${1:expression})"
+        ],
+        "description": "Print warning to stderr"
+    },
+    "console.warn template": {
+        "prefix": "warnt",
+        "body": [
+            "console.warn(\\$\"${1:text}: {${2:variable}}\")"
+        ],
+        "description": "Print warning template"
+    },
+    "readLine": {
+        "prefix": "readline",
+        "body": [
+            "let ${1:input} = readLine()"
+        ],
+        "description": "Read line from stdin"
+    },
+    "prompt": {
+        "prefix": "prompt",
+        "body": [
+            "let ${1:input} = prompt(\"${2:Enter value}: \")"
+        ],
+        "description": "Display prompt and read input"
+    },
+    "Interactive input pattern": {
+        "prefix": "inputpat",
+        "body": [
+            "let ${1:input} = prompt(\"${2:Enter a number}: \")",
+            "let ${3:num}, ${4:err} = parseInt(${1:input})",
+            "if ${4:err} == \"\" {",
+            "    console.log(\\$\"You entered: {${3:num}}\")",
+            "} else {",
+            "    console.error(\\$\"Invalid input: {${4:err}}\")",
+            "}"
+        ],
+        "description": "Interactive input with validation pattern"
     }
 }
+
