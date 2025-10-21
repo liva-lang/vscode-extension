@@ -280,6 +280,7 @@ export class LiveCompletionProvider implements vscode.CompletionItemProvider {
      */
     private getBuiltInFunctions(linePrefix: string): vscode.CompletionItem[] {
         const functions = [
+            // Basic I/O
             { 
                 label: 'print', 
                 detail: 'print(value)', 
@@ -292,6 +293,60 @@ export class LiveCompletionProvider implements vscode.CompletionItemProvider {
                 doc: 'Print value with newline',
                 snippet: 'println(${1:value})'
             },
+            
+            // Console functions
+            { 
+                label: 'console.log', 
+                detail: 'console.log(...values)', 
+                doc: '**Print debug information**\n\nPrints values to stdout for debugging.\n\nExample:\n```liva\nconsole.log("Debug:", value)\n```',
+                snippet: 'console.log(${1:message})'
+            },
+            { 
+                label: 'console.success', 
+                detail: 'console.success(...values)', 
+                doc: '**Print success message in green**\n\nDisplays confirmation or success messages.\n\nExample:\n```liva\nconsole.success("✓ User created!")\n```',
+                snippet: 'console.success(${1:message})'
+            },
+            { 
+                label: 'console.warn', 
+                detail: 'console.warn(...values)', 
+                doc: '**Print warning in yellow**\n\nDisplays warning messages to stderr.\n\nExample:\n```liva\nconsole.warn("Memory usage high:", usage, "%")\n```',
+                snippet: 'console.warn(${1:message})'
+            },
+            { 
+                label: 'console.error', 
+                detail: 'console.error(...values)', 
+                doc: '**Print error in red**\n\nDisplays error messages to stderr.\n\nExample:\n```liva\nconsole.error("Error:", errorMsg)\n```',
+                snippet: 'console.error(${1:message})'
+            },
+            { 
+                label: 'console.input', 
+                detail: 'console.input(prompt?)', 
+                doc: '**Read user input from stdin**\n\nReads a line of text from terminal. Optional prompt message.\n\nExamples:\n```liva\nlet name = console.input("Your name: ")\nlet value = console.input()  // No prompt\n```',
+                snippet: 'console.input(${1:"${2:prompt}: "})'
+            },
+            
+            // Type conversion functions
+            { 
+                label: 'parseInt', 
+                detail: 'parseInt(string)', 
+                doc: '**Parse string to integer**\n\nReturns (value, error) tuple.\n\nExample:\n```liva\nlet num, err = parseInt("42")\n```',
+                snippet: 'parseInt(${1:string})'
+            },
+            { 
+                label: 'parseFloat', 
+                detail: 'parseFloat(string)', 
+                doc: '**Parse string to float**\n\nReturns (value, error) tuple.\n\nExample:\n```liva\nlet num, err = parseFloat("3.14")\n```',
+                snippet: 'parseFloat(${1:string})'
+            },
+            { 
+                label: 'toString', 
+                detail: 'toString(value)', 
+                doc: '**Convert value to string**\n\nConverts any value to string representation.\n\nExample:\n```liva\nlet str = toString(42)\n```',
+                snippet: 'toString(${1:value})'
+            },
+            
+            // Array functions
             { 
                 label: 'length', 
                 detail: 'length(collection)', 

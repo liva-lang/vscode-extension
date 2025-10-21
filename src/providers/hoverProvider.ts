@@ -207,6 +207,54 @@ export class LivaHoverProvider implements vscode.HoverProvider {
                 returns: 'void',
                 example: 'println("Hello, world!")\nprintln($"User: {username}")'
             },
+            'console.log': {
+                signature: 'console.log(...values: any[])',
+                description: 'Prints debug information to stdout. Values are displayed with proper spacing.',
+                returns: 'void',
+                example: 'console.log("Debug:", value)\nconsole.log("User:", name, "Age:", age)'
+            },
+            'console.success': {
+                signature: 'console.success(...values: any[])',
+                description: 'Prints success message in **green color** to stdout. Perfect for confirmations.',
+                returns: 'void',
+                example: 'console.success("✓ User created!")\nconsole.success("Task completed:", taskName)'
+            },
+            'console.warn': {
+                signature: 'console.warn(...values: any[])',
+                description: 'Prints warning message in **yellow/amber color** to stderr.',
+                returns: 'void',
+                example: 'console.warn("Memory usage high:", usage, "%")\nconsole.warn("Deprecated function used")'
+            },
+            'console.error': {
+                signature: 'console.error(...values: any[])',
+                description: 'Prints error message in **red color** to stderr.',
+                returns: 'void',
+                example: 'console.error("Error:", errorMsg)\nconsole.error("Failed to connect:", url)'
+            },
+            'console.input': {
+                signature: 'console.input(prompt?: string): string',
+                description: 'Reads a line of text from stdin. Optional prompt message (like Python\'s input()).',
+                returns: 'string',
+                example: 'let name = console.input("Your name: ")\nlet age = console.input()  // No prompt'
+            },
+            'parseInt': {
+                signature: 'parseInt(str: string): (number, string)',
+                description: 'Parses a string to an integer. Returns (value, error) tuple.',
+                returns: '(number, string)',
+                example: 'let num, err = parseInt("42")\nif err == "" {\n    print(num)\n}'
+            },
+            'parseFloat': {
+                signature: 'parseFloat(str: string): (number, string)',
+                description: 'Parses a string to a float. Returns (value, error) tuple.',
+                returns: '(number, string)',
+                example: 'let num, err = parseFloat("3.14")\nif err == "" {\n    print(num)\n}'
+            },
+            'toString': {
+                signature: 'toString(value: any): string',
+                description: 'Converts any value to its string representation.',
+                returns: 'string',
+                example: 'let str = toString(42)  // "42"\nlet str2 = toString(true)  // "true"'
+            },
             'length': {
                 signature: 'length(collection: array | string): number',
                 description: 'Returns the length of a collection or string.',

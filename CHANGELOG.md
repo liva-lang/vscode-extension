@@ -2,6 +2,34 @@
 
 ## [Unreleased]
 
+## [0.3.1] - 2025-10-21
+
+### Added
+
+#### Console API Enhancements
+- **console.input()** - Read user input with optional prompt (IntelliSense support)
+- **console.success()** - Display success messages in green
+- **console.error()** - Display errors in red (updated hover docs)
+- **console.warn()** - Display warnings in yellow (updated hover docs)
+- **console.log()** - Debug output (updated hover docs)
+
+#### IntelliSense Improvements
+- Added autocomplete for all console functions with documentation
+- Added hover information for console methods with examples
+- Added syntax highlighting for `console` namespace
+- Added snippets for common console usage patterns
+- Updated built-in function completions with parseInt, parseFloat, toString
+
+#### Syntax Highlighting
+- Console namespace now highlighted as special class
+- Console methods highlighted as support functions
+- Built-in functions (print, parseInt, etc.) now properly highlighted
+
+### Changed
+- Extension version bumped to 0.3.1
+- Improved documentation for all console functions with color indicators
+- Updated completion provider with comprehensive console API
+
 ## [0.3.0] - 2025-10-21
 
 ### 🎉 Module System Support - Liva v0.8.0 ✅

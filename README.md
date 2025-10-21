@@ -1,10 +1,32 @@
 # Liva Language Support
 
-**Version 0.3.0** - Complete IDE experience for Liva in Visual Studio Code and Cursor.
+**Version 0.3.1** - Complete IDE experience for Liva in Visual Studio Code and Cursor.
 
-## 🎉 What's New in 0.3.0
+## 🎉 What's New in 0.3.1
 
-### Module System Support - Liva v0.8.0 ✅
+### Console API Support ✅
+
+**Complete IntelliSense for Liva's Console API!**
+
+- **🎨 Colored Output Functions**
+  - `console.log()` - Debug information
+  - `console.success()` - **Green** success messages
+  - `console.warn()` - **Yellow** warnings
+  - `console.error()` - **Red** errors
+
+- **⌨️ User Input**
+  - `console.input("prompt")` - Read with prompt
+  - `console.input()` - Read without prompt
+
+- **🔮 IntelliSense Features**
+  - Autocomplete for all console methods
+  - Hover documentation with examples
+  - Syntax highlighting for console namespace
+  - Built-in function support (parseInt, parseFloat, toString)
+
+## Previous Updates
+
+### 0.3.0 - Module System Support - Liva v0.8.0 ✅
 
 **Full support for Liva's new module system!**
 
