@@ -90,3 +90,6 @@ public
 tmp/
 temp/
 
+# Liva build outputs
+**/.liva_build/
+**/liva_build/

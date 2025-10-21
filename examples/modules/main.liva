@@ -1,0 +1,37 @@
+// main.liva - Main program using math module
+// Example demonstrating Liva v0.8.0 module imports
+
+// Import specific functions from math module
+import { add, subtract, multiply, divide, power, factorial } from "./math.liva"
+
+main() {
+    print("=== Liva Module System Demo ===")
+    print("")
+    
+    // Basic operations
+    print("--- Basic Operations ---")
+    let sum = add(10, 5)
+    print($"10 + 5 = {sum}")
+    
+    let diff = subtract(10, 5)
+    print($"10 - 5 = {diff}")
+    
+    let product = multiply(10, 5)
+    print($"10 * 5 = {product}")
+    
+    let quotient = divide(10, 5)
+    print($"10 / 5 = {quotient}")
+    
+    print("")
+    
+    // Advanced operations
+    print("--- Advanced Operations ---")
+    let result = power(2, 8)
+    print($"2^8 = {result}")
+    
+    let fact = factorial(5)
+    print($"5! = {fact}")
+    
+    print("")
+    print("Module system working perfectly! ✅")
+}

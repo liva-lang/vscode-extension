@@ -8,6 +8,9 @@
             "include": "#comments"
         },
         {
+            "include": "#import-statement"
+        },
+        {
             "include": "#strings"
         },
         {
@@ -33,6 +36,51 @@
         }
     ],
     "repository": {
+        "import-statement": {
+            "patterns": [
+                {
+                    "comment": "Import statement with from clause",
+                    "match": "\\b(import)\\s+\\{([^}]+)\\}\\s+(from)\\s+(\"[^\"]+\")",
+                    "captures": {
+                        "1": {
+                            "name": "keyword.other.liva"
+                        },
+                        "2": {
+                            "patterns": [
+                                {
+                                    "match": "\\b\\w+\\b",
+                                    "name": "entity.name.function.liva"
+                                }
+                            ]
+                        },
+                        "3": {
+                            "name": "keyword.other.liva"
+                        },
+                        "4": {
+                            "name": "string.quoted.double.liva"
+                        }
+                    }
+                },
+                {
+                    "comment": "Wildcard import",
+                    "match": "\\b(import)\\s+(\\*)\\s+(from)\\s+(\"[^\"]+\")",
+                    "captures": {
+                        "1": {
+                            "name": "keyword.other.liva"
+                        },
+                        "2": {
+                            "name": "constant.language.liva"
+                        },
+                        "3": {
+                            "name": "keyword.other.liva"
+                        },
+                        "4": {
+                            "name": "string.quoted.double.liva"
+                        }
+                    }
+                }
+            ]
+        },
         "class-interface-declaration": {
             "patterns": [
                 {
@@ -192,7 +240,7 @@
                 {
                     "comment": "Module and import keywords",
                     "name": "keyword.other.liva",
-                    "match": "\\b(import|use|rust|type|test|as|move)\\b"
+                    "match": "\\b(import|from|use|rust|type|test|as|move)\\b"
                 },
                 {
                     "comment": "Execution mode keywords",

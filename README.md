@@ -1,10 +1,35 @@
 # Liva Language Support
 
-**Version 0.1.0** - Complete IDE experience for Liva in Visual Studio Code and Cursor.
+**Version 0.3.0** - Complete IDE experience for Liva in Visual Studio Code and Cursor.
 
-## 🎉 What's New in 0.1.0
+## 🎉 What's New in 0.3.0
 
-### Phase 2: IntelliSense & Code Intelligence - COMPLETE ✅
+### Module System Support - Liva v0.8.0 ✅
+
+**Full support for Liva's new module system!**
+
+- **📦 Multi-File Projects**
+  - Import functions and types from other Liva files
+  - Automatic module resolution
+  - Clean project organization
+
+- **🔗 Import Statements**
+  - `import { add, subtract } from "./math.liva"`
+  - Syntax highlighting for imports
+  - Code snippets for common patterns
+
+- **🚀 Smart Compilation**
+  - Automatic detection of multi-file projects
+  - Uses `.liva_build/` for local builds
+  - Maintains build cache between runs
+  - `--run` flag now works with multi-file projects
+
+- **📂 Project Structure**
+  - Support for organized codebases
+  - Cross-file navigation (coming soon)
+  - Module dependency tracking (coming soon)
+
+### Phase 2: IntelliSense & Code Intelligence ✅
 
 **Full IntelliSense support!** Professional-grade code intelligence features:
 
@@ -77,6 +102,64 @@
 - **Debugging support** - Breakpoints and step-through
 - **Test integration** - Run and debug tests
 - **Code formatting** - Automatic formatting
+
+## Module System (v0.8.0)
+
+Organize your code across multiple files with Liva's module system:
+
+### Creating a Multi-File Project
+
+**math.liva** (utility module):
+```liva
+// Export functions by defining them
+add(a: int, b: int): int => a + b
+multiply(a: int, b: int): int => a * b
+```
+
+**main.liva** (entry point):
+```liva
+// Import specific functions
+import { add, multiply } from "./math.liva"
+
+main() {
+    result = add(5, multiply(3, 4))
+    print($"Result: {result}")  // Output: Result: 17
+}
+```
+
+### Import Syntax
+
+```liva
+// Import specific items
+import { function1, function2 } from "./module.liva"
+
+// Import all items
+import * from "./module.liva"
+
+// Relative paths
+import { helper } from "./utils/helper.liva"
+import { Config } from "../config.liva"
+```
+
+### Compilation
+
+The extension automatically detects multi-file projects:
+
+- **Single file**: Uses default output directory
+- **With imports**: Uses `.liva_build/` for fast incremental builds
+- **Build cache**: Maintains compiled artifacts between runs
+
+### Project Organization
+
+```
+my-project/
+├── main.liva           # Entry point
+├── math.liva           # Math utilities
+├── utils/
+│   ├── helper.liva     # Helper functions
+│   └── types.liva      # Type definitions
+└── .liva_build/        # Build cache (auto-generated)
+```
 
 ## Installation
 

@@ -2,6 +2,40 @@
 
 ## [Unreleased]
 
+## [0.3.0] - 2025-10-21
+
+### 🎉 Module System Support - Liva v0.8.0 ✅
+
+Full support for Liva's new module system enabling multi-file projects.
+
+### Added
+
+#### Module System Features
+- **Multi-file project support**: Import functions and types from other `.liva` files
+- **Updated import snippets**: New syntax `import { item } from "./module.liva"`
+  - `import` - Single item import
+  - `importm` - Multiple items import
+  - `importw` - Wildcard import (all items)
+- **Smart compilation**: Automatic detection of multi-file projects
+- **Build optimization**: Uses `.liva_build/` directory for local builds with caching
+
+#### Compiler Integration Improvements
+- **Enhanced --run flag**: Now works seamlessly with multi-file projects
+- **Intelligent output directory selection**:
+  - `--run` with imports → `.liva_build/` (local cache)
+  - `--output <path>` → User-specified location
+  - Default → `./target/liva_build`
+
+### Changed
+- Updated package description to include module system
+- Added "modules" and "imports" to extension keywords
+- Improved import statement snippets with v0.8.0 syntax
+
+### Documentation
+- Updated README with Module System features
+- Added examples of multi-file project organization
+- Documented new import syntax and patterns
+
 ## [0.2.0] - 2025-10-20
 
 ### 🎉 Standard Library Snippets - COMPLETE ✅

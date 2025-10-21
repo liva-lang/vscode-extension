@@ -212,9 +212,23 @@
     "Import statement": {
         "prefix": "import",
         "body": [
-            "import \"${1:module_path}\""
+            "import { ${1:function_name} } from \"${2:./module.liva}\""
         ],
-        "description": "Create an import statement"
+        "description": "Import functions from a module"
+    },
+    "Import multiple items": {
+        "prefix": "importm",
+        "body": [
+            "import { ${1:item1}, ${2:item2}, ${3:item3} } from \"${4:./module.liva}\""
+        ],
+        "description": "Import multiple items from a module"
+    },
+    "Import wildcard": {
+        "prefix": "importw",
+        "body": [
+            "import * from \"${1:./module.liva}\""
+        ],
+        "description": "Import all items from a module"
     },
     "Use statement": {
         "prefix": "use",

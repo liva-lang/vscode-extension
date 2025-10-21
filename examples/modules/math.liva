@@ -1,0 +1,45 @@
+// math.liva - Mathematical utility functions
+// Example module demonstrating Liva v0.8.0 module system
+
+// Basic arithmetic operations
+add(a: int, b: int): int => a + b
+
+subtract(a: int, b: int): int => a - b
+
+multiply(a: int, b: int): int => a * b
+
+divide(a: int, b: int): int => a / b
+
+// Advanced operations
+power(base: int, exp: int): int {
+    if exp == 0 {
+        return 1
+    }
+    let result = base
+    let i = 1
+    while i < exp {
+        result = result * base
+        i = i + 1
+    }
+    return result
+}
+
+factorial(n: int): int {
+    if n <= 1 {
+        return 1
+    }
+    return n * factorial(n - 1)
+}
+
+// Utility functions
+isEven(n: int): bool => n % 2 == 0
+
+isOdd(n: int): bool => n % 2 != 0
+
+abs(n: int): int {
+    if n < 0 {
+        return -n
+    } else {
+        return n
+    }
+}
