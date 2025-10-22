@@ -2,6 +2,85 @@
 
 ## [Unreleased]
 
+## [0.3.2] - 2025-10-22
+
+### Added
+
+#### Real-Time Fallible Function Validation ✅
+- **Instant error detection**: Red squiggly lines appear immediately when fallible functions are called without error binding
+- **Fast validation**: Works independently of compiler for instant feedback (300ms debounce)
+- **Comprehensive detection**: Validates calls in all contexts:
+  - String templates: `console.log($"Result: {divide(10, 2)}")`
+  - Variable assignments: `let x = divide(10, 2)`
+  - Standalone calls: `divide(10, 2)`
+- **Smart function analysis**: Automatically detects which functions are fallible (contain `fail` statements)
+- **Error binding recognition**: Correctly identifies when error binding is used: `let result, err = divide(10, 2)`
+- **Clear error messages**: Shows E0701 error with:
+  - Explanation of why it's an error
+  - The function name that's problematic
+  - Helpful fix suggestion: "Change to: let result, err = functionName(...)"
+
+#### Technical Implementation
+- New `FallibleFunctionValidator` provider
+- AST-like parsing of Liva code in TypeScript
+- Tracks function definitions and their fallibility
+- Validates all call sites in real-time
+- Separate diagnostic collection for fallible errors
+
+### Changed
+- Version bumped to 0.3.2
+- Enhanced developer experience with proactive error prevention
+
+### Example
+
+**Before (no validation):**
+```liva
+divide(a, b) {
+    if b == 0.0 {
+        fail "Division by zero"
+    }
+    return a / b
+}
+
+main() {
+    console.log($"Result: {divide(10.0, 2.0)}")  // Would print "Ok(5.0)" - BAD!
+}
+```
+
+**Now (with validation):**
+```liva
+divide(a, b) {
+    if b == 0.0 {
+        fail "Division by zero"
+    }
+    return a / b
+}
+
+main() {
+    console.log($"Result: {divide(10.0, 2.0)}")  // ❌ RED SQUIGGLY LINE
+    // Error: E0701 - Function 'divide' can fail but is not being called with error binding
+    // 💡 Change to: let result, err = divide(...)
+}
+```
+
+**Correct usage:**
+```liva
+main() {
+    let result, err = divide(10.0, 2.0)  // ✅ NO ERROR
+    if err != null {
+        console.error($"Error: {err}")
+    } else {
+        console.log($"Result: {result}")
+    }
+}
+```
+
+### Benefits
+- **Catch errors while typing**: No need to compile to see this type of error
+- **Learn correct patterns**: Immediate feedback teaches proper error handling
+- **Prevent runtime issues**: Stops Result type leakage before it happens
+- **Matches compiler**: Same validation as livac compiler (commit e18cadb)
+
 ## [0.3.1] - 2025-10-21
 
 ### Added

@@ -1,0 +1,27 @@
+// Test: Real-time validation of fallible functions in VS Code
+
+divide(a, b) {
+    if b == 0.0 {
+        fail "Division by zero"
+    }
+    return a / b
+}
+
+main() {
+    // ERROR: This should show red squiggly line
+    console.log($"Result: {divide(10.0, 2.0)}")
+    
+    // ERROR: This should also show red squiggly line
+    let x = divide(20.0, 4.0)
+    
+    // ERROR: Standalone call
+    divide(30.0, 5.0)
+    
+    // OK: This should NOT show error (using error binding)
+    let result, err = divide(40.0, 8.0)
+    if err != null {
+        console.error($"Error: {err}")
+    } else {
+        console.log($"OK: {result}")
+    }
+}
