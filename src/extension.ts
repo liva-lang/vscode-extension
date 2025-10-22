@@ -8,6 +8,7 @@ import { LivaSignatureHelpProvider } from './providers/signatureHelpProvider';
 import { LivaDefinitionProvider, LivaReferenceProvider } from './providers/definitionProvider';
 import { LivaDocumentSymbolProvider } from './providers/symbolProvider';
 import { InterfaceValidationProvider } from './providers/interfaceValidator';
+import { FallibleFunctionValidator } from './providers/fallibleValidator';
 
 const execAsync = promisify(exec);
 
@@ -137,6 +138,10 @@ export function activate(context: vscode.ExtensionContext) {
     // Register interface validator for real-time validation
     const interfaceValidator = new InterfaceValidationProvider();
     interfaceValidator.activate(context);
+
+    // Register fallible function validator for real-time validation
+    const fallibleValidator = new FallibleFunctionValidator();
+    fallibleValidator.activate(context);
 
     context.subscriptions.push(
         compileCommand, 
