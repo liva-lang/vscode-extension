@@ -2,6 +2,130 @@
 
 ## [Unreleased]
 
+## [0.4.0] - 2025-01-XX
+
+### 🎉 Phase 5 Integration: Enhanced Error Messages & Quick Fixes ✅
+
+Full integration of Liva compiler v0.8.1 Phase 5 enhancements into VS Code extension, providing intelligent error diagnostics and interactive quick fixes.
+
+### Added
+
+#### Phase 5.1: "Did You Mean?" Quick Fixes
+- **Interactive code actions**: Click on red squigglies to see suggestions
+- **One-click fixes**: Automatically replace typos with correct names
+- **Smart suggestions**: Levenshtein distance algorithm (max 2 edits)
+- **Preferred action**: Marked as default quick fix (⌘+. / Ctrl+.)
+- **Pattern matching**: Detects "Did you mean 'xxx'?" in error messages
+
+#### Phase 5.2: Precise Error Highlighting
+- **Exact token underlining**: Uses token `length` field for accurate ranges
+- **No more approximate +3 characters**: Highlights exactly the problematic token
+- **Context support**: Parses `context_before` and `context_after` fields
+- **Better visual feedback**: More precise error location in editor
+
+#### Phase 5.3: Error Categories in Diagnostics
+- **Categorized errors**: Shows `[Lexical]`, `[Syntax]`, `[Semantic]`, etc.
+- **Clear message format**: `[Category] E0xxx: Error title`
+- **8 error categories**:
+  - Lexical (E0xxx): Invalid tokens
+  - Syntax (E1xxx): Grammar violations
+  - Semantic (E2xxx): Type errors, undefined symbols
+  - Control Flow (E3xxx): Return/break issues
+  - Error Handling (E4xxx): Fallible patterns
+  - Concurrency (E5xxx): Async/par errors
+  - Standard Library (E6xxx): Stdlib issues
+  - I/O (E7xxx): File/console errors
+
+#### Phase 5.4: Intelligent Hints & Documentation
+- **Contextual hints**: Automatic helpful hints for common errors
+- **Code examples**: Shows correct usage patterns in related information
+- **Documentation links**: Clickable links to error documentation
+  - Appears in diagnostic message with 📚 icon
+  - Also available on hover over error
+- **Enhanced hover provider**: Shows error details with markdown formatting
+  - Error code and description
+  - Clickable documentation links
+  - Rich markdown content
+
+#### New TypeScript Interfaces
+- Extended `LivaErrorJson` interface with Phase 5 fields:
+  - `length?: number` - Token length for precise highlighting
+  - `context_before?: string[]` - Lines before error
+  - `context_after?: string[]` - Lines after error
+  - `suggestion?: string` - "Did you mean?" suggestions
+  - `hint?: string` - Intelligent hints
+  - `example?: string` - Code examples
+  - `doc_link?: string` - Documentation URLs
+  - `category?: string` - Error category name
+
+#### New Providers
+- **`LivaCodeActionProvider`**: Quick fix provider for typo suggestions
+- **`LivaErrorHoverProvider`**: Enhanced hover with documentation links
+
+### Changed
+- **Enhanced `createDiagnosticFromJson()`**:
+  - Uses `length` field instead of hardcoded +3 characters
+  - Displays error category in message
+  - Adds suggestions, hints, and doc links to message
+  - Creates related information for code examples
+- **Version bumped**: 0.3.2 → 0.4.0
+- **Backward compatible**: Still supports legacy error format
+
+### Technical Implementation
+- `LivaCodeActionProvider` class with regex-based suggestion extraction
+- `LivaErrorHoverProvider` class with markdown link support
+- Pattern matching for multiple suggestion formats
+- Registered both providers in extension activation
+- All providers properly disposed in subscriptions
+
+### Example Workflow
+
+**1. Typo in function name:**
+```liva
+console.log(divid(10, 2))  // Typo: 'divid' instead of 'divide'
+```
+
+**VS Code shows:**
+- Red squiggly under `divid`
+- Error: `[Semantic] E2001: Undefined function 'divid'`
+- 💡 Suggestion: `Did you mean 'divide'?`
+- **Quick Fix available**: ⌘+. shows "Change to 'divide'"
+- **One click** → Fixed!
+
+**2. Error with documentation:**
+```liva
+let x = fallibleFunc()  // Missing error binding
+```
+
+**VS Code shows:**
+- Red squiggly under function call
+- Error: `[Error Handling] E0701: Fallible function must be called with error binding`
+- 💡 Hint: `Change to: let result, err = fallibleFunc(...)`
+- 📚 **Hover shows clickable link** to error documentation
+- **Example in related information**: Shows correct usage pattern
+
+**3. Precise highlighting:**
+```liva
+let x = 42unknownSuffix  // Invalid suffix
+```
+
+**Before (v0.3.2):** Underlines `42u` (first 3 chars)
+**Now (v0.4.0):** Underlines exactly `unknownSuffix` (using length field)
+
+### Benefits
+
+- **Faster error fixing**: One-click quick fixes for typos
+- **Learn as you code**: See correct patterns immediately
+- **Better error understanding**: Categories, hints, examples, docs
+- **Precise visual feedback**: Exact token highlighting
+- **Professional IDE experience**: Matches TypeScript/Rust tooling quality
+
+### Compatibility
+
+- **Requires**: Liva compiler v0.8.1 or later (with Phase 5 error format)
+- **Backward compatible**: Works with older compilers (legacy format)
+- **VS Code version**: 1.80.0 or later
+
 ## [0.3.2] - 2025-10-22
 
 ### Added

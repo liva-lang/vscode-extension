@@ -1,10 +1,46 @@
 # Liva Language Support
 
-**Version 0.3.1** - Complete IDE experience for Liva in Visual Studio Code and Cursor.
+**Version 0.4.0** - Complete IDE experience for Liva in Visual Studio Code and Cursor.
 
-## 🎉 What's New in 0.3.1
+## 🎉 What's New in 0.4.0
 
-### Console API Support ✅
+### Phase 5 Integration: Enhanced Error Messages & Quick Fixes ✅
+
+**Intelligent error diagnostics with interactive quick fixes!** Integration of Liva compiler v0.8.1 Phase 5 enhancements.
+
+- **⚡ One-Click Quick Fixes**
+  - Click on red squigglies to see "Did you mean?" suggestions
+  - Press ⌘+. (Ctrl+.) for instant typo fixes
+  - Automatically replaces incorrect names with correct ones
+  - Smart Levenshtein distance algorithm (max 2 character edits)
+
+- **🎯 Precise Error Highlighting**
+  - Exact token underlining using compiler's length field
+  - No more approximate +3 characters
+  - Highlights exactly the problematic token
+
+- **📂 Error Categories**
+  - Categorized errors: `[Lexical]`, `[Syntax]`, `[Semantic]`, etc.
+  - 8 error categories for easy identification
+  - Clear message format: `[Category] E0xxx: Error title`
+
+- **💡 Intelligent Hints & Help**
+  - Contextual hints for common errors
+  - Code examples in related information panel
+  - Clickable documentation links (📚 icon)
+  - Enhanced hover with markdown formatting
+
+**Example:**
+```liva
+console.log(divid(10, 2))  // Typo: 'divid'
+// ❌ [Semantic] E2001: Undefined function 'divid'
+// 💡 Did you mean 'divide'?
+// ⚡ Quick Fix: Click lightbulb → "Change to 'divide'" → Fixed!
+```
+
+## Previous Updates
+
+### 0.3.1 - Console API Support ✅
 
 **Complete IntelliSense for Liva's Console API!**
 
