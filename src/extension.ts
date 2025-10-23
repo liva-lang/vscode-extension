@@ -15,6 +15,134 @@ const execAsync = promisify(exec);
 // Diagnostic collection for Liva errors
 const livaDiagnostics = vscode.languages.createDiagnosticCollection('liva');
 
+/**
+ * Phase 5.1: Code Action Provider for "Did you mean?" suggestions
+ * Provides quick fixes for typos and common errors
+ */
+class LivaCodeActionProvider implements vscode.CodeActionProvider {
+    public provideCodeActions(
+        document: vscode.TextDocument,
+        range: vscode.Range | vscode.Selection,
+        context: vscode.CodeActionContext,
+        token: vscode.CancellationToken
+    ): vscode.CodeAction[] | undefined {
+        const codeActions: vscode.CodeAction[] = [];
+
+        // Look for diagnostics with "Did you mean?" suggestions
+        for (const diagnostic of context.diagnostics) {
+            if (diagnostic.source === 'Liva Compiler') {
+                const suggestion = this.extractSuggestion(diagnostic.message);
+                if (suggestion) {
+                    const action = new vscode.CodeAction(
+                        `Change to '${suggestion}'`,
+                        vscode.CodeActionKind.QuickFix
+                    );
+
+                    // Create a text edit to replace the error token with the suggestion
+                    action.edit = new vscode.WorkspaceEdit();
+                    action.edit.replace(document.uri, diagnostic.range, suggestion);
+                    action.diagnostics = [diagnostic];
+                    action.isPreferred = true; // Make it the default action
+
+                    codeActions.push(action);
+                }
+            }
+        }
+
+        return codeActions;
+    }
+
+    /**
+     * Extract suggestion from "Did you mean 'xxx'?" or similar patterns
+     */
+    private extractSuggestion(message: string): string | null {
+        // Pattern 1: "Did you mean 'xxx'?"
+        let match = message.match(/Did you mean '([^']+)'\?/);
+        if (match) {
+            return match[1];
+        }
+
+        // Pattern 2: "Perhaps you meant 'xxx'"
+        match = message.match(/Perhaps you meant '([^']+)'/);
+        if (match) {
+            return match[1];
+        }
+
+        // Pattern 3: Extract from suggestion field (already in message with 💡)
+        match = message.match(/💡.*'([^']+)'/);
+        if (match) {
+            return match[1];
+        }
+
+        return null;
+    }
+}
+
+/**
+ * Phase 5.4: Enhanced Hover Provider for documentation links
+ * Shows error details with clickable links when hovering over errors
+ */
+class LivaErrorHoverProvider implements vscode.HoverProvider {
+    public provideHover(
+        document: vscode.TextDocument,
+        position: vscode.Position,
+        token: vscode.CancellationToken
+    ): vscode.Hover | undefined {
+        // Get diagnostics for the current position
+        const diagnostics = livaDiagnostics.get(document.uri);
+        if (!diagnostics) {
+            return undefined;
+        }
+
+        // Find diagnostics that overlap with the hover position
+        const relevantDiagnostics = diagnostics.filter(d => d.range.contains(position));
+        if (relevantDiagnostics.length === 0) {
+            return undefined;
+        }
+
+        const contents: vscode.MarkdownString[] = [];
+
+        for (const diagnostic of relevantDiagnostics) {
+            const markdown = new vscode.MarkdownString();
+            markdown.isTrusted = true; // Allow command URIs
+            markdown.supportHtml = true;
+
+            // Add error code and message
+            markdown.appendMarkdown(`**${diagnostic.code}**\n\n`);
+            markdown.appendMarkdown(`${diagnostic.message}\n\n`);
+
+            // Extract and add documentation link if present
+            const docLink = this.extractDocLink(diagnostic.message);
+            if (docLink) {
+                markdown.appendMarkdown(`📚 [View documentation](${docLink})\n\n`);
+            }
+
+            contents.push(markdown);
+        }
+
+        return new vscode.Hover(contents);
+    }
+
+    /**
+     * Extract documentation link from diagnostic message
+     */
+    private extractDocLink(message: string): string | null {
+        // Look for markdown links in the message
+        const match = message.match(/\[.*?\]\((https?:\/\/[^\)]+)\)/);
+        if (match) {
+            return match[1];
+        }
+
+        // Look for plain URLs
+        const urlMatch = message.match(/(https?:\/\/[^\s]+)/);
+        if (urlMatch) {
+            return urlMatch[1];
+        }
+
+        return null;
+    }
+}
+
 export function activate(context: vscode.ExtensionContext) {
     console.log('Liva extension is now active!');
 
@@ -109,6 +237,12 @@ export function activate(context: vscode.ExtensionContext) {
         new LivaHoverProvider()
     );
 
+    // Phase 5.4: Register enhanced hover provider for error documentation
+    const errorHoverProvider = vscode.languages.registerHoverProvider(
+        'liva',
+        new LivaErrorHoverProvider()
+    );
+
     // Register signature help provider
     const signatureHelpProvider = vscode.languages.registerSignatureHelpProvider(
         'liva',
@@ -135,6 +269,15 @@ export function activate(context: vscode.ExtensionContext) {
         new LivaDocumentSymbolProvider()
     );
 
+    // Phase 5.1: Register code action provider for "Did you mean?" quick fixes
+    const codeActionProvider = vscode.languages.registerCodeActionsProvider(
+        'liva',
+        new LivaCodeActionProvider(),
+        {
+            providedCodeActionKinds: [vscode.CodeActionKind.QuickFix]
+        }
+    );
+
     // Register interface validator for real-time validation
     const interfaceValidator = new InterfaceValidationProvider();
     interfaceValidator.activate(context);
@@ -153,10 +296,12 @@ export function activate(context: vscode.ExtensionContext) {
         livaDiagnostics,
         completionProvider,
         hoverProvider,
+        errorHoverProvider,
         signatureHelpProvider,
         definitionProvider,
         referenceProvider,
-        symbolProvider
+        symbolProvider,
+        codeActionProvider
     );
 }
 
@@ -438,11 +583,19 @@ interface LivaErrorJson {
         line: number;
         column?: number;
         source_line?: string;
+        length?: number; // Phase 5.2: Precise token length for underlining
+        context_before?: string[]; // Phase 5.2: Lines before error
+        context_after?: string[]; // Phase 5.2: Lines after error
     };
     code: string;
     title: string;
     message: string;
     help?: string;
+    suggestion?: string; // Phase 5.1: "Did you mean?" suggestions
+    hint?: string; // Phase 5.4: Intelligent hints
+    example?: string; // Phase 5.4: Code examples
+    doc_link?: string; // Phase 5.4: Documentation links
+    category?: string; // Phase 5.3: Error category name
 }
 
 function createDiagnosticFromJson(errorJson: LivaErrorJson, filePath: string): vscode.Diagnostic | null {
@@ -464,13 +617,12 @@ function createDiagnosticFromJson(errorJson: LivaErrorJson, filePath: string): v
         lineLength = 100; // Fallback
     }
 
-    // Create a range that highlights the specific error location
-    // If we have column information, highlight from that column for a few characters
-    // Otherwise, highlight the entire line
+    // Phase 5.2: Use precise token length for highlighting
     let range: vscode.Range;
     if (errorJson.location.column && errorJson.location.column > 0) {
-        // Highlight approximately 3 characters from the error position
-        const endColumn = Math.min(column + 3, lineLength);
+        // Use the actual token length if available (Phase 5.2 enhancement)
+        const tokenLength = errorJson.location.length || 3; // Default to 3 if not provided
+        const endColumn = Math.min(column + tokenLength, lineLength);
         range = new vscode.Range(
             new vscode.Position(lineNumber, column),
             new vscode.Position(lineNumber, endColumn)
@@ -483,13 +635,36 @@ function createDiagnosticFromJson(errorJson: LivaErrorJson, filePath: string): v
         );
     }
 
-    // Build the diagnostic message
-    let message = `${errorJson.code}: ${errorJson.title}`;
+    // Phase 5.3: Add category to message
+    let message = '';
+    if (errorJson.category) {
+        message = `[${errorJson.category}] ${errorJson.code}: ${errorJson.title}`;
+    } else {
+        message = `${errorJson.code}: ${errorJson.title}`;
+    }
+    
     if (errorJson.message && errorJson.message !== errorJson.title) {
         message += `\n\n${errorJson.message}`;
     }
-    if (errorJson.help) {
+    
+    // Phase 5.1: Add "Did you mean?" suggestions
+    if (errorJson.suggestion) {
+        message += `\n\n💡 ${errorJson.suggestion}`;
+    }
+    
+    // Phase 5.4: Add intelligent hints
+    if (errorJson.hint) {
+        message += `\n\n💡 Hint: ${errorJson.hint}`;
+    }
+    
+    // Legacy help field (maintain backwards compatibility)
+    if (errorJson.help && !errorJson.hint) {
         message += `\n\n💡 ${errorJson.help}`;
+    }
+
+    // Phase 5.4: Add documentation link
+    if (errorJson.doc_link) {
+        message += `\n\n📚 [View documentation](${errorJson.doc_link})`;
     }
 
     const diagnostic = new vscode.Diagnostic(
@@ -500,6 +675,20 @@ function createDiagnosticFromJson(errorJson: LivaErrorJson, filePath: string): v
 
     diagnostic.code = errorJson.code;
     diagnostic.source = 'Liva Compiler';
+
+    // Phase 5.4: Add code examples as related information
+    if (errorJson.example) {
+        const exampleLocation = new vscode.Location(
+            vscode.Uri.file(filePath),
+            range
+        );
+        diagnostic.relatedInformation = [
+            new vscode.DiagnosticRelatedInformation(
+                exampleLocation,
+                `Example:\n${errorJson.example}`
+            )
+        ];
+    }
 
     return diagnostic;
 }
