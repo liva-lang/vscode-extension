@@ -368,6 +368,217 @@ You can customize the extension behavior in VS Code settings:
 - `liva.compiler.autoBuild`: Automatically compile on file save
 - `liva.liveValidation`: Enable real-time validation while typing (default: `true`) 🆕
 
+## Generics & Trait Aliases (v0.9.2) 🎉
+
+Liva v0.9.2 introduces **trait aliases** - intuitive names for common constraint patterns that make generic programming accessible while maintaining full power for experts.
+
+### Trait Aliases
+
+**Built-in aliases** for common patterns:
+
+- **`Numeric`** - All arithmetic operations (Add + Sub + Mul + Div + Rem + Neg)
+- **`Comparable`** - Equality and ordering (Ord + Eq)
+- **`Number`** - Complete number operations (Numeric + Comparable)
+- **`Printable`** - Formatting (Display + Debug)
+
+### Generic Functions
+
+Write functions that work with any type:
+
+```liva
+// Simple arithmetic with Numeric
+sum<T: Numeric>(a: T, b: T): T => a + b
+
+multiply<T: Numeric>(a: T, b: T): T => a * b
+
+// Comparison with Comparable
+max<T: Comparable>(a: T, b: T): T {
+    if a > b { return a }
+    return b
+}
+
+min<T: Comparable>(a: T, b: T): T => a < b ? a : b
+
+// Complex operations with Number (math + comparison)
+clamp<T: Number>(value: T, min: T, max: T): T {
+    if value < min { return min }
+    if value > max { return max }
+    return value
+}
+
+inRange<T: Number>(value: T, min: T, max: T): bool {
+    return value >= min and value <= max
+}
+```
+
+### Mixed Constraints
+
+Combine trait aliases with granular traits:
+
+```liva
+// Trait alias + granular trait
+formatAndCompare<T: Comparable + Display>(a: T, b: T): string {
+    if a == b { return $"Equal: {a}" }
+    if a > b { return $"{a} > {b}" }
+    return $"{a} < {b}"
+}
+
+// Multiple combinations
+debugCalc<T: Numeric + Printable>(a: T, b: T): T {
+    console.log($"Computing: {a} + {b}")
+    return a + b
+}
+```
+
+### Granular Traits (Precise Control)
+
+Use specific traits when you need exact control:
+
+```liva
+// Only addition, nothing else
+addOnly<T: Add>(a: T, b: T): T => a + b
+
+// Only comparison
+lessThan<T: Ord>(a: T, b: T): bool => a < b
+
+// Only equality
+equals<T: Eq>(a: T, b: T): bool => a == b
+```
+
+**Available granular traits:**
+- **Arithmetic**: `Add`, `Sub`, `Mul`, `Div`, `Rem`, `Neg`
+- **Comparison**: `Ord`, `Eq`, `PartialOrd`, `PartialEq`
+- **Formatting**: `Display`, `Debug`
+- **Utilities**: `Clone`, `Copy`, `Default`, `Hash`
+
+### Generic Classes
+
+Create reusable data structures:
+
+```liva
+// Generic range with Number constraints
+Range<T: Number> {
+    constructor(min: T, max: T) {
+        this.min = min
+        this.max = max
+    }
+    
+    min: T
+    max: T
+    
+    contains(value: T): bool {
+        return value >= this.min and value <= this.max
+    }
+    
+    size(): T {
+        return this.max - this.min
+    }
+}
+
+// Generic calculator with Numeric
+Calculator<T: Numeric> {
+    constructor(initial: T) {
+        this.value = initial
+    }
+    
+    value: T
+    
+    add(other: T): T {
+        this.value = this.value + other
+        return this.value
+    }
+    
+    multiply(other: T): T {
+        this.value = this.value * other
+        return this.value
+    }
+}
+```
+
+### Usage Examples
+
+```liva
+main() {
+    // Works with int
+    let sum1 = sum<int>(10, 20)           // 30
+    let max1 = max<int>(100, 50)           // 100
+    let clamp1 = clamp<int>(150, 0, 100)  // 100
+    
+    // Works with float
+    let sum2 = sum<float>(3.14, 2.71)     // 5.85
+    let max2 = max<float>(10.5, 20.3)     // 20.3
+    
+    // Generic classes
+    let range = Range<int>(0, 100)
+    let inRange = range.contains(50)      // true
+    let size = range.size()               // 100
+    
+    let calc = Calculator<int>(10)
+    calc.add(5)                           // 15
+    calc.multiply(2)                      // 30
+}
+```
+
+### IntelliSense Support
+
+The extension provides full IntelliSense for generics:
+
+- ✅ **Syntax highlighting** for trait aliases and granular traits
+- ✅ **20+ generic snippets** for common patterns
+- ✅ **Autocomplete** for `Numeric`, `Comparable`, `Number`, `Printable`
+- ✅ **Autocomplete** for granular traits (`Add`, `Ord`, `Display`, etc.)
+- ✅ **Code snippets** for generic functions and classes
+
+### Generic Snippets
+
+Use these prefixes to quickly create generic code:
+
+**Functions:**
+- `fng` - Generic function with Numeric
+- `fngc` - Generic function with Comparable
+- `fngn` - Generic function with Number
+- `fn1g` - Generic one-liner with Numeric
+- `fngm` - Generic function with mixed constraints
+- `fngr` - Generic function with granular traits
+
+**Classes:**
+- `classg` - Generic class with Numeric
+- `classgc` - Generic class with Comparable
+- `classgn` - Generic class with Number
+
+**Common patterns:**
+- `sum` - Generic sum function
+- `gmax` / `gmin` - Generic max/min functions
+- `clamp` - Generic clamp function
+- `avg` - Generic average function
+- `swap` - Generic swap function
+
+### When to Use Each Approach
+
+**Use trait aliases (Numeric, Comparable, Number) when:**
+- ✅ You need common operations (arithmetic, comparison)
+- ✅ You want clear, intuitive code
+- ✅ You're writing general-purpose utilities
+- ✅ You want to minimize constraints verbosity
+
+**Use granular traits (Add, Ord, Display) when:**
+- ✅ You need precise control over operations
+- ✅ You want to minimize constraints for flexibility
+- ✅ You're implementing specific interfaces
+- ✅ Performance optimization requires specificity
+
+**Mix both approaches when:**
+- ✅ You have complex requirements
+- ✅ You need multiple different capabilities
+- ✅ You're combining standard traits with custom needs
+
+### More Information
+
+For comprehensive documentation on generics and trait aliases:
+- [Generics Reference](https://github.com/liva-lang/livac/blob/main/docs/language-reference/generics.md)
+- [Trait Aliases Guide](https://github.com/liva-lang/livac/blob/main/docs/guides/trait-aliases-guide.md)
+- [Examples](https://github.com/liva-lang/livac/tree/main/examples)
+
 ## 🔴 Error Reporting
 
 The extension provides comprehensive error detection and reporting:

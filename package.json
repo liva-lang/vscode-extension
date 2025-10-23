@@ -1,8 +1,8 @@
 {
   "name": "liva-vscode",
   "displayName": "Liva Language Support",
-  "description": "Complete programming language support for Liva in Visual Studio Code and Cursor. Features include syntax highlighting, snippets, compiler integration, module system, standard library, and automatic building.",
-  "version": "0.4.0",
+  "description": "Complete programming language support for Liva in Visual Studio Code and Cursor. Features include syntax highlighting, snippets, compiler integration, generics with trait aliases, module system, standard library, and automatic building.",
+  "version": "0.5.0",
   "publisher": "liva-lang",
   "repository": {
     "type": "git",
@@ -19,6 +19,8 @@
     "programming-language",
     "rust",
     "compiler",
+    "generics",
+    "trait-aliases",
     "modules",
     "imports",
     "standard-library",

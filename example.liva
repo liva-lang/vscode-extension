@@ -109,3 +109,127 @@ procesarDatos() {
     let paralelo = par procesarHeavy(datos)
     print($"Procesado: {paralelo}")
 }
+
+// ============================================================================
+// GENERICS CON TRAIT ALIASES (v0.9.2)
+// ============================================================================
+
+// Generic functions with trait aliases
+
+// Numeric: All arithmetic operations
+sum<T: Numeric>(a: T, b: T): T => a + b
+
+multiply<T: Numeric>(a: T, b: T): T => a * b
+
+average<T: Numeric>(a: T, b: T, divisor: T): T {
+    let total = a + b
+    return total / divisor
+}
+
+// Comparable: Equality and ordering
+max<T: Comparable>(a: T, b: T): T {
+    if a > b {
+        return a
+    }
+    return b
+}
+
+min<T: Comparable>(a: T, b: T): T => a < b ? a : b
+
+// Number: Complete number operations (Numeric + Comparable)
+clamp<T: Number>(value: T, min: T, max: T): T {
+    if value < min { return min }
+    if value > max { return max }
+    return value
+}
+
+inRange<T: Number>(value: T, min: T, max: T): bool {
+    return value >= min and value <= max
+}
+
+// Mixed constraints: Trait aliases + granular traits
+formatAndCompare<T: Comparable + Display>(a: T, b: T): string {
+    if a == b {
+        return $"Equal: {a}"
+    }
+    if a > b {
+        return $"{a} is greater than {b}"
+    }
+    return $"{a} is less than {b}"
+}
+
+// Granular traits for precise control
+addOnly<T: Add>(a: T, b: T): T => a + b
+
+// Generic classes
+
+Range<T: Number> {
+    constructor(min: T, max: T) {
+        this.min = min
+        this.max = max
+    }
+    
+    min: T
+    max: T
+    
+    contains(value: T): bool {
+        return value >= this.min and value <= this.max
+    }
+    
+    size(): T {
+        return this.max - this.min
+    }
+}
+
+Calculator<T: Numeric> {
+    constructor(initial: T) {
+        this.value = initial
+    }
+    
+    value: T
+    
+    add(other: T): T {
+        this.value = this.value + other
+        return this.value
+    }
+    
+    multiply(other: T): T {
+        this.value = this.value * other
+        return this.value
+    }
+    
+    reset(newValue: T) {
+        this.value = newValue
+    }
+}
+
+// Example usage of generics
+testGenerics() {
+    // Test Numeric
+    let result1 = sum<int>(10, 20)
+    let result2 = multiply<float>(3.5, 2.0)
+    
+    console.log($"Sum: {result1}")
+    console.log($"Multiply: {result2}")
+    
+    // Test Comparable
+    let maxValue = max<int>(100, 50)
+    let minValue = min<float>(3.14, 2.71)
+    
+    console.log($"Max: {maxValue}")
+    console.log($"Min: {minValue}")
+    
+    // Test Number (clamp)
+    let clamped = clamp<int>(150, 0, 100)
+    console.log($"Clamped: {clamped}")
+    
+    // Test generic classes
+    let range = Range<int>(0, 100)
+    let inRange = range.contains(50)
+    console.log($"50 in range [0, 100]: {inRange}")
+    
+    let calc = Calculator<int>(10)
+    calc.add(5)
+    calc.multiply(2)
+    console.log($"Calculator result: {calc.value}")
+}

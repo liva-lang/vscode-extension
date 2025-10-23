@@ -881,6 +881,225 @@
             "}"
         ],
         "description": "Interactive input with validation pattern"
+    },
+    "Generic function with Numeric": {
+        "prefix": "fng",
+        "body": [
+            "${1:function_name}<T: Numeric>(${2:a}: T, ${3:b}: T): T {",
+            "    ${4:// arithmetic operations}",
+            "    return ${5:a + b}",
+            "}"
+        ],
+        "description": "Create a generic function with Numeric constraint"
+    },
+    "Generic function with Comparable": {
+        "prefix": "fngc",
+        "body": [
+            "${1:function_name}<T: Comparable>(${2:a}: T, ${3:b}: T): T {",
+            "    ${4:// comparison operations}",
+            "    return ${5:a < b ? a : b}",
+            "}"
+        ],
+        "description": "Create a generic function with Comparable constraint"
+    },
+    "Generic function with Number": {
+        "prefix": "fngn",
+        "body": [
+            "${1:function_name}<T: Number>(${2:value}: T, ${3:min}: T, ${4:max}: T): T {",
+            "    ${5:// math + comparison}",
+            "    if ${2:value} < ${3:min} { return ${3:min} }",
+            "    if ${2:value} > ${4:max} { return ${4:max} }",
+            "    return ${2:value}",
+            "}"
+        ],
+        "description": "Create a generic function with Number constraint"
+    },
+    "Generic arrow function with Numeric": {
+        "prefix": "fn1g",
+        "body": [
+            "${1:function_name}<T: Numeric>(${2:a}: T, ${3:b}: T): T => ${4:a + b}"
+        ],
+        "description": "Create a generic one-liner with Numeric"
+    },
+    "Generic arrow function with Comparable": {
+        "prefix": "fn1gc",
+        "body": [
+            "${1:max}<T: Comparable>(${2:a}: T, ${3:b}: T): T => ${4:a > b ? a : b}"
+        ],
+        "description": "Create a generic one-liner with Comparable"
+    },
+    "Generic function with mixed constraints": {
+        "prefix": "fngm",
+        "body": [
+            "${1:function_name}<T: ${2|Numeric,Comparable,Number,Printable|} + ${3|Display,Debug,Ord,Eq|}>(${4:param}: T): ${5:ReturnType} {",
+            "    ${6:// mixed operations}",
+            "}"
+        ],
+        "description": "Create a generic function with mixed trait constraints"
+    },
+    "Generic function with granular traits": {
+        "prefix": "fngr",
+        "body": [
+            "${1:function_name}<T: ${2|Add,Sub,Mul,Div,Rem,Neg,Eq,Ord|}>(${3:a}: T, ${4:b}: T): T {",
+            "    ${5:// precise control}",
+            "}"
+        ],
+        "description": "Create a generic function with granular trait constraints"
+    },
+    "Generic class with Numeric": {
+        "prefix": "classg",
+        "body": [
+            "${1:ClassName}<T: Numeric> {",
+            "    constructor(${2:value}: T) {",
+            "        this.${2:value} = ${2:value}",
+            "    }",
+            "    ",
+            "    ${2:value}: T",
+            "    ",
+            "    ${3:add}(${4:other}: T): T {",
+            "        return this.${2:value} + ${4:other}",
+            "    }",
+            "}"
+        ],
+        "description": "Create a generic class with Numeric constraint"
+    },
+    "Generic class with Comparable": {
+        "prefix": "classgc",
+        "body": [
+            "${1:ClassName}<T: Comparable> {",
+            "    constructor(${2:value}: T) {",
+            "        this.${2:value} = ${2:value}",
+            "    }",
+            "    ",
+            "    ${2:value}: T",
+            "    ",
+            "    ${3:isGreater}(${4:other}: T): bool {",
+            "        return this.${2:value} > ${4:other}",
+            "    }",
+            "}"
+        ],
+        "description": "Create a generic class with Comparable constraint"
+    },
+    "Generic class with Number": {
+        "prefix": "classgn",
+        "body": [
+            "${1:Range}<T: Number> {",
+            "    constructor(${2:min}: T, ${3:max}: T) {",
+            "        this.${2:min} = ${2:min}",
+            "        this.${3:max} = ${3:max}",
+            "    }",
+            "    ",
+            "    ${2:min}: T",
+            "    ${3:max}: T",
+            "    ",
+            "    ${4:contains}(${5:value}: T): bool {",
+            "        return ${5:value} >= this.${2:min} and ${5:value} <= this.${3:max}",
+            "    }",
+            "}"
+        ],
+        "description": "Create a generic class with Number constraint"
+    },
+    "Generic sum function": {
+        "prefix": "sum",
+        "body": [
+            "sum<T: Numeric>(a: T, b: T): T => a + b"
+        ],
+        "description": "Sum two numeric values"
+    },
+    "Generic max function": {
+        "prefix": "gmax",
+        "body": [
+            "max<T: Comparable>(a: T, b: T): T => a > b ? a : b"
+        ],
+        "description": "Get maximum of two comparable values"
+    },
+    "Generic min function": {
+        "prefix": "gmin",
+        "body": [
+            "min<T: Comparable>(a: T, b: T): T => a < b ? a : b"
+        ],
+        "description": "Get minimum of two comparable values"
+    },
+    "Generic clamp function": {
+        "prefix": "clamp",
+        "body": [
+            "clamp<T: Number>(value: T, min: T, max: T): T {",
+            "    if value < min { return min }",
+            "    if value > max { return max }",
+            "    return value",
+            "}"
+        ],
+        "description": "Clamp value between min and max"
+    },
+    "Generic average function": {
+        "prefix": "avg",
+        "body": [
+            "average<T: Numeric>(a: T, b: T, divisor: T): T => (a + b) / divisor"
+        ],
+        "description": "Calculate average of two values"
+    },
+    "Generic swap function": {
+        "prefix": "swap",
+        "body": [
+            "swap<T>(a: T, b: T): (T, T) => (b, a)"
+        ],
+        "description": "Swap two values (no constraints needed)"
+    },
+    "Generic array sum": {
+        "prefix": "arrsum",
+        "body": [
+            "sumArray<T: Numeric>(arr: [T]): T {",
+            "    let total = arr[0]",
+            "    for i in 1..arr.length {",
+            "        total = total + arr[i]",
+            "    }",
+            "    return total",
+            "}"
+        ],
+        "description": "Sum all elements in array"
+    },
+    "Generic array max": {
+        "prefix": "arrmax",
+        "body": [
+            "maxArray<T: Comparable>(arr: [T]): T {",
+            "    let max_val = arr[0]",
+            "    for i in 1..arr.length {",
+            "        if arr[i] > max_val {",
+            "            max_val = arr[i]",
+            "        }",
+            "    }",
+            "    return max_val",
+            "}"
+        ],
+        "description": "Find maximum element in array"
+    },
+    "Generic filter with predicate": {
+        "prefix": "filterg",
+        "body": [
+            "filter<T>(arr: [T], predicate: (T) => bool): [T] {",
+            "    let result: [T] = []",
+            "    for item in arr {",
+            "        if predicate(item) {",
+            "            result.push(item)",
+            "        }",
+            "    }",
+            "    return result",
+            "}"
+        ],
+        "description": "Generic filter function"
+    },
+    "Generic map function": {
+        "prefix": "mapg",
+        "body": [
+            "map<T, U>(arr: [T], transform: (T) => U): [U] {",
+            "    let result: [U] = []",
+            "    for item in arr {",
+            "        result.push(transform(item))",
+            "    }",
+            "    return result",
+            "}"
+        ],
+        "description": "Generic map function with two type parameters"
     }
 }
 

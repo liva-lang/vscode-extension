@@ -2,6 +2,139 @@
 
 ## [Unreleased]
 
+## [0.5.0] - 2025-10-23
+
+### 🎉 Generics & Trait Aliases Support - Liva v0.9.2 ✅
+
+Complete support for generics with trait aliases! This major update brings full IntelliSense for Liva's new generic programming features introduced in v0.9.2.
+
+### Added
+
+#### Trait Aliases Syntax Highlighting
+- **Trait alias keywords**: `Numeric`, `Comparable`, `Number`, `Printable` highlighted with special color
+- **Granular trait keywords**: `Add`, `Sub`, `Mul`, `Div`, `Rem`, `Neg`, `Eq`, `Ord`, `Display`, `Debug` highlighted distinctly
+- **Support for trait composition**: Recognizes `T: Numeric + Display` syntax
+- **Generic type parameters**: Proper highlighting of `<T>`, `<T: Numeric>`, etc.
+
+#### 20+ Generic Snippets
+**Function snippets:**
+- `fng` - Generic function with Numeric constraint
+- `fngc` - Generic function with Comparable constraint
+- `fngn` - Generic function with Number constraint
+- `fn1g` - Generic one-liner with Numeric
+- `fn1gc` - Generic one-liner with Comparable
+- `fngm` - Generic function with mixed constraints (aliases + granular)
+- `fngr` - Generic function with granular traits only
+
+**Class snippets:**
+- `classg` - Generic class with Numeric
+- `classgc` - Generic class with Comparable
+- `classgn` - Generic class with Number (Range example)
+
+**Common patterns:**
+- `sum` - Generic sum function (one-liner)
+- `gmax` - Generic max function
+- `gmin` - Generic min function
+- `clamp` - Generic clamp function
+- `avg` - Generic average function
+- `swap` - Generic swap function (no constraints)
+- `arrsum` - Sum all elements in array
+- `arrmax` - Find maximum in array
+- `filterg` - Generic filter with predicate
+- `mapg` - Generic map with two type parameters
+
+#### Documentation Enhancements
+- **Comprehensive generics section** in README with:
+  - Overview of trait aliases system
+  - When to use aliases vs granular traits
+  - Complete examples of all patterns
+  - Generic functions with all constraint types
+  - Generic classes with different aliases
+  - Mixed constraints examples
+  - Real-world usage patterns
+- **Updated example.liva** with 130+ lines of generic examples:
+  - All trait aliases demonstrated
+  - Mixed constraints patterns
+  - Generic class examples (Range, Calculator)
+  - Practical usage in `testGenerics()` function
+
+#### IntelliSense Support
+- **Autocomplete** for all trait aliases and granular traits
+- **Syntax highlighting** distinguishes aliases from granular traits
+- **20+ code snippets** for quick generic code creation
+- **Full documentation** in hover and completion items
+
+### Changed
+- **Version**: 0.4.0 → 0.5.0
+- **Description**: Added "generics with trait aliases" to extension description
+- **Keywords**: Added "generics" and "trait-aliases" to package.json keywords
+- **README**: Added major section on Generics & Trait Aliases with comprehensive examples
+
+### Trait Aliases Reference
+
+**Built-in aliases:**
+- `Numeric` = Add + Sub + Mul + Div + Rem + Neg (all arithmetic)
+- `Comparable` = Ord + Eq (equality and ordering)
+- `Number` = Numeric + Comparable (complete number operations)
+- `Printable` = Display + Debug (formatting)
+
+**Granular traits:**
+- Arithmetic: Add, Sub, Mul, Div, Rem, Neg
+- Comparison: Ord, Eq, PartialOrd, PartialEq
+- Formatting: Display, Debug
+- Utilities: Clone, Copy, Default, Hash
+
+### Usage Examples
+
+**Simple generic function:**
+```liva
+// Type 'sum' → Tab
+sum<T: Numeric>(a: T, b: T): T => a + b
+```
+
+**Generic with mixed constraints:**
+```liva
+// Type 'fngm' → Tab
+formatAndCompare<T: Comparable + Display>(a: T, b: T): string {
+    if a == b { return $"Equal: {a}" }
+    return $"{a} vs {b}"
+}
+```
+
+**Generic class:**
+```liva
+// Type 'classgn' → Tab
+Range<T: Number> {
+    constructor(min: T, max: T) {
+        this.min = min
+        this.max = max
+    }
+    
+    min: T
+    max: T
+    
+    contains(value: T): bool {
+        return value >= this.min and value <= this.max
+    }
+}
+```
+
+### Compatibility
+
+- **Requires**: Liva compiler v0.9.2 or later
+- **Backward compatible**: All previous v0.4.0 features still work
+- **VS Code version**: 1.80.0 or later
+
+### Benefits
+
+- **Intuitive generic programming**: Simple aliases like `Numeric` and `Comparable`
+- **Precise control**: Granular traits still available when needed
+- **Flexible mixing**: Combine aliases and granular traits freely
+- **Professional tooling**: Full IntelliSense matching modern language support
+- **Learn by example**: Comprehensive snippets demonstrate best practices
+
+---
+
 ## [0.4.0] - 2025-01-XX
 
 ### 🎉 Phase 5 Integration: Enhanced Error Messages & Quick Fixes ✅
