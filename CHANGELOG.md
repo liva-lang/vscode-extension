@@ -2,6 +2,118 @@
 
 ## [Unreleased]
 
+## [0.6.0] - 2025-01-24
+
+### 🎉 Pattern Matching Support - Liva v0.9.5 ✅
+
+Full support for Liva's new pattern matching with switch expressions! This update brings complete IntelliSense for switch expressions with multiple pattern types and guards.
+
+### Added
+
+#### Pattern Matching Syntax Highlighting
+- **Wildcard pattern**: Underscore `_` now highlighted as `constant.language.wildcard.liva`
+- **Inclusive range operator**: `..=` now highlighted as `keyword.operator.range.inclusive.liva`
+- **Proper precedence**: `..=` matched before `..` to prevent conflicts
+- **Context-aware**: Word boundary matching for underscore (doesn't match in identifiers)
+
+#### 10+ Pattern Matching Snippets
+**Switch expression snippets:**
+- `switchexpr` - Basic switch with literal patterns and wildcard
+- `switchb` - Switch with binding pattern
+- `switchr` - Switch with range patterns (exclusive)
+- `switchri` - Switch with inclusive range patterns (`..=`)
+- `switchg` - Switch with pattern guards (if conditions)
+- `switchc` - Complex switch combining all pattern types
+- `switchlet` - Assign switch result to variable
+- `switchret` - Return switch expression result
+- `switchblock` - Switch with block expressions
+- `switchrange` - Switch demonstrating all range types (`..<`, `..=`, `<..`, `<..=`)
+
+#### Pattern Types Supported
+1. **Literal patterns**: `1 => "one"`, `"hello" => result`
+2. **Wildcard pattern**: `_ => "default"`
+3. **Binding pattern**: `n => n * 2` (binds value to variable)
+4. **Range patterns**:
+   - Exclusive: `1..10` (1 to 9)
+   - Inclusive: `1..=10` (1 to 10)
+   - Open ranges: `..10`, `10..`
+5. **Pattern guards**: `n if n < 20 => "teenager"`
+
+### Changed
+- **Version**: 0.5.0 → 0.6.0
+- **Description**: Added "pattern matching with switch expressions" to extension description
+- **Syntax highlighting**: Added 2 new patterns for pattern matching features
+
+### Usage Examples
+
+**Simple switch with literals:**
+```liva
+// Type 'switchexpr' → Tab
+switch value {
+    1 => "one"
+    2 => "two"
+    _ => "other"
+}
+```
+
+**Switch with ranges:**
+```liva
+// Type 'switchri' → Tab
+switch score {
+    90..=100 => "A"
+    80..=89 => "B"
+    70..=79 => "C"
+    _ => "F"
+}
+```
+
+**Switch with pattern guards:**
+```liva
+// Type 'switchg' → Tab
+switch value {
+    n if n < 0 => "negative"
+    n if n == 0 => "zero"
+    n if n > 0 => "positive"
+}
+```
+
+**Complex switch:**
+```liva
+// Type 'switchc' → Tab
+switch input {
+    0 => "zero"
+    1..10 => "small"
+    n if n > 100 => "large"
+    n => $"medium: {n}"
+}
+```
+
+**Switch as expression:**
+```liva
+// Type 'switchlet' → Tab
+let result = switch value {
+    pattern1 => expr1
+    pattern2 => expr2
+    _ => default
+}
+```
+
+### Compatibility
+
+- **Requires**: Liva compiler v0.9.5 or later
+- **Backward compatible**: All previous v0.5.0 features still work
+- **VS Code version**: 1.80.0 or later
+
+### Benefits
+
+- **Modern pattern matching**: Expressive switch expressions that return values
+- **Type-safe patterns**: Wildcard, binding, literal, and range patterns
+- **Guards for complex logic**: Add conditions to patterns with `if`
+- **Professional tooling**: Full IntelliSense with snippets matching Rust/Swift quality
+- **Learn by example**: Comprehensive snippets demonstrate all pattern types
+
+---
+
 ## [0.5.0] - 2025-10-23
 
 ### 🎉 Generics & Trait Aliases Support - Liva v0.9.2 ✅

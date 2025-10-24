@@ -204,6 +204,11 @@
                     "match": "\\b(true|false)\\b"
                 },
                 {
+                    "comment": "Wildcard pattern (underscore)",
+                    "name": "constant.language.wildcard.liva",
+                    "match": "\\b_\\b"
+                },
+                {
                     "comment": "Null/None literal",
                     "name": "constant.language.null.liva",
                     "match": "\\b(null|None)\\b"
@@ -345,6 +350,11 @@
                     "comment": "Type annotation arrow",
                     "name": "keyword.operator.type.liva",
                     "match": "->"
+                },
+                {
+                    "comment": "Inclusive range operator",
+                    "name": "keyword.operator.range.inclusive.liva",
+                    "match": "\\.\\.="
                 },
                 {
                     "comment": "Range operator",

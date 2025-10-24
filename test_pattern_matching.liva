@@ -1,0 +1,202 @@
+// ============================================================================
+// Pattern Matching Test - Liva v0.9.5
+// ============================================================================
+// This file tests syntax highlighting for all pattern matching features
+
+main() {
+    console.log("=== Pattern Matching Tests ===\n")
+    
+    // Test 1: Literal patterns
+    testLiterals()
+    
+    // Test 2: Wildcard pattern
+    testWildcard()
+    
+    // Test 3: Binding pattern
+    testBinding()
+    
+    // Test 4: Range patterns
+    testRanges()
+    
+    // Test 5: Pattern guards
+    testGuards()
+    
+    // Test 6: Complex patterns
+    testComplex()
+}
+
+// ============================================================================
+// Test 1: Literal Patterns
+// ============================================================================
+
+testLiterals() {
+    let numbers = [1, 2, 3, 5, 8]
+    
+    for num in numbers {
+        let name = switch num {
+            1 => "one"
+            2 => "two"
+            3 => "three"
+            5 => "five"
+            8 => "eight"
+            _ => "other"
+        }
+        console.log($"Number {num} is '{name}'")
+    }
+}
+
+// ============================================================================
+// Test 2: Wildcard Pattern
+// ============================================================================
+
+testWildcard() {
+    let value = 42
+    
+    let result = switch value {
+        0 => "zero"
+        1 => "one"
+        _ => "something else"
+    }
+    
+    console.log($"Wildcard test: {result}")
+}
+
+// ============================================================================
+// Test 3: Binding Pattern
+// ============================================================================
+
+testBinding() {
+    let values = [5, 10, 15, 20]
+    
+    for val in values {
+        let doubled = switch val {
+            0 => 0
+            n => n * 2
+        }
+        console.log($"{val} doubled is {doubled}")
+    }
+}
+
+// ============================================================================
+// Test 4: Range Patterns
+// ============================================================================
+
+testRanges() {
+    let ages = [5, 12, 18, 25, 45, 65, 80]
+    
+    for age in ages {
+        let category = switch age {
+            0..13 => "child"
+            13..18 => "teenager"
+            18..65 => "adult"
+            _ => "senior"
+        }
+        console.log($"Age {age}: {category}")
+    }
+    
+    // Inclusive ranges with ..=
+    let scores = [55, 75, 85, 95, 100]
+    
+    for score in scores {
+        let grade = switch score {
+            90..=100 => "A"
+            80..=89 => "B"
+            70..=79 => "C"
+            60..=69 => "D"
+            _ => "F"
+        }
+        console.log($"Score {score}: Grade {grade}")
+    }
+    
+    // Open ranges
+    let temps = [0, 15, 25, 30]
+    
+    for temp in temps {
+        let description = switch temp {
+            ..16 => "cold"
+            16..=25 => "comfortable"
+            26..=34 => "warm"
+            _ => "hot"
+        }
+        console.log($"Temperature {temp}°C: {description}")
+    }
+}
+
+// ============================================================================
+// Test 5: Pattern Guards
+// ============================================================================
+
+testGuards() {
+    let numbers = [0, 5, 15, 25]
+    
+    for num in numbers {
+        let classification = switch num {
+            n if n == 0 => "zero"
+            n if n > 0 and n < 10 => "small positive"
+            n if n >= 10 and n < 20 => "medium positive"
+            _ => "large positive"
+        }
+        console.log($"{num} is {classification}")
+    }
+    
+    // Guards with ranges
+    let ages = [5, 17, 21, 45, 70]
+    
+    for age in ages {
+        let status = switch age {
+            x if x < 18 => "minor"
+            x if x >= 18 and x < 21 => "young adult"
+            x if x >= 21 and x < 65 => "adult"
+            _ => "senior"
+        }
+        console.log($"Age {age}: {status}")
+    }
+}
+
+// ============================================================================
+// Test 6: Complex Patterns (Mixed)
+// ============================================================================
+
+testComplex() {
+    let inputs = [0, 5, 50, 150, 250]
+    
+    for input in inputs {
+        let result = switch input {
+            0 => "exactly zero"
+            1..10 => "small (1-9)"
+            10..=100 => "medium (10-100)"
+            n if n > 100 and n < 200 => "large (101-199)"
+            n if n >= 200 => "very large (200+)"
+            _ => "negative"
+        }
+        console.log($"Input {input}: {result}")
+    }
+}
+
+// ============================================================================
+// Edge Cases & Special Tests
+// ============================================================================
+
+testEdgeCases() {
+    // Underscore in variable name vs wildcard pattern
+    let my_variable = 42  // Underscore in identifier - should NOT be highlighted as wildcard
+    
+    let result = switch my_variable {
+        _ => "wildcard match"  // THIS underscore should be highlighted as wildcard
+    }
+    
+    console.log($"Edge case test: {result}")
+    
+    // Nested switch
+    let outer = 5
+    let inner_result = switch outer {
+        0..10 => (switch 3 {
+            1 => "inner one"
+            2 => "inner two"
+            _ => "inner other"
+        })
+        _ => "outer other"
+    }
+    
+    console.log($"Nested switch: {inner_result}")
+}
