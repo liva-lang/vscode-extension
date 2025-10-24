@@ -1214,6 +1214,141 @@
             "}"
         ],
         "description": "Create switch with various range pattern types"
+    },
+    "JSON parse": {
+        "prefix": "jsonparse",
+        "body": [
+            "let ${1:data}, ${2:err} = JSON.parse(${3:json_string})",
+            "if ${2:err} == \"\" {",
+            "    ${4:// use data}",
+            "} else {",
+            "    console.error(\\$\"Parse error: {${2:err}}\")",
+            "}"
+        ],
+        "description": "Parse JSON string with error binding"
+    },
+    "JSON parse simple": {
+        "prefix": "jsonp",
+        "body": [
+            "let ${1:data}, ${2:err} = JSON.parse(${3:json_string})"
+        ],
+        "description": "Parse JSON string"
+    },
+    "JSON stringify": {
+        "prefix": "jsons",
+        "body": [
+            "let ${1:json} = JSON.stringify(${2:value})"
+        ],
+        "description": "Convert value to JSON string"
+    },
+    "JSON stringify with check": {
+        "prefix": "jsonstringify",
+        "body": [
+            "let ${1:json} = JSON.stringify(${2:value})",
+            "if ${1:json} != \"\" {",
+            "    ${3:// use json string}",
+            "}"
+        ],
+        "description": "Convert value to JSON with validation"
+    },
+    "File read": {
+        "prefix": "fileread",
+        "body": [
+            "let ${1:content}, ${2:err} = File.read(${3:\"path/to/file.txt\"})",
+            "if ${2:err} == \"\" {",
+            "    ${4:// use content}",
+            "} else {",
+            "    console.error(\\$\"Read error: {${2:err}}\")",
+            "}"
+        ],
+        "description": "Read file with error binding"
+    },
+    "File read simple": {
+        "prefix": "fread",
+        "body": [
+            "let ${1:content}, ${2:err} = File.read(${3:\"file.txt\"})"
+        ],
+        "description": "Read file content"
+    },
+    "File write": {
+        "prefix": "filewrite",
+        "body": [
+            "let ${1:err} = File.write(${2:\"path/to/file.txt\"}, ${3:content})",
+            "if ${1:err} == \"\" {",
+            "    console.log(\"File written successfully\")",
+            "} else {",
+            "    console.error(\\$\"Write error: {${1:err}}\")",
+            "}"
+        ],
+        "description": "Write file with error binding"
+    },
+    "File write simple": {
+        "prefix": "fwrite",
+        "body": [
+            "let ${1:err} = File.write(${2:\"file.txt\"}, ${3:content})"
+        ],
+        "description": "Write content to file"
+    },
+    "File append": {
+        "prefix": "fappend",
+        "body": [
+            "let ${1:err} = File.append(${2:\"file.txt\"}, ${3:content})"
+        ],
+        "description": "Append content to file"
+    },
+    "File exists": {
+        "prefix": "fexists",
+        "body": [
+            "if File.exists(${1:\"file.txt\"}) {",
+            "    ${2:// file exists}",
+            "} else {",
+            "    ${3:// file doesn't exist}",
+            "}"
+        ],
+        "description": "Check if file exists"
+    },
+    "File delete": {
+        "prefix": "fdelete",
+        "body": [
+            "let ${1:err} = File.delete(${2:\"file.txt\"})",
+            "if ${1:err} == \"\" {",
+            "    console.log(\"File deleted\")",
+            "} else {",
+            "    console.error(\\$\"Delete error: {${1:err}}\")",
+            "}"
+        ],
+        "description": "Delete file with error binding"
+    },
+    "JSON File pattern": {
+        "prefix": "jsonfile",
+        "body": [
+            "// Read JSON file",
+            "let ${1:content}, ${2:read_err} = File.read(${3:\"data.json\"})",
+            "if ${2:read_err} != \"\" {",
+            "    console.error(\\$\"Read error: {${2:read_err}}\")",
+            "} else {",
+            "    let ${4:data}, ${5:parse_err} = JSON.parse(${1:content})",
+            "    if ${5:parse_err} == \"\" {",
+            "        ${6:// use data}",
+            "    } else {",
+            "        console.error(\\$\"Parse error: {${5:parse_err}}\")",
+            "    }",
+            "}"
+        ],
+        "description": "Read and parse JSON file pattern"
+    },
+    "Save JSON file": {
+        "prefix": "savejson",
+        "body": [
+            "let ${1:json} = JSON.stringify(${2:data})",
+            "let ${3:err} = File.write(${4:\"output.json\"}, ${1:json})",
+            "if ${3:err} == \"\" {",
+            "    console.log(\"JSON saved successfully\")",
+            "} else {",
+            "    console.error(\\$\"Save error: {${3:err}}\")",
+            "}"
+        ],
+        "description": "Stringify and save JSON to file"
     }
 }
 

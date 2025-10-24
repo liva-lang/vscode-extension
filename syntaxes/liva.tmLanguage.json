@@ -301,6 +301,30 @@
                     }
                 },
                 {
+                    "comment": "JSON namespace and methods",
+                    "match": "\\b(JSON)\\s*\\.\\s*([a-zA-Z_][a-zA-Z0-9_]*)\\s*(?=\\()",
+                    "captures": {
+                        "1": {
+                            "name": "support.class.json.liva"
+                        },
+                        "2": {
+                            "name": "support.function.json.liva"
+                        }
+                    }
+                },
+                {
+                    "comment": "File namespace and methods",
+                    "match": "\\b(File)\\s*\\.\\s*([a-zA-Z_][a-zA-Z0-9_]*)\\s*(?=\\()",
+                    "captures": {
+                        "1": {
+                            "name": "support.class.file.liva"
+                        },
+                        "2": {
+                            "name": "support.function.file.liva"
+                        }
+                    }
+                },
+                {
                     "comment": "Built-in functions",
                     "match": "\\b(print|println|parseInt|parseFloat|toString|length|push|pop)\\s*(?=\\()",
                     "captures": {

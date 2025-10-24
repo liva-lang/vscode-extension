@@ -2,6 +2,124 @@
 
 ## [Unreleased]
 
+## [0.7.0] - 2025-01-24
+
+### 🎉 JSON & File I/O Support - Liva v0.9.3 & v0.9.4 ✅
+
+Complete support for JSON parsing/serialization and File I/O operations! This update brings comprehensive snippets and syntax highlighting for working with JSON data and file system operations.
+
+### Added
+
+#### JSON Parsing & Serialization (v0.9.3)
+- **Syntax highlighting for JSON namespace**: `JSON.parse()`, `JSON.stringify()`
+- **8 JSON snippets**:
+  * `jsonparse` - Parse JSON with full error handling pattern
+  * `jsonp` - Simple JSON parse
+  * `jsons` - JSON stringify
+  * `jsonstringify` - Stringify with validation
+  * `jsonfile` - Complete read and parse JSON file pattern
+  * `savejson` - Stringify and save to file
+
+**JSON Features:**
+- Parse JSON strings with error binding: `let data, err = JSON.parse(json)`
+- Convert values to JSON: `let json = JSON.stringify(value)`
+- Full error handling integration
+- Bidirectional type mapping (JSON ↔ Liva types)
+
+#### File I/O Operations (v0.9.4)
+- **Syntax highlighting for File namespace**: `File.read()`, `File.write()`, `File.append()`, `File.exists()`, `File.delete()`
+- **8 File I/O snippets**:
+  * `fileread` - Read file with error handling
+  * `fread` - Simple file read
+  * `filewrite` - Write file with error handling
+  * `fwrite` - Simple file write
+  * `fappend` - Append to file
+  * `fexists` - Check file existence
+  * `fdelete` - Delete file
+  * `jsonfile` - Read & parse JSON file (complete pattern)
+  * `savejson` - Save JSON to file (complete pattern)
+
+**File I/O Features:**
+- Read files: `let content, err = File.read("path.txt")`
+- Write files: `let err = File.write("path.txt", content)`
+- Append to files: `let err = File.append("path.txt", data)`
+- Check existence: `if File.exists("path.txt") { ... }`
+- Delete files: `let err = File.delete("path.txt")`
+- UTF-8 support with Rust std::fs backend
+
+### Changed
+- **Version**: 0.6.0 → 0.7.0
+- **Description**: Added "JSON parsing, File I/O" to extension description
+- **Syntax highlighting**: Added JSON and File namespaces recognition
+
+### Usage Examples
+
+**Parse JSON data:**
+```liva
+// Type 'jsonparse' → Tab
+let data, err = JSON.parse(json_string)
+if err == "" {
+    // use data
+} else {
+    console.error($"Parse error: {err}")
+}
+```
+
+**Read JSON file:**
+```liva
+// Type 'jsonfile' → Tab
+let content, read_err = File.read("data.json")
+if read_err != "" {
+    console.error($"Read error: {read_err}")
+} else {
+    let data, parse_err = JSON.parse(content)
+    if parse_err == "" {
+        // use data
+    } else {
+        console.error($"Parse error: {parse_err}")
+    }
+}
+```
+
+**Write to file:**
+```liva
+// Type 'filewrite' → Tab
+let err = File.write("output.txt", content)
+if err == "" {
+    console.log("File written successfully")
+} else {
+    console.error($"Write error: {err}")
+}
+```
+
+**Save JSON to file:**
+```liva
+// Type 'savejson' → Tab
+let json = JSON.stringify(data)
+let err = File.write("output.json", json)
+if err == "" {
+    console.log("JSON saved successfully")
+} else {
+    console.error($"Save error: {err}")
+}
+```
+
+### Compatibility
+
+- **Requires**: Liva compiler v0.9.3 (JSON) or v0.9.4 (File I/O) or later
+- **Backward compatible**: All previous v0.6.0 features still work
+- **VS Code version**: 1.80.0 or later
+
+### Benefits
+
+- **JSON integration**: Parse and generate JSON with ease
+- **File operations**: Read, write, append, delete files
+- **Error handling**: Full error binding support for safe operations
+- **Professional patterns**: Complete snippets for common workflows
+- **UTF-8 support**: Proper Unicode handling for international text
+
+---
+
 ## [0.6.0] - 2025-01-24
 
 ### 🎉 Pattern Matching Support - Liva v0.9.5 ✅
