@@ -1,8 +1,98 @@
 # Liva Language Support
 
-**Version 0.4.0** - Complete IDE experience for Liva in Visual Studio Code and Cursor.
+**Version 0.8.0** - Complete IDE experience for Liva in Visual Studio Code and Cursor.
 
-## 🎉 What's New in 0.4.0
+## 🎉 What's New in 0.8.0
+
+### HTTP Client v0.9.6: Complete REST API Support 🌐 ✅
+
+**Modern HTTP client with ergonomic JSON parsing!** Built-in async HTTP methods and response.json() API.
+
+- **🌐 HTTP Methods**
+  - `HTTP.get(url)` - GET requests with automatic JSON parsing
+  - `HTTP.post(url, body)` - POST with JSON or form data
+  - `HTTP.put(url, body)` - PUT for updates
+  - `HTTP.delete(url)` - DELETE operations
+  - All methods async by default with error binding pattern
+
+- **✨ Ergonomic JSON Parsing**
+  - `response.json()` - Parse JSON directly from responses (like fetch API)
+  - Returns `(JsonValue, String)` tuple for easy error handling
+  - Alternative to `JSON.parse(response.body)`
+  - Cleaner, more intuitive API
+
+- **🎨 Typed JSON Parsing**
+  - Direct deserialization to custom classes
+  - `let users: [User], err = response.json()`
+  - Automatic serde derives for classes
+  - Type-safe API consumption
+
+- **📦 Response Object**
+  - `status: int` - HTTP status code (200, 404, etc.)
+  - `statusText: string` - Status message ("OK", "Not Found")
+  - `body: string` - Response body
+  - `headers: {string: string}` - Response headers map
+  - `json() -> (JsonValue, String)` - Parse response as JSON
+
+- **⚡ Modern Patterns**
+  - Error binding: `let response, err = HTTP.get(url)`
+  - Async execution with 30-second timeout
+  - TLS/SSL support via rustls
+  - Clean REST API integration
+
+- **📝 16 New HTTP Snippets**
+  - `httpget`, `hget` - Quick GET requests
+  - `httppost`, `hpost` - POST with JSON
+  - `httpjson` - GET with response.json()
+  - `httptyped` - Typed JSON parsing pattern
+  - `restapi` - Full REST API class template
+  - And 9 more patterns!
+
+**Example:**
+```liva
+main() {
+    // Simple GET with JSON parsing
+    let response, err = HTTP.get("https://api.github.com/users/octocat")
+    if err != "" {
+        console.error($"Request failed: {err}")
+        return
+    }
+    
+    // Parse JSON directly from response
+    let json, parseErr = response.json()
+    if parseErr != "" {
+        console.error($"JSON error: {parseErr}")
+        return
+    }
+    
+    console.success($"Status: {response.status} {response.statusText}")
+    console.log($"User data: {json}")
+}
+```
+
+**Typed parsing example:**
+```liva
+User {
+    name: string
+    email: string
+    age: int
+}
+
+main() {
+    let response, err = HTTP.get("https://api.example.com/users/1")
+    if err != "" { return }
+    
+    // Automatic deserialization to User class
+    let user: User, jsonErr = response.json()
+    if jsonErr != "" { return }
+    
+    console.log($"Name: {user.name}, Email: {user.email}")
+}
+```
+
+## Previous Updates
+
+### 0.4.0 - Enhanced Error Messages & Quick Fixes
 
 ### Phase 5 Integration: Enhanced Error Messages & Quick Fixes ✅
 
@@ -552,6 +642,195 @@ Use these prefixes to quickly create generic code:
 - `clamp` - Generic clamp function
 - `avg` - Generic average function
 - `swap` - Generic swap function
+
+## HTTP Client (v0.9.6) 🌐
+
+Make HTTP requests with Liva's built-in async HTTP client:
+
+### Basic Requests
+
+```liva
+main() {
+    // GET request with error binding
+    let response, err = HTTP.get("https://api.example.com/users")
+    
+    if err != "" {
+        console.error($"Request failed: {err}")
+        return
+    }
+    
+    console.success($"Status: {response.status} {response.statusText}")
+    console.log($"Body: {response.body}")
+}
+```
+
+### HTTP Methods
+
+**GET:**
+```liva
+let response, err = HTTP.get("https://api.example.com/data")
+```
+
+**POST:**
+```liva
+let body = '{"name": "John", "email": "john@example.com"}'
+let response, err = HTTP.post("https://api.example.com/users", body)
+```
+
+**PUT:**
+```liva
+let updateData = '{"name": "Jane Doe"}'
+let response, err = HTTP.put("https://api.example.com/users/1", updateData)
+```
+
+**DELETE:**
+```liva
+let response, err = HTTP.delete("https://api.example.com/users/1")
+```
+
+### JSON Parsing
+
+**Ergonomic response.json():**
+```liva
+let response, err = HTTP.get("https://api.github.com/users/octocat")
+if err != "" { return }
+
+// Parse JSON directly from response (like fetch API)
+let json, parseErr = response.json()
+if parseErr != "" { return }
+
+console.log($"Data: {json}")
+```
+
+**Typed JSON parsing:**
+```liva
+User {
+    name: string
+    email: string
+    company: string
+}
+
+main() {
+    let response, err = HTTP.get("https://api.example.com/users/1")
+    if err != "" { return }
+    
+    // Automatic deserialization to User class
+    let user: User, jsonErr = response.json()
+    if jsonErr != "" { return }
+    
+    console.log($"User: {user.name} at {user.company}")
+}
+```
+
+**Alternative with JSON.parse():**
+```liva
+let json, err = JSON.parse(response.body)
+```
+
+### Response Object
+
+Every HTTP response provides:
+
+- `status: int` - HTTP status code (200, 404, 500, etc.)
+- `statusText: string` - Status message ("OK", "Not Found", etc.)
+- `body: string` - Response body as string
+- `headers: {string: string}` - Response headers as map
+- `json() -> (JsonValue, String)` - Parse response body as JSON
+
+### Error Handling
+
+All HTTP methods return a tuple `(Response, String)`:
+
+```liva
+let response, err = HTTP.get(url)
+
+if err != "" {
+    console.error($"Error: {err}")
+    return
+}
+
+// Check status code
+if response.status >= 400 {
+    console.warn($"HTTP error: {response.status}")
+}
+```
+
+### Complete Example
+
+```liva
+ApiClient {
+    baseUrl: string
+    
+    constructor(baseUrl: string) {
+        this.baseUrl = baseUrl
+    }
+    
+    getUser(id: int) {
+        let url = $"{this.baseUrl}/users/{id}"
+        let response, err = HTTP.get(url)
+        
+        if err != "" {
+            console.error($"Request failed: {err}")
+            return
+        }
+        
+        if response.status == 200 {
+            let json, parseErr = response.json()
+            if parseErr == "" {
+                console.success("User fetched successfully")
+                return json
+            }
+        }
+    }
+    
+    createUser(userData: string) {
+        let url = $"{this.baseUrl}/users"
+        let response, err = HTTP.post(url, userData)
+        
+        if err != "" {
+            console.error($"Failed to create user: {err}")
+            return
+        }
+        
+        console.success($"User created: {response.status}")
+    }
+}
+
+main() {
+    let api = ApiClient("https://api.example.com")
+    api.getUser(1)
+    api.createUser('{"name": "Alice", "email": "alice@example.com"}')
+}
+```
+
+### HTTP Snippets
+
+Quick snippets for common HTTP patterns:
+
+- `httpget` / `hget` - GET request with error handling
+- `httppost` / `hpost` - POST request with JSON body
+- `httpput` / `hput` - PUT request
+- `httpdelete` / `hdel` - DELETE request
+- `httpjson` - GET with response.json() parsing
+- `httppostjson` - POST with JSON response
+- `resjson` - response.json() with error handling
+- `resjsonc` - response.json() with class type hint
+- `httptyped` - Typed JSON parsing pattern
+- `httpstatus` - Status code checking
+- `httpfull` - Full HTTP request pattern
+- `restapi` - Complete REST API class template
+
+### Features
+
+- ✅ **Async by default** - All requests are async
+- ✅ **Error binding** - Clean error handling with tuples
+- ✅ **30-second timeout** - Prevents hanging requests
+- ✅ **TLS/SSL support** - Secure HTTPS via rustls
+- ✅ **JSON parsing** - Built-in response.json() method
+- ✅ **Typed parsing** - Automatic deserialization to classes
+- ✅ **Complete response object** - Status, headers, body
+
+For more information, see the [HTTP Client documentation](https://github.com/liva-lang/livac/blob/main/docs/language-reference/http.md).
 
 ### When to Use Each Approach
 
