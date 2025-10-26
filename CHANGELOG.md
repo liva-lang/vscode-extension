@@ -2,6 +2,108 @@
 
 ## [Unreleased]
 
+### 🎯 Parameter Destructuring - Liva v0.10.2 & v0.10.3 ✅
+
+**Destructure arrays and objects in variables, function parameters, and lambdas!** Complete modern destructuring support inspired by JavaScript/TypeScript, bringing ergonomic data extraction patterns to Liva.
+
+### Added
+
+#### Variable Destructuring (v0.10.2)
+- **Enhanced let bindings with destructuring patterns**:
+  * Array destructuring: `let [x, y] = [10, 20]`
+  * Object destructuring: `let {id, name} = user`
+  * Skip elements: `let [first, , third] = array`
+  * Rest patterns: `let [head, ...tail] = list`
+  * Field renaming: `let {name: userName, email: userEmail} = user`
+  * Nested destructuring: `let [[a, b], [c, d]] = matrix`
+
+#### Function Parameter Destructuring (v0.10.3)
+- **Destructuring in function parameters**:
+  * Array params: `printPair([x, y]: [int]) { ... }`
+  * Object params: `processUser({id, name}: User) { ... }`
+  * One-liners: `sum([a, b]: [int]): int => a + b`
+  * Field renaming: `greet({firstName: first}: Person) { ... }`
+  * Rest patterns: `processList([head, ...tail]: [int]) { ... }`
+  * Works in both functions and methods
+
+#### Lambda Destructuring (v0.10.3)
+- **Destructuring in array method lambdas**:
+  * forEach: `pairs.forEach(([x, y]) => print(x, y))`
+  * map: `points.map(([a, b]) => a + b)`
+  * filter: `users.filter(({age}) => age >= 18)`
+  * reduce: `items.reduce((acc, [x, y]) => acc + x + y, 0)`
+  * Parallel execution: `data.parvec().forEach(([x, y]) => ...)`
+
+#### 20+ New Destructuring Snippets
+- **Variable destructuring**:
+  * `letarr` - Array destructuring in let
+  * `letarrskip` - Array with skip elements
+  * `letarrrest` - Array with rest pattern
+  * `letobj` - Object destructuring in let
+  * `letobjren` - Object with field renaming
+  * `letobjrest` - Object with rest pattern
+
+- **Function parameter destructuring**:
+  * `fnarr` - Function with array destructuring param
+  * `fnobj` - Function with object destructuring param
+  * `fn1arr` - One-liner with array destructuring
+  * `fn1obj` - One-liner with object destructuring
+
+- **Lambda destructuring**:
+  * `foreachd` - forEach with array destructuring
+  * `foreachobj` - forEach with object destructuring
+  * `mapd` - map with array destructuring
+  * `mapobj` - map with object destructuring
+  * `filterd` - filter with array destructuring
+  * `filterobj` - filter with object destructuring
+  * `reduced` - reduce with array destructuring
+
+#### Documentation Updates
+- **Enhanced language-reference docs**:
+  * `functions.md` - Complete Parameter Destructuring section (200+ lines)
+  * `variables.md` - Expanded Destructuring section with all patterns
+  * `syntax-overview.md` - Quick reference examples
+- **Implementation docs**: PHASE_6.5.1_PARAM_DESTRUCTURING_DESIGN.md
+- **User guide examples**: Real-world HTTP and array processing patterns
+
+### Changed
+- **Snippet improvements**: 20+ new destructuring patterns
+- **Documentation**: Comprehensive guides for v0.10.2 and v0.10.3 features
+- **Examples**: Added working code samples for all destructuring forms
+
+### Implementation Details
+- Parser recognizes `[x, y] =>` and `{x, y} =>` as lambda starts
+- Codegen generates temporary parameter names (`_param_0`, `_param_1`)
+- Destructuring code inserted at function/lambda entry
+- Works with all array methods (forEach, map, filter, reduce)
+- Full support for parallel execution (parvec)
+
+**Examples:**
+```liva
+// Variable destructuring
+let [x, y] = [10, 20]
+let {id, name} = user
+let [head, ...tail] = [1, 2, 3, 4]
+
+// Function parameter destructuring
+printPair([first, second]: [int]): int {
+    print($"First: {first}, Second: {second}")
+    return first + second
+}
+
+// Lambda destructuring
+let pairs = [[1, 2], [3, 4], [5, 6]]
+pairs.forEach(([x, y]) => {
+    print($"Sum: {x + y}")
+})
+
+// Object destructuring in filter
+let users = [{id: 1, name: "Alice", age: 25}]
+let adults = users.filter(({age}) => age >= 18)
+```
+
+---
+
 ## [0.7.0] - 2025-01-24
 
 ### 🎉 JSON & File I/O Support - Liva v0.9.3 & v0.9.4 ✅

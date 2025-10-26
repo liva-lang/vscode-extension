@@ -33,12 +33,88 @@
         ],
         "description": "Create a typed one-liner function"
     },
+    "Function with array destructuring": {
+        "prefix": "fnarr",
+        "body": [
+            "${1:function_name}([${2:x}, ${3:y}]: [${4:int}])${5:: ${6:ReturnType}} {",
+            "    ${7:// function body}",
+            "    return ${8:x + y}",
+            "}"
+        ],
+        "description": "Function with array destructuring parameter (v0.10.3)"
+    },
+    "Function with object destructuring": {
+        "prefix": "fnobj",
+        "body": [
+            "${1:function_name}({${2:id}, ${3:name}}: ${4:Type})${5:: ${6:ReturnType}} {",
+            "    ${7:// function body}",
+            "    return ${8:value}",
+            "}"
+        ],
+        "description": "Function with object destructuring parameter (v0.10.3)"
+    },
+    "One-liner with array destructuring": {
+        "prefix": "fn1arr",
+        "body": [
+            "${1:function_name}([${2:a}, ${3:b}]: [${4:int}]): ${5:int} => ${6:a + b}"
+        ],
+        "description": "One-liner function with array destructuring (v0.10.3)"
+    },
+    "One-liner with object destructuring": {
+        "prefix": "fn1obj",
+        "body": [
+            "${1:function_name}({${2:id}, ${3:name}}: ${4:Type}): ${5:string} => ${6:\\$\"{id}: {name}\"}"
+        ],
+        "description": "One-liner function with object destructuring (v0.10.3)"
+    },
     "Variable declaration": {
         "prefix": "let",
         "body": [
             "let ${1:variable_name}${2:: ${3:Type}} = ${4:value}"
         ],
         "description": "Create a mutable variable"
+    },
+    "Array destructuring": {
+        "prefix": "letarr",
+        "body": [
+            "let [${1:a}, ${2:b}] = ${3:array}"
+        ],
+        "description": "Array destructuring - extract elements"
+    },
+    "Array destructuring with skip": {
+        "prefix": "letarrskip",
+        "body": [
+            "let [${1:first}, , ${2:third}] = ${3:array}"
+        ],
+        "description": "Array destructuring with skipped elements"
+    },
+    "Array destructuring with rest": {
+        "prefix": "letarrrest",
+        "body": [
+            "let [${1:head}, ...${2:tail}] = ${3:array}"
+        ],
+        "description": "Array destructuring with rest pattern"
+    },
+    "Object destructuring": {
+        "prefix": "letobj",
+        "body": [
+            "let {${1:id}, ${2:name}} = ${3:object}"
+        ],
+        "description": "Object destructuring - extract fields"
+    },
+    "Object destructuring with rename": {
+        "prefix": "letobjren",
+        "body": [
+            "let {${1:name}: ${2:userName}, ${3:email}: ${4:userEmail}} = ${5:object}"
+        ],
+        "description": "Object destructuring with field renaming"
+    },
+    "Object destructuring with rest": {
+        "prefix": "letobjrest",
+        "body": [
+            "let {${1:id}, ...${2:rest}} = ${3:object}"
+        ],
+        "description": "Object destructuring with rest pattern"
     },
     "Constant declaration": {
         "prefix": "const",
@@ -575,6 +651,59 @@
             "${1:array}.forEach(${2:x} => ${3:print(x)})"
         ],
         "description": "Iterate over array with side effects"
+    },
+    "forEach with array destructuring": {
+        "prefix": "foreachd",
+        "body": [
+            "${1:array}.forEach(([${2:x}, ${3:y}]) => {",
+            "    ${4:// use x and y}",
+            "})"
+        ],
+        "description": "forEach with array destructuring (v0.10.3)"
+    },
+    "forEach with object destructuring": {
+        "prefix": "foreachobj",
+        "body": [
+            "${1:array}.forEach(({${2:id}, ${3:name}}) => {",
+            "    ${4:// use id and name}",
+            "})"
+        ],
+        "description": "forEach with object destructuring (v0.10.3)"
+    },
+    "map with array destructuring": {
+        "prefix": "mapd",
+        "body": [
+            "${1:array}.map(([${2:a}, ${3:b}]) => ${4:a + b})"
+        ],
+        "description": "map with array destructuring (v0.10.3)"
+    },
+    "map with object destructuring": {
+        "prefix": "mapobj",
+        "body": [
+            "${1:array}.map(({${2:id}, ${3:name}}) => ${4:\\$\"{id}: {name}\"})"
+        ],
+        "description": "map with object destructuring (v0.10.3)"
+    },
+    "filter with array destructuring": {
+        "prefix": "filterd",
+        "body": [
+            "${1:array}.filter(([${2:x}, ${3:y}]) => ${4:x > 0})"
+        ],
+        "description": "filter with array destructuring (v0.10.3)"
+    },
+    "filter with object destructuring": {
+        "prefix": "filterobj",
+        "body": [
+            "${1:array}.filter(({${2:age}}) => ${3:age >= 18})"
+        ],
+        "description": "filter with object destructuring (v0.10.3)"
+    },
+    "reduce with destructuring": {
+        "prefix": "reduced",
+        "body": [
+            "${1:array}.reduce((${2:acc}, [${3:x}, ${4:y}]) => ${5:acc + x + y}, ${6:0})"
+        ],
+        "description": "reduce with array destructuring (v0.10.3)"
     },
     "Array find": {
         "prefix": "find",
@@ -1349,9 +1478,7 @@
             "}"
         ],
         "description": "Stringify and save JSON to file"
-    }
-}
-,
+    },
     "HTTP GET request": {
         "prefix": "httpget",
         "body": [
@@ -1573,4 +1700,5 @@
             "}"
         ],
         "description": "Complete REST API CRUD wrapper class"
-    },}
+    }
+}

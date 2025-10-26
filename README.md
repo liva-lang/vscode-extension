@@ -4,6 +4,64 @@
 
 ## 🎉 What's New in 0.8.0
 
+### Parameter Destructuring v0.10.2 & v0.10.3 🎯 ✅
+
+**Destructure arrays and objects directly in parameters and variables!** Modern syntax inspired by JavaScript/TypeScript.
+
+- **📦 Variable Destructuring (v0.10.2)**
+  - Array destructuring: `let [x, y] = [10, 20]`
+  - Object destructuring: `let {id, name} = user`
+  - Skip elements: `let [first, , third] = array`
+  - Rest patterns: `let [head, ...tail] = list`
+  - Field renaming: `let {name: userName} = user`
+
+- **🔧 Function Parameter Destructuring (v0.10.3)**
+  - Array params: `printPair([x, y]: [int]) { ... }`
+  - Object params: `processUser({id, name}: User) { ... }`
+  - One-liners: `sum([a, b]: [int]): int => a + b`
+  - Works in methods and functions
+
+- **⚡ Lambda Destructuring (v0.10.3)**
+  - forEach: `pairs.forEach(([x, y]) => print(x, y))`
+  - map: `points.map(([a, b]) => a + b)`
+  - filter: `users.filter(({age}) => age >= 18)`
+  - All array methods support destructuring!
+
+- **📝 20+ New Destructuring Snippets**
+  - `letarr` - Array destructuring in let
+  - `letobj` - Object destructuring in let
+  - `letarrrest` - Array with rest pattern
+  - `fnarr` - Function with array destructuring
+  - `fnobj` - Function with object destructuring
+  - `foreachd` - forEach with destructuring
+  - `mapd`, `mapobj` - map with destructuring
+  - `filterd`, `filterobj` - filter with destructuring
+  - And 12 more patterns!
+
+**Examples:**
+```liva
+// Variable destructuring
+let [x, y] = [10, 20]
+let {id, name} = user
+let [head, ...tail] = [1, 2, 3, 4]
+
+// Function parameter destructuring
+printPair([first, second]: [int]): int {
+    print($"First: {first}, Second: {second}")
+    return first + second
+}
+
+// Lambda destructuring with forEach
+let pairs = [[1, 2], [3, 4], [5, 6]]
+pairs.forEach(([x, y]) => {
+    print($"x={x}, y={y}, sum={x + y}")
+})
+
+// Object destructuring in map
+let users = [{id: 1, name: "Alice"}, {id: 2, name: "Bob"}]
+let names = users.map(({name}) => name)
+```
+
 ### HTTP Client v0.9.6: Complete REST API Support 🌐 ✅
 
 **Modern HTTP client with ergonomic JSON parsing!** Built-in async HTTP methods and response.json() API.
