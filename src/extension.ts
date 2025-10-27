@@ -2,6 +2,7 @@ import * as vscode from 'vscode';
 import * as path from 'path';
 import { exec } from 'child_process';
 import { promisify } from 'util';
+import { activateLspClient, deactivateLspClient } from './lspClient';
 import { LiveCompletionProvider } from './providers/completionProvider';
 import { LivaHoverProvider } from './providers/hoverProvider';
 import { LivaSignatureHelpProvider } from './providers/signatureHelpProvider';
@@ -146,6 +147,18 @@ class LivaErrorHoverProvider implements vscode.HoverProvider {
 export function activate(context: vscode.ExtensionContext) {
     console.log('Liva extension is now active!');
 
+    // ===== LSP CLIENT INTEGRATION (Phase 9) =====
+    // Start the Language Server Protocol client
+    // This provides: completion, diagnostics, hover, goto definition, find references
+    const lspEnabled = vscode.workspace.getConfiguration('liva').get<boolean>('lsp.enabled', true);
+    if (lspEnabled) {
+        console.log('[Liva] Starting LSP client...');
+        activateLspClient(context);
+    } else {
+        console.log('[Liva] LSP client disabled, using fallback providers');
+    }
+    // ============================================
+
     // Clear diagnostics on activation
     livaDiagnostics.clear();
 
@@ -231,7 +244,7 @@ export function activate(context: vscode.ExtensionContext) {
         '(', // Trigger on opening paren for function calls
     );
 
-    // Register hover provider
+    // Register hover provider (LSP will handle most, this is fallback)
     const hoverProvider = vscode.languages.registerHoverProvider(
         'liva',
         new LivaHoverProvider()
@@ -307,6 +320,8 @@ export function activate(context: vscode.ExtensionContext) {
 
 export function deactivate() {
     livaDiagnostics.clear();
+    // Stop the LSP client
+    return deactivateLspClient();
 }
 
 async function compileLivaFile(filePath: string, silent: boolean = false): Promise<void> {

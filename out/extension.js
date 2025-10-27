@@ -6,6 +6,7 @@ const vscode = require("vscode");
 const path = require("path");
 const child_process_1 = require("child_process");
 const util_1 = require("util");
+const lspClient_1 = require("./lspClient");
 const completionProvider_1 = require("./providers/completionProvider");
 const hoverProvider_1 = require("./providers/hoverProvider");
 const signatureHelpProvider_1 = require("./providers/signatureHelpProvider");
@@ -114,6 +115,18 @@ class LivaErrorHoverProvider {
 }
 function activate(context) {
     console.log('Liva extension is now active!');
+    // ===== LSP CLIENT INTEGRATION (Phase 9) =====
+    // Start the Language Server Protocol client
+    // This provides: completion, diagnostics, hover, goto definition, find references
+    const lspEnabled = vscode.workspace.getConfiguration('liva').get('lsp.enabled', true);
+    if (lspEnabled) {
+        console.log('[Liva] Starting LSP client...');
+        (0, lspClient_1.activateLspClient)(context);
+    }
+    else {
+        console.log('[Liva] LSP client disabled, using fallback providers');
+    }
+    // ============================================
     // Clear diagnostics on activation
     livaDiagnostics.clear();
     // Validate all open Liva documents on activation
@@ -179,7 +192,7 @@ function activate(context) {
     const completionProvider = vscode.languages.registerCompletionItemProvider('liva', new completionProvider_1.LiveCompletionProvider(), '.', // Trigger completion on dot for member access
     ' ', // Trigger on space for keywords
     '(');
-    // Register hover provider
+    // Register hover provider (LSP will handle most, this is fallback)
     const hoverProvider = vscode.languages.registerHoverProvider('liva', new hoverProvider_1.LivaHoverProvider());
     // Phase 5.4: Register enhanced hover provider for error documentation
     const errorHoverProvider = vscode.languages.registerHoverProvider('liva', new LivaErrorHoverProvider());
@@ -206,6 +219,8 @@ function activate(context) {
 }
 function deactivate() {
     livaDiagnostics.clear();
+    // Stop the LSP client
+    return (0, lspClient_1.deactivateLspClient)();
 }
 async function compileLivaFile(filePath, silent = false) {
     const compilerPath = getConfig('compiler.path', 'livac');
