@@ -1,5 +1,70 @@
 # Changelog
 
+## [0.12.0] - 2025-10-27
+
+### 🚀 Language Server Protocol (LSP) Integration ✨
+
+**Full LSP support with intelligent code features!** Liva now includes a native Language Server providing real-time diagnostics, smart completions, navigation, and hover information.
+
+### Added
+
+#### LSP Client Integration
+- **Language Server Protocol client**:
+  * Connects to `livac --lsp` server
+  * Automatic startup on Liva file open
+  * Configurable via `liva.lsp.enabled` setting
+  * Restart command: `Liva: Restart Language Server`
+
+#### Smart Features via LSP
+- **Code Completion** (Ctrl+Space):
+  * Keywords: let, const, fn, if, else, while, for, return, etc.
+  * Types: int, float, string, bool, void
+  * Built-in functions: parseInt, parseFloat, toString
+  * AST-extracted symbols: functions, classes, type aliases
+  * Trigger characters: `.` and `:`
+
+- **Go to Definition** (F12):
+  * Jump to function declarations
+  * Navigate to class definitions
+  * Find type alias declarations
+  * Context-aware symbol resolution
+
+- **Find All References** (Shift+F12):
+  * Locate all usages of functions, classes, variables
+  * Word boundary detection for accurate results
+  * Single-file scope with precise locations
+
+- **Hover Information** (Mouse hover):
+  * Type signatures for symbols
+  * Function/class/type descriptions
+  * Built-in keyword documentation
+  * Markdown-formatted tooltips
+
+- **Real-time Diagnostics**:
+  * Lexer, parser, and semantic errors
+  * Inline error messages with rich metadata
+  * Error codes and categories
+  * Automatic updates on file changes
+
+#### Configuration
+- **New Settings**:
+  * `liva.lsp.enabled`: Enable/disable LSP (default: true)
+  * `liva.compiler.path`: Path to livac executable
+
+### Changed
+- Extension now prioritizes LSP features over manual providers
+- Fallback to legacy providers when LSP disabled
+- Version bumped to 0.12.0 to match compiler LSP release
+
+### Technical Details
+- Uses `vscode-languageclient` for JSON-RPC communication
+- Server process: `livac --lsp` via stdio transport
+- Document sync: Full text synchronization
+- Symbol extraction from Liva AST
+- Textual reference finding with boundary checking
+
+---
+
 ## [Unreleased]
 
 ### 🎯 Advanced Types Support - Liva v0.11.x ✨
