@@ -1700,5 +1700,61 @@
             "}"
         ],
         "description": "Complete REST API CRUD wrapper class"
+    },
+    "Union type annotation": {
+        "prefix": "union",
+        "body": [
+            "let ${1:variable}: ${2:int} | ${3:string} = ${4:value}"
+        ],
+        "description": "Variable with union type (v0.11.2)"
+    },
+    "Union type 3 types": {
+        "prefix": "union3",
+        "body": [
+            "let ${1:variable}: ${2:int} | ${3:string} | ${4:bool} = ${5:value}"
+        ],
+        "description": "Variable with 3-type union (v0.11.2)"
+    },
+    "Type alias simple": {
+        "prefix": "typealias",
+        "body": [
+            "type ${1:AliasName} = ${2:int}"
+        ],
+        "description": "Simple type alias (v0.11.1)"
+    },
+    "Type alias generic": {
+        "prefix": "typealiasgen",
+        "body": [
+            "type ${1:Box}<${2:T}> = (${2:T},)"
+        ],
+        "description": "Generic type alias (v0.11.1)"
+    },
+    "Type alias tuple": {
+        "prefix": "typealiastuple",
+        "body": [
+            "type ${1:Point} = (${2:int}, ${3:int})"
+        ],
+        "description": "Tuple type alias (v0.11.1)"
+    },
+    "Switch with union pattern matching": {
+        "prefix": "switchunion",
+        "body": [
+            "let ${1:result} = switch ${2:value} {",
+            "    ${3:n}: ${4:int} => ${5:n * 2},",
+            "    ${6:s}: ${7:string} => ${8:0}",
+            "}"
+        ],
+        "description": "Switch with union type pattern matching (v0.11.3)"
+    },
+    "Switch union 3 types": {
+        "prefix": "switchunion3",
+        "body": [
+            "let ${1:result} = switch ${2:value} {",
+            "    ${3:n}: ${4:int} => ${5:\"Number\"},",
+            "    ${6:s}: ${7:string} => ${8:\"String\"},",
+            "    ${9:b}: ${10:bool} => ${11:\"Boolean\"}",
+            "}"
+        ],
+        "description": "Switch with 3-type union pattern matching (v0.11.3)"
     }
 }

@@ -376,6 +376,11 @@
                     "match": "->"
                 },
                 {
+                    "comment": "Union type operator (in type context)",
+                    "name": "keyword.operator.type.union.liva",
+                    "match": "(?<=:)\\s*\\w+\\s*(\\|)(?=\\s*\\w+)"
+                },
+                {
                     "comment": "Inclusive range operator",
                     "name": "keyword.operator.range.inclusive.liva",
                     "match": "\\.\\.="

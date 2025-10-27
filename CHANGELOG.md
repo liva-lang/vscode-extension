@@ -2,6 +2,44 @@
 
 ## [Unreleased]
 
+### 🎯 Advanced Types Support - Liva v0.11.x ✨
+
+**Union types, type aliases, and pattern matching with type narrowing!** Complete support for Phase 7 (Advanced Types) features in the Liva compiler v0.11.0-v0.11.3.
+
+### Added
+
+#### v0.11.3 - Pattern Matching for Union Types
+- **Pattern matching with type patterns**:
+  * Syntax: `n: int => expr` in switch expressions
+  * Automatic type narrowing in each match arm
+  * Full exhaustiveness checking support
+  * Works with 2+ type unions
+
+#### v0.11.2 - Union Types
+- **Union type syntax highlighting**:
+  * Basic unions: `int | string`, `T | U | V`
+  * Multi-type unions: `int | string | bool`
+  * Union with tuples: `(int, int) | string`
+  * Union with arrays: `[int] | string`
+  * Union with optionals: `int? | string`
+
+#### v0.11.1 - Type Aliases
+- **Type alias declarations**:
+  * Simple aliases: `type UserId = int`
+  * Tuple aliases: `type Point = (int, int)`
+  * Generic aliases: `type Box<T> = (T,)`
+  * Nested aliases: `type IntBox = Box<int>`
+  * Array and optional aliases
+
+#### Syntax Highlighting Updates
+- **New operator**: Pipe `|` for union types in type context
+- **Enhanced**: `type` keyword recognition for aliases
+- **Added**: Pattern matching with type annotations support
+
+---
+
+## [0.9.0] - Previous Release
+
 ### 🎯 Parameter Destructuring - Liva v0.10.2 & v0.10.3 ✅
 
 **Destructure arrays and objects in variables, function parameters, and lambdas!** Complete modern destructuring support inspired by JavaScript/TypeScript, bringing ergonomic data extraction patterns to Liva.
