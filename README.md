@@ -1,8 +1,19 @@
 # Liva Language Support
 
-**Version 0.8.0** - Complete IDE experience for Liva in Visual Studio Code and Cursor.
+**Version 0.12.0** - Complete IDE experience for Liva v1.0.0 in Visual Studio Code and Cursor.
 
-## 🎉 What's New in 0.8.0
+## 🎉 Liva v1.0.0 Released!
+
+The Liva compiler has reached its first stable release! This extension provides full IDE support:
+
+- ✅ **Syntax Highlighting** - Full grammar support
+- ✅ **Error Diagnostics** - Real-time error reporting
+- ✅ **Autocomplete** - IntelliSense for all symbols
+- ✅ **Go to Definition** - Navigate codebase easily
+- ✅ **Hover Information** - Type info on hover
+- ✅ **Multi-file Support** - Import/export across modules
+
+## 🎉 What's New in 0.12.0
 
 ### Parameter Destructuring v0.10.2 & v0.10.3 🎯 ✅
 
