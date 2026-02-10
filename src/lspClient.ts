@@ -4,7 +4,6 @@ import {
     LanguageClient,
     LanguageClientOptions,
     ServerOptions,
-    TransportKind
 } from 'vscode-languageclient/node';
 
 let client: LanguageClient | undefined;
@@ -24,10 +23,10 @@ export function activateLspClient(context: vscode.ExtensionContext, resolvedComp
     console.log(`[Liva LSP] Starting Language Server at: ${compilerPath}`);
 
     // Define how to start the LSP server
+    // Note: don't use TransportKind.stdio — it appends --stdio which livac doesn't accept
     const serverOptions: ServerOptions = {
         command: compilerPath,
         args: ['--lsp'],
-        transport: TransportKind.stdio,
     };
 
     // Options to control the language client
