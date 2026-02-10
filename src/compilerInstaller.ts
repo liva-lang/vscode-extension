@@ -233,6 +233,78 @@ async function extractArchive(archivePath: string, destDir: string): Promise<voi
 }
 
 /**
+ * Get the shell profile file for the current platform
+ */
+function getShellProfile(): string | null {
+    if (os.platform() === 'win32') {
+        return null; // Windows uses system PATH, handled differently
+    }
+
+    const shell = process.env.SHELL || '';
+    const home = os.homedir();
+
+    if (shell.includes('zsh')) {
+        return path.join(home, '.zshrc');
+    }
+    if (shell.includes('fish')) {
+        return path.join(home, '.config', 'fish', 'config.fish');
+    }
+    // Default to .bashrc (also covers .profile as fallback)
+    return path.join(home, '.bashrc');
+}
+
+/**
+ * Add ~/.liva/bin to the user's shell PATH if not already present
+ */
+async function addToPath(): Promise<boolean> {
+    const platform = os.platform();
+
+    if (platform === 'win32') {
+        // On Windows, suggest adding to PATH manually or use setx
+        try {
+            await execAsync(`setx PATH "%PATH%;${INSTALL_DIR}"`);
+            return true;
+        } catch {
+            return false;
+        }
+    }
+
+    const profilePath = getShellProfile();
+    if (!profilePath) {
+        return false;
+    }
+
+    // Check if already in profile
+    try {
+        if (fs.existsSync(profilePath)) {
+            const content = fs.readFileSync(profilePath, 'utf8');
+            if (content.includes('.liva/bin')) {
+                return true; // Already configured
+            }
+        }
+    } catch {
+        // ignore read errors
+    }
+
+    // Append PATH export
+    const shell = process.env.SHELL || '';
+    let exportLine: string;
+
+    if (shell.includes('fish')) {
+        exportLine = '\n# Liva compiler\nfish_add_path $HOME/.liva/bin\n';
+    } else {
+        exportLine = '\n# Liva compiler\nexport PATH="$HOME/.liva/bin:$PATH"\n';
+    }
+
+    try {
+        fs.appendFileSync(profilePath, exportLine, 'utf8');
+        return true;
+    } catch {
+        return false;
+    }
+}
+
+/**
  * Install the Liva compiler from GitHub Releases
  */
 export async function installCompiler(): Promise<string | null> {
@@ -304,11 +376,24 @@ export async function installCompiler(): Promise<string | null> {
                 const config = vscode.workspace.getConfiguration('liva');
                 await config.update('compiler.path', binaryPath, vscode.ConfigurationTarget.Global);
 
-                // 9. Cleanup temp file
+                // 9. Add to shell PATH
+                progress.report({ message: 'Configuring PATH...' });
+                const addedToPath = await addToPath();
+
+                // 10. Cleanup temp file
                 try { fs.unlinkSync(archivePath); } catch { /* ignore */ }
 
                 progress.report({ message: `Liva ${version} installed!` });
-                vscode.window.showInformationMessage(`Liva compiler ${version} installed successfully!`);
+
+                if (addedToPath) {
+                    vscode.window.showInformationMessage(
+                        `Liva compiler ${version} installed successfully! Restart your terminal to use 'livac' from the command line.`
+                    );
+                } else {
+                    vscode.window.showInformationMessage(
+                        `Liva compiler ${version} installed! Add ${INSTALL_DIR} to your PATH to use 'livac' from the command line.`
+                    );
+                }
 
                 return binaryPath;
 
