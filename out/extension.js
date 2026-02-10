@@ -7,6 +7,7 @@ const path = require("path");
 const child_process_1 = require("child_process");
 const util_1 = require("util");
 const lspClient_1 = require("./lspClient");
+const compilerInstaller_1 = require("./compilerInstaller");
 const completionProvider_1 = require("./providers/completionProvider");
 const hoverProvider_1 = require("./providers/hoverProvider");
 const signatureHelpProvider_1 = require("./providers/signatureHelpProvider");
@@ -113,20 +114,36 @@ class LivaErrorHoverProvider {
         return null;
     }
 }
-function activate(context) {
+async function activate(context) {
     console.log('Liva extension is now active!');
+    // ===== COMPILER INSTALLATION CHECK =====
+    // Ensure the compiler is available before starting LSP
+    const compilerPath = await (0, compilerInstaller_1.ensureCompilerInstalled)();
+    // =======================================
     // ===== LSP CLIENT INTEGRATION (Phase 9) =====
     // Start the Language Server Protocol client
     // This provides: completion, diagnostics, hover, goto definition, find references
     const lspEnabled = vscode.workspace.getConfiguration('liva').get('lsp.enabled', true);
-    if (lspEnabled) {
+    if (lspEnabled && compilerPath) {
         console.log('[Liva] Starting LSP client...');
-        (0, lspClient_1.activateLspClient)(context);
+        (0, lspClient_1.activateLspClient)(context, compilerPath);
+    }
+    else if (!compilerPath) {
+        console.log('[Liva] Compiler not found, LSP disabled. Syntax highlighting still active.');
     }
     else {
         console.log('[Liva] LSP client disabled, using fallback providers');
     }
     // ============================================
+    // Register update compiler command
+    const updateCompilerCmd = vscode.commands.registerCommand('liva.updateCompiler', async () => {
+        await (0, compilerInstaller_1.checkForUpdates)();
+        // Reload to pick up new compiler
+        const choice = await vscode.window.showInformationMessage('Reload window to use updated compiler?', 'Reload', 'Later');
+        if (choice === 'Reload') {
+            await vscode.commands.executeCommand('workbench.action.reloadWindow');
+        }
+    });
     // Clear diagnostics on activation
     livaDiagnostics.clear();
     // Validate all open Liva documents on activation
@@ -215,7 +232,7 @@ function activate(context) {
     // Register fallible function validator for real-time validation
     const fallibleValidator = new fallibleValidator_1.FallibleFunctionValidator();
     fallibleValidator.activate(context);
-    context.subscriptions.push(compileCommand, runCommand, checkCommand, fileWatcher, changeListener, openListener, livaDiagnostics, completionProvider, hoverProvider, errorHoverProvider, signatureHelpProvider, definitionProvider, referenceProvider, symbolProvider, codeActionProvider);
+    context.subscriptions.push(compileCommand, runCommand, checkCommand, updateCompilerCmd, fileWatcher, changeListener, openListener, livaDiagnostics, completionProvider, hoverProvider, errorHoverProvider, signatureHelpProvider, definitionProvider, referenceProvider, symbolProvider, codeActionProvider);
 }
 function deactivate() {
     livaDiagnostics.clear();

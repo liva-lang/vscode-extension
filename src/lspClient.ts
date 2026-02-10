@@ -9,10 +9,10 @@ import {
 
 let client: LanguageClient | undefined;
 
-export function activateLspClient(context: vscode.ExtensionContext): void {
-    // Get compiler path from configuration
+export function activateLspClient(context: vscode.ExtensionContext, resolvedCompilerPath?: string): void {
+    // Use resolved path (from installer) or fall back to config
     const config = vscode.workspace.getConfiguration('liva');
-    const compilerPath = config.get<string>('compiler.path', 'livac');
+    const compilerPath = resolvedCompilerPath || config.get<string>('compiler.path', 'livac');
     
     // Check if LSP is enabled
     const lspEnabled = config.get<boolean>('lsp.enabled', true);

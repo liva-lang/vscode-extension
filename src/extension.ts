@@ -3,6 +3,7 @@ import * as path from 'path';
 import { exec } from 'child_process';
 import { promisify } from 'util';
 import { activateLspClient, deactivateLspClient } from './lspClient';
+import { ensureCompilerInstalled, checkForUpdates, findCompiler } from './compilerInstaller';
 import { LiveCompletionProvider } from './providers/completionProvider';
 import { LivaHoverProvider } from './providers/hoverProvider';
 import { LivaSignatureHelpProvider } from './providers/signatureHelpProvider';
@@ -144,20 +145,41 @@ class LivaErrorHoverProvider implements vscode.HoverProvider {
     }
 }
 
-export function activate(context: vscode.ExtensionContext) {
+export async function activate(context: vscode.ExtensionContext) {
     console.log('Liva extension is now active!');
+
+    // ===== COMPILER INSTALLATION CHECK =====
+    // Ensure the compiler is available before starting LSP
+    const compilerPath = await ensureCompilerInstalled();
+    // =======================================
 
     // ===== LSP CLIENT INTEGRATION (Phase 9) =====
     // Start the Language Server Protocol client
     // This provides: completion, diagnostics, hover, goto definition, find references
     const lspEnabled = vscode.workspace.getConfiguration('liva').get<boolean>('lsp.enabled', true);
-    if (lspEnabled) {
+    if (lspEnabled && compilerPath) {
         console.log('[Liva] Starting LSP client...');
-        activateLspClient(context);
+        activateLspClient(context, compilerPath);
+    } else if (!compilerPath) {
+        console.log('[Liva] Compiler not found, LSP disabled. Syntax highlighting still active.');
     } else {
         console.log('[Liva] LSP client disabled, using fallback providers');
     }
     // ============================================
+
+    // Register update compiler command
+    const updateCompilerCmd = vscode.commands.registerCommand('liva.updateCompiler', async () => {
+        await checkForUpdates();
+        // Reload to pick up new compiler
+        const choice = await vscode.window.showInformationMessage(
+            'Reload window to use updated compiler?',
+            'Reload',
+            'Later'
+        );
+        if (choice === 'Reload') {
+            await vscode.commands.executeCommand('workbench.action.reloadWindow');
+        }
+    });
 
     // Clear diagnostics on activation
     livaDiagnostics.clear();
@@ -303,6 +325,7 @@ export function activate(context: vscode.ExtensionContext) {
         compileCommand, 
         runCommand, 
         checkCommand, 
+        updateCompilerCmd,
         fileWatcher, 
         changeListener, 
         openListener, 

@@ -109,6 +109,10 @@
       {
         "command": "liva.restartLsp",
         "title": "Restart Liva Language Server"
+      },
+      {
+        "command": "liva.updateCompiler",
+        "title": "Liva: Update Compiler"
       }
     ],
     "menus": {
