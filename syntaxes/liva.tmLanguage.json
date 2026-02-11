@@ -357,6 +357,21 @@
                     "match": "_[a-zA-Z_][a-zA-Z0-9_]*\\b"
                 },
                 {
+                    "comment": "Method reference operator (object::method)",
+                    "match": "\\b([a-zA-Z_][a-zA-Z0-9_]*)\\s*(::)\\s*([a-zA-Z_][a-zA-Z0-9_]*)\\b",
+                    "captures": {
+                        "1": {
+                            "name": "variable.other.object.liva"
+                        },
+                        "2": {
+                            "name": "keyword.operator.method-reference.liva"
+                        },
+                        "3": {
+                            "name": "entity.name.function.method-reference.liva"
+                        }
+                    }
+                },
+                {
                     "comment": "Regular identifiers",
                     "name": "variable.other.liva",
                     "match": "\\b[a-zA-Z_][a-zA-Z0-9_]*\\b"
@@ -365,6 +380,11 @@
         },
         "operators": {
             "patterns": [
+                {
+                    "comment": "Method reference operator",
+                    "name": "keyword.operator.method-reference.liva",
+                    "match": "::"
+                },
                 {
                     "comment": "Arrow function operator",
                     "name": "keyword.operator.arrow.liva",

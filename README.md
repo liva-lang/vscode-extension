@@ -1,19 +1,49 @@
 # Liva Language Support
 
-**Version 0.12.0** - Complete IDE experience for Liva v1.0.0 in Visual Studio Code and Cursor.
+**Version 0.13.0** - Complete IDE experience for Liva v1.1.0 in Visual Studio Code and Cursor.
 
-## 🎉 Liva v1.0.0 Released!
+## 🎉 Liva v1.1.0 — Syntax Sugar & Ergonomics!
 
-The Liva compiler has reached its first stable release! This extension provides full IDE support:
+The Liva compiler now includes ergonomic syntax sugar features, fully supported by this extension:
 
-- ✅ **Syntax Highlighting** - Full grammar support
+- ✅ **Syntax Highlighting** - Full grammar support including `::` operator
 - ✅ **Error Diagnostics** - Real-time error reporting
 - ✅ **Autocomplete** - IntelliSense for all symbols
 - ✅ **Go to Definition** - Navigate codebase easily
 - ✅ **Hover Information** - Type info on hover
 - ✅ **Multi-file Support** - Import/export across modules
 
-## 🎉 What's New in 0.12.0
+## 🎉 What's New in 0.13.0
+
+### Point-Free Function References (v1.1.0) 🎯
+
+**Pass function names directly as callbacks — no lambda wrapper needed!**
+
+```liva
+// Before (still works)
+items.forEach(x => print(x))
+nums.map(x => double(x))
+
+// After — point-free (v1.1.0)
+items.forEach(print)
+nums.map(double)
+names.filter(isValid)
+for item in items => print
+```
+
+**Snippets:** `foreachpf`, `mappf`, `filterpf`
+
+### Method References with `::` (v1.1.0) 🔗
+
+**Reference instance methods as callbacks using `object::method` syntax!**
+
+```liva
+let fmt = Formatter("Hello")
+let greetings = names.map(fmt::format)   // ["Hello: Alice", ...]
+names.forEach(logger::log)
+```
+
+**Snippets:** `foreachmr`, `mapmr`, `filtermr`
 
 ### Parameter Destructuring v0.10.2 & v0.10.3 🎯 ✅
 

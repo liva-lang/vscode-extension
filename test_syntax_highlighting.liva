@@ -367,3 +367,51 @@ main() {
 
   print("✅ All syntax highlighting features tested!")
 }
+
+// ============================================================================
+// 16. POINT-FREE FUNCTION REFERENCES (v1.1.0)
+// ============================================================================
+
+double(x) => x * 2
+isPositive(n) => n > 0
+
+testPointFree() {
+  let nums = [1, 2, 3, 4, 5]
+
+  // Point-free: function name as callback
+  nums.forEach(print)
+  let doubled = nums.map(double)
+  let positives = nums.filter(isPositive)
+  let strs = nums.map(toString)
+
+  // Point-free in for => loop
+  for n in nums => print
+  for n in nums => double
+
+  print("✅ Point-free function references tested!")
+}
+
+// ============================================================================
+// 17. METHOD REFERENCES WITH :: (v1.1.0)
+// ============================================================================
+
+Formatter {
+    prefix: string
+    constructor(prefix: string) { this.prefix = prefix }
+    format(s: string) => $"{this.prefix}: {s}"
+}
+
+testMethodRef() {
+  let names = ["Alice", "Bob", "Charlie"]
+  let fmt = Formatter("Hello")
+
+  // Method reference: object::method
+  let greetings = names.map(fmt::format)
+  greetings.forEach(print)
+
+  // :: with forEach, filter, find, some, every
+  let logger = Formatter("LOG")
+  names.forEach(logger::format)
+
+  print("✅ Method references with :: tested!")
+}

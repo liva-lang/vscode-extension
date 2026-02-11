@@ -1,8 +1,8 @@
 {
   "name": "liva-vscode",
   "displayName": "Liva Language Support",
-  "description": "Complete programming language support for Liva in Visual Studio Code and Cursor. Features syntax highlighting, snippets, compiler integration, union types, type aliases, pattern matching with type narrowing, destructuring, generics, modules, and standard library.",
-  "version": "0.12.0",
+  "description": "Complete programming language support for Liva in Visual Studio Code and Cursor. Features syntax highlighting, snippets, compiler integration, union types, type aliases, pattern matching with type narrowing, destructuring, generics, modules, point-free function references, :: method references, and standard library.",
+  "version": "0.13.0",
   "publisher": "liva-lang",
   "repository": {
     "type": "git",
@@ -33,7 +33,10 @@
     "parallel",
     "http",
     "rest-api",
-    "web"
+    "web",
+    "point-free",
+    "method-reference",
+    "callbacks"
   ],
   "contributes": {
     "languages": [

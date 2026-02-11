@@ -44,6 +44,49 @@ main() {
     print("\n¡Ejemplo completado!")
 }
 
+// ============================================================================
+// Point-Free Function References (v1.1.0)
+// ============================================================================
+
+double(x) => x * 2
+isPositive(n) => n > 0
+
+testPointFree() {
+    let nums = [1, 2, 3, 4, 5]
+
+    // Point-free: pass function name directly (no lambda needed)
+    nums.forEach(print)
+    let doubled = nums.map(double)
+    let positives = nums.filter(isPositive)
+    let strs = nums.map(toString)
+
+    // For loop with point-free
+    for n in nums => print
+}
+
+// ============================================================================
+// Method References with :: (v1.1.0)
+// ============================================================================
+
+Formatter {
+    prefix: string
+    constructor(prefix: string) { this.prefix = prefix }
+    format(s: string) => $"{this.prefix}: {s}"
+}
+
+testMethodRef() {
+    let names = ["Alice", "Bob", "Charlie"]
+    let fmt = Formatter("Hello")
+
+    // Method reference: bind instance method as callback
+    let greetings = names.map(fmt::format)
+    greetings.forEach(print)
+
+    // Also works with forEach, filter, find, some, every
+    let logger = Formatter("LOG")
+    names.forEach(logger::format)
+}
+
 // Función de utilidad
 saludar(nombre: string) => $"¡Hola, {nombre}!"
 

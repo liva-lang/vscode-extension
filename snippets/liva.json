@@ -631,12 +631,40 @@
         ],
         "description": "Transform array elements"
     },
+    "Array map (point-free)": {
+        "prefix": "mappf",
+        "body": [
+            "${1:array}.map(${2:toString})"
+        ],
+        "description": "map with point-free function reference (v1.1.0)"
+    },
+    "Array map (method reference)": {
+        "prefix": "mapmr",
+        "body": [
+            "${1:array}.map(${2:fmt}::${3:format})"
+        ],
+        "description": "map with :: method reference (v1.1.0)"
+    },
     "Array filter": {
         "prefix": "filter",
         "body": [
             "${1:array}.filter(${2:x} => ${3:x > 0})"
         ],
         "description": "Filter array elements"
+    },
+    "Array filter (point-free)": {
+        "prefix": "filterpf",
+        "body": [
+            "${1:array}.filter(${2:isValid})"
+        ],
+        "description": "filter with point-free function reference (v1.1.0)"
+    },
+    "Array filter (method reference)": {
+        "prefix": "filtermr",
+        "body": [
+            "${1:array}.filter(${2:checker}::${3:isValid})"
+        ],
+        "description": "filter with :: method reference (v1.1.0)"
     },
     "Array reduce": {
         "prefix": "reduce",
@@ -651,6 +679,20 @@
             "${1:array}.forEach(${2:x} => ${3:print(x)})"
         ],
         "description": "Iterate over array with side effects"
+    },
+    "Array forEach (point-free)": {
+        "prefix": "foreachpf",
+        "body": [
+            "${1:array}.forEach(${2:print})"
+        ],
+        "description": "forEach with point-free function reference (v1.1.0)"
+    },
+    "Array forEach (method reference)": {
+        "prefix": "foreachmr",
+        "body": [
+            "${1:array}.forEach(${2:obj}::${3:method})"
+        ],
+        "description": "forEach with :: method reference (v1.1.0)"
     },
     "forEach with array destructuring": {
         "prefix": "foreachd",

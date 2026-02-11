@@ -1,5 +1,32 @@
 # Changelog
 
+## [0.13.0] - 2026-02-11
+
+### 🍬 Liva v1.1.0 Syntax Sugar Support
+
+**Point-free function references and `::` method references!**
+
+### Added
+
+#### Syntax Highlighting
+- **`::` method reference operator**: Highlighted as `keyword.operator.method-reference.liva`
+- **`object::method` pattern**: Object highlighted as variable, `::` as operator, method as function reference
+- Examples: `names.map(fmt::format)`, `items.forEach(logger::log)`
+
+#### New Snippets (6 new)
+- `foreachpf` — forEach with point-free function reference
+- `foreachmr` — forEach with `::` method reference
+- `mappf` — map with point-free function reference
+- `mapmr` — map with `::` method reference
+- `filterpf` — filter with point-free function reference
+- `filtermr` — filter with `::` method reference
+
+#### Examples & Tests
+- Added point-free and `::` method reference examples to `example.liva`
+- Added syntax highlighting test cases (sections 16 & 17)
+
+---
+
 ## [0.12.0] - 2025-10-27
 
 ### 🚀 Language Server Protocol (LSP) Integration ✨
