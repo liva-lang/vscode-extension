@@ -314,11 +314,6 @@ export class LivaHoverProvider implements vscode.HoverProvider {
                 description: 'Creates a task handle for deferred execution. Allows spawning multiple tasks and awaiting them later.',
                 example: 'let task1 = task async fetchUser(1)\nlet task2 = task par compute(100)\n\n// Do other work...\n\n// Await results when needed\nlet user = await task1\nlet result = await task2'
             },
-            'fire': {
-                title: 'Fire and Forget',
-                description: 'Executes a function without waiting for the result. Use for side effects like logging.',
-                example: 'fire async logEvent("User logged in")\nfire par backgroundCleanup()\n\n// Continues immediately without waiting'
-            },
             'await': {
                 title: 'Await Task',
                 description: 'Waits for a task handle to complete and returns its result.',

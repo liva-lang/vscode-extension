@@ -62,9 +62,9 @@ main() {
   let taskA = task async fetchUser(2)
   let taskB = task par compute(50)
   
-  // Fire and forget
-  fire async logEvent("System started")
-  fire par backgroundCleanup()
+  // Fire and forget (auto-inferred when not assigned)
+  async logEvent("System started")
+  par backgroundCleanup()
   
   // Await task results
   let userResult = await taskA

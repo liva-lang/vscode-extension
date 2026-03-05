@@ -240,9 +240,9 @@
                     "match": "\\bfail\\b"
                 },
                 {
-                    "comment": "Concurrency keywords - async/par/task/fire/await",
+                    "comment": "Concurrency keywords - async/par/task/await",
                     "name": "keyword.control.concurrency.liva",
-                    "match": "\\b(async|await|par|task|fire)\\b"
+                    "match": "\\b(async|await|par|task)\\b"
                 },
                 {
                     "comment": "Parallel execution policies",

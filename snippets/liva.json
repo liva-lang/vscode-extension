@@ -260,20 +260,6 @@
         ],
         "description": "Await a task handle"
     },
-    "Fire async": {
-        "prefix": "firea",
-        "body": [
-            "fire async ${1:functionCall}(${2:arguments})"
-        ],
-        "description": "Fire and forget async call"
-    },
-    "Fire par": {
-        "prefix": "firep",
-        "body": [
-            "fire par ${1:functionCall}(${2:arguments})"
-        ],
-        "description": "Fire and forget parallel call"
-    },
     "Try-catch": {
         "prefix": "try",
         "body": [

@@ -1062,7 +1062,7 @@ Major milestone! Full IntelliSense support with intelligent code completion, nav
 #### Phase 2.1: Completion Provider (af27ce9)
 - **Intelligent code completion** with 100+ completion items
 - **Keyword completions**: All language keywords with descriptions
-- **Concurrency completions**: `async`, `par`, `task`, `fire`, `await` with snippets
+- **Concurrency completions**: `async`, `par`, `task`, `await` with snippets
 - **Type completions**: Primitive and platform-specific types (i8-i128, u8-u128, f32, f64)
 - **Error handling completions**: Error binding patterns, fail statements
 - **Built-in function completions**: print, println, length, push, pop
@@ -1081,7 +1081,7 @@ Major milestone! Full IntelliSense support with intelligent code completion, nav
   - Shows function signature, parameters, return type
   - Practical usage examples
 - **Concurrency keyword hover**: Detailed execution model explanations
-  - async, par, task, fire, await with complete examples
+  - async, par, task, await with complete examples
   - Parallel policies: seq, parvec, chunk, threads, simdWidth, ordered
 - **Markdown formatting**: Rich hover content with code examples
 
@@ -1184,7 +1184,7 @@ Major improvements to developer experience with enhanced syntax highlighting, co
   - Escape sequence support
 - **Categorized keywords**: Better organization by purpose
   - Control flow: `if`, `else`, `while`, `for`, `switch`, `return`, `break`, `continue`
-  - Concurrency: `async`, `await`, `par`, `task`, `fire`
+  - Concurrency: `async`, `await`, `par`, `task`
   - Parallel policies: `parvec`, `with`, `ordered`, `chunk`, `threads`, `simdWidth`
   - Declarations: `let`, `const`, `constructor`, `this`
   - Error handling: `fail`, `throw`, `try`, `catch`, `Err`, `Ok`
@@ -1220,7 +1220,6 @@ Major improvements to developer experience with enhanced syntax highlighting, co
   - `async`, `par`: Async/parallel calls
   - `taska`, `taskp`: Task handles
   - `await`: Await task
-  - `firea`, `firep`: Fire and forget
   - `asyncm`: Multi-async pattern
   - `parpat`: Parallel computation pattern
 - **Error handling snippets**:
@@ -1251,7 +1250,7 @@ Major improvements to developer experience with enhanced syntax highlighting, co
 - **OnEnter rules**:
   - Multi-line comment continuation (`/** */`)
   - Control flow statement indentation
-  - Special handling for async/par/task/fire
+  - Special handling for async/par/task
 
 ### Changed
 - Updated syntax highlighting to use semantic categories instead of flat keyword list

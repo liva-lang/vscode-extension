@@ -82,7 +82,7 @@
             }
         },
         {
-            "beforeText": "^\\s*(async|par|task|fire)\\s+",
+            "beforeText": "^\\s*(async|par|task)\\s+",
             "action": {
                 "indent": "none"
             }

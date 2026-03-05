@@ -52,7 +52,7 @@ This file tracks progress on implementing the Liva VSCode extension enhancements
 **Enhanced Language Support (Phase 1):**
 - ✅ Advanced syntax highlighting with v0.6 features
   - ✅ String template interpolation (`$"text {expr}"`)
-  - ✅ Concurrency keywords (`async`, `par`, `task`, `fire`, `await`)
+  - ✅ Concurrency keywords (`async`, `par`, `task`, `await`)
   - ✅ Enhanced numeric literals (hex, binary, scientific)
   - ✅ Function and operator highlighting
 - ✅ Comprehensive snippets (56 total)
@@ -109,7 +109,7 @@ This file tracks progress on implementing the Liva VSCode extension enhancements
 #### 1.1: Enhanced Syntax Highlighting ✅
 
 - ✅ Update `liva.tmLanguage.json` with v0.6 keywords
-  - ✅ Add `async`, `par`, `task`, `fire`, `await` keywords
+  - ✅ Add `async`, `par`, `task`, `await` keywords
   - ✅ Add `fail` expression support
   - ✅ Update operators and symbols
   - ✅ Add string template interpolation
@@ -126,11 +126,10 @@ This file tracks progress on implementing the Liva VSCode extension enhancements
   - ✅ `fnb`: Block function
   - ✅ `fnt`: Function with return type
   - ✅ `fn1`: Typed one-liner
-- ✅ Add concurrency snippets (8 snippets)
+- ✅ Add concurrency snippets (6 snippets)
   - ✅ `async`, `par`: Basic calls
   - ✅ `taska`, `taskp`: Task handles
   - ✅ `await`: Await task
-  - ✅ `firea`, `firep`: Fire and forget
   - ✅ `asyncm`, `parpat`: Patterns
 - ✅ Add error handling snippets (6 snippets)
   - ✅ `letf`, `leta`, `letp`: Error binding

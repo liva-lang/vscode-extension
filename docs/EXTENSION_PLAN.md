@@ -83,7 +83,7 @@
 
 1. **Enhanced Syntax Highlighting**
    - [ ] Update `liva.tmLanguage.json` with new v0.6 keywords
-   - [ ] Add support for concurrency keywords (`async`, `par`, `task`, `fire`)
+   - [ ] Add support for concurrency keywords (`async`, `par`, `task`)
    - [ ] Improve string template highlighting (`$"text {expr}"`)
    - [ ] Add semantic token provider for better coloring
    - [ ] Support for new fail expression syntax

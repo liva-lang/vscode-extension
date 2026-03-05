@@ -101,13 +101,6 @@ export class LiveCompletionProvider implements vscode.CompletionItemProvider {
         taskItem.insertText = new vscode.SnippetString('task ${1|async,par|} ${2:functionCall}(${3:args})');
         items.push(taskItem);
 
-        // Fire keyword
-        const fireItem = new vscode.CompletionItem('fire', vscode.CompletionItemKind.Keyword);
-        fireItem.detail = 'Fire and forget';
-        fireItem.documentation = new vscode.MarkdownString('Execute without waiting for result\n\nExample: `fire async logEvent("message")`');
-        fireItem.insertText = new vscode.SnippetString('fire ${1|async,par|} ${2:functionCall}(${3:args})');
-        items.push(fireItem);
-
         // Await keyword
         const awaitItem = new vscode.CompletionItem('await', vscode.CompletionItemKind.Keyword);
         awaitItem.detail = 'Await task result';
