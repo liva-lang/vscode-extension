@@ -283,6 +283,11 @@
                     "match": "\\b(number|float|bool|char|string|bytes|i8|i16|i32|i64|i128|isize|u8|u16|u32|u64|u128|usize|f32|f64)\\b"
                 },
                 {
+                    "comment": "Map collection type with optional generic parameters",
+                    "name": "support.type.collection.liva",
+                    "match": "\\bMap\\b"
+                },
+                {
                     "comment": "Trait aliases - Numeric, Comparable, Number, Printable",
                     "name": "support.type.trait.alias.liva",
                     "match": "\\b(Numeric|Comparable|Number|Printable)\\b"

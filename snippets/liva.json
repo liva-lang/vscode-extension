@@ -215,6 +215,100 @@
         ],
         "description": "Create a for loop with policy options"
     },
+    "For loop over Map": {
+        "prefix": "formap",
+        "body": [
+            "for ${1:key}, ${2:value} in ${3:map} {",
+            "    $0",
+            "}"
+        ],
+        "description": "Iterate over Map with key-value destructuring (v1.3.0)"
+    },
+    "Map literal": {
+        "prefix": "maplit",
+        "body": [
+            "let ${1:name} = Map {",
+            "    \"${2:key}\": ${3:value}",
+            "}"
+        ],
+        "description": "Create a Map with key-value pairs (v1.3.0)"
+    },
+    "Map empty with type": {
+        "prefix": "mapempty",
+        "body": [
+            "let ${1:name}: Map<${2:string}, ${3:int}> = Map {}"
+        ],
+        "description": "Create an empty Map with type annotation (v1.3.0)"
+    },
+    "Map get with default": {
+        "prefix": "mapget",
+        "body": [
+            "${1:map}.get(\"${2:key}\") or ${3:default}"
+        ],
+        "description": "Get value from Map with fallback default (v1.3.0)"
+    },
+    "Map set": {
+        "prefix": "mapset",
+        "body": [
+            "${1:map}.set(\"${2:key}\", ${3:value})"
+        ],
+        "description": "Insert or update Map entry (v1.3.0)"
+    },
+    "Map has": {
+        "prefix": "maphas",
+        "body": [
+            "${1:map}.has(\"${2:key}\")"
+        ],
+        "description": "Check if key exists in Map (v1.3.0)"
+    },
+    "Map delete": {
+        "prefix": "mapdel",
+        "body": [
+            "${1:map}.delete(\"${2:key}\")"
+        ],
+        "description": "Remove entry from Map by key (v1.3.0)"
+    },
+    "Map forEach": {
+        "prefix": "mapfe",
+        "body": [
+            "${1:map}.forEach((${2:key}, ${3:value}) => {",
+            "    $0",
+            "})"
+        ],
+        "description": "Iterate Map with forEach callback (v1.3.0)"
+    },
+    "Map keys": {
+        "prefix": "mapkeys",
+        "body": [
+            "let ${1:keys} = ${2:map}.keys()"
+        ],
+        "description": "Get all keys from Map as array (v1.3.0)"
+    },
+    "Map values": {
+        "prefix": "mapvals",
+        "body": [
+            "let ${1:vals} = ${2:map}.values()"
+        ],
+        "description": "Get all values from Map as array (v1.3.0)"
+    },
+    "Map entries": {
+        "prefix": "mapentries",
+        "body": [
+            "let ${1:entries} = ${2:map}.entries()"
+        ],
+        "description": "Get all key-value pairs from Map as tuples (v1.3.0)"
+    },
+    "Function returning Map": {
+        "prefix": "fnmap",
+        "body": [
+            "${1:name}(): Map<${2:string}, ${3:int}> {",
+            "    return Map {",
+            "        \"${4:key}\": ${5:value}",
+            "    }",
+            "}"
+        ],
+        "description": "Function that returns a Map (v1.3.0)"
+    },
     "Switch statement": {
         "prefix": "switch",
         "body": [

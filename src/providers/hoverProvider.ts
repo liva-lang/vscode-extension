@@ -172,6 +172,7 @@ export class LivaHoverProvider implements vscode.HoverProvider {
             
             'f32': { title: '32-bit Float', description: 'Single-precision floating-point number (IEEE 754)' },
             'f64': { title: '64-bit Float', description: 'Double-precision floating-point number (IEEE 754)' },
+            'Map': { title: 'Map<K, V> Collection', description: 'Key-value dictionary (hashmap) with O(1) lookup. Created with `Map { key: value }` syntax. Supports methods: get, set, has, delete, keys, values, entries, clear, forEach. Iteration with `for key, value in map`.' },
         };
 
         const info = types[word];

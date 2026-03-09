@@ -196,6 +196,9 @@ export class LiveCompletionProvider implements vscode.CompletionItemProvider {
             // Float types
             { label: 'f32', detail: '32-bit float', doc: 'Single-precision floating-point' },
             { label: 'f64', detail: '64-bit float', doc: 'Double-precision floating-point' },
+            
+            // Collection types
+            { label: 'Map', detail: 'Map<K, V> collection', doc: 'Key-value dictionary with O(1) lookup.\n\nExample:\n```liva\nlet ages: Map<string, int> = Map {}\nlet scores = Map { "math": 95, "english": 88 }\n```' },
         ];
 
         return types.map(t => {
@@ -339,6 +342,14 @@ export class LiveCompletionProvider implements vscode.CompletionItemProvider {
                 snippet: 'toString(${1:value})'
             },
             
+            // Map methods
+            {
+                label: 'Map {}',
+                detail: 'Map { key: value }',
+                doc: '**Create a Map literal**\n\nCreates a new Map (dictionary) with key-value pairs.\n\nExample:\n```liva\nlet ages = Map { "Alice": 30, "Bob": 25 }\nlet empty: Map<string, int> = Map {}\n```',
+                snippet: 'Map { "${1:key}": ${2:value} }'
+            },
+
             // Array functions
             { 
                 label: 'length', 

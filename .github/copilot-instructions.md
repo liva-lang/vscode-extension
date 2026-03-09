@@ -121,5 +121,11 @@ VS Code Extension (TypeScript)
 
 1. **El binario `livac`** debe estar en el PATH o en `bin/` para que el LSP funcione
 2. **lspClient.ts** maneja la conexión con el servidor LSP
-3. **Los snippets** están en `snippets/liva.json` - 70+ patterns
+3. **Los snippets** están en `snippets/liva.json` - 80+ patterns (including Map<K,V> collection snippets)
 4. Para probar cambios, usar F5 (Extension Development Host)
+
+### v1.3.0 Changes (Map<K,V> Support)
+- **Syntax highlighting:** `Map` added as `support.type.collection.liva` in tmLanguage
+- **Snippets:** 12 new Map snippets (maplit, mapempty, mapget, mapset, maphas, mapdel, mapfe, mapkeys, mapvals, mapentries, fnmap, formap)
+- **Completions:** `Map` type completion + `Map {}` literal snippet
+- **Hover:** `Map` type information with method list
