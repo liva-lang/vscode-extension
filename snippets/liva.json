@@ -309,6 +309,96 @@
         ],
         "description": "Function that returns a Map (v1.3.0)"
     },
+    "Set literal": {
+        "prefix": "setlit",
+        "body": [
+            "let ${1:name} = Set { ${2:value1}, ${3:value2} }"
+        ],
+        "description": "Create a Set with values (v1.3.0)"
+    },
+    "Set empty with type": {
+        "prefix": "setempty",
+        "body": [
+            "let ${1:name}: Set<${2:string}> = Set {}"
+        ],
+        "description": "Create an empty Set with type annotation (v1.3.0)"
+    },
+    "Set add": {
+        "prefix": "setadd",
+        "body": [
+            "${1:set}.add(${2:value})"
+        ],
+        "description": "Add element to Set (v1.3.0)"
+    },
+    "Set has": {
+        "prefix": "sethas",
+        "body": [
+            "${1:set}.has(${2:value})"
+        ],
+        "description": "Check if value exists in Set (v1.3.0)"
+    },
+    "Set delete": {
+        "prefix": "setdel",
+        "body": [
+            "${1:set}.delete(${2:value})"
+        ],
+        "description": "Remove element from Set (v1.3.0)"
+    },
+    "Set forEach": {
+        "prefix": "setfe",
+        "body": [
+            "${1:set}.forEach((${2:value}) => {",
+            "    $0",
+            "})"
+        ],
+        "description": "Iterate Set with forEach callback (v1.3.0)"
+    },
+    "Set values": {
+        "prefix": "setvals",
+        "body": [
+            "let ${1:vals} = ${2:set}.values()"
+        ],
+        "description": "Get all values from Set as array (v1.3.0)"
+    },
+    "Set union": {
+        "prefix": "setunion",
+        "body": [
+            "let ${1:result} = ${2:set1}.union(${3:set2})"
+        ],
+        "description": "Get union of two Sets (v1.3.0)"
+    },
+    "Set intersection": {
+        "prefix": "setinter",
+        "body": [
+            "let ${1:result} = ${2:set1}.intersection(${3:set2})"
+        ],
+        "description": "Get intersection of two Sets (v1.3.0)"
+    },
+    "Set difference": {
+        "prefix": "setdiff",
+        "body": [
+            "let ${1:result} = ${2:set1}.difference(${3:set2})"
+        ],
+        "description": "Get difference of two Sets (v1.3.0)"
+    },
+    "For loop over Set": {
+        "prefix": "forset",
+        "body": [
+            "for ${1:value} in ${2:set} {",
+            "    $0",
+            "}"
+        ],
+        "description": "Iterate over Set values (v1.3.0)"
+    },
+    "Function returning Set": {
+        "prefix": "fnset",
+        "body": [
+            "${1:name}(): Set<${2:string}> {",
+            "    return Set { ${3:value1}, ${4:value2} }",
+            "}"
+        ],
+        "description": "Function that returns a Set (v1.3.0)"
+    },
     "Switch statement": {
         "prefix": "switch",
         "body": [

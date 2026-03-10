@@ -285,7 +285,7 @@
                 {
                     "comment": "Map collection type with optional generic parameters",
                     "name": "support.type.collection.liva",
-                    "match": "\\bMap\\b"
+                    "match": "\\b(Map|Set)\\b"
                 },
                 {
                     "comment": "Trait aliases - Numeric, Comparable, Number, Printable",

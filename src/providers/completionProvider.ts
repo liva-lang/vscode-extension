@@ -199,6 +199,7 @@ export class LiveCompletionProvider implements vscode.CompletionItemProvider {
             
             // Collection types
             { label: 'Map', detail: 'Map<K, V> collection', doc: 'Key-value dictionary with O(1) lookup.\n\nExample:\n```liva\nlet ages: Map<string, int> = Map {}\nlet scores = Map { "math": 95, "english": 88 }\n```' },
+            { label: 'Set', detail: 'Set<T> collection', doc: 'Unique value collection with O(1) lookup.\n\nExample:\n```liva\nlet colors: Set<string> = Set {}\nlet primes = Set { 2, 3, 5, 7, 11 }\n```' },
         ];
 
         return types.map(t => {
@@ -348,6 +349,14 @@ export class LiveCompletionProvider implements vscode.CompletionItemProvider {
                 detail: 'Map { key: value }',
                 doc: '**Create a Map literal**\n\nCreates a new Map (dictionary) with key-value pairs.\n\nExample:\n```liva\nlet ages = Map { "Alice": 30, "Bob": 25 }\nlet empty: Map<string, int> = Map {}\n```',
                 snippet: 'Map { "${1:key}": ${2:value} }'
+            },
+
+            // Set methods
+            {
+                label: 'Set {}',
+                detail: 'Set { value1, value2 }',
+                doc: '**Create a Set literal**\n\nCreates a new Set (unique collection) with values.\n\nExample:\n```liva\nlet colors = Set { "red", "green", "blue" }\nlet empty: Set<string> = Set {}\n```',
+                snippet: 'Set { ${1:value} }'
             },
 
             // Array functions
