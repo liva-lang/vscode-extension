@@ -1968,5 +1968,197 @@
             "}"
         ],
         "description": "Switch with 3-type union pattern matching (v0.11.3)"
+    },
+
+    "Enum declaration (simple)": {
+        "prefix": "enum",
+        "body": [
+            "enum ${1:Name} {",
+            "    ${2:VariantA}",
+            "    ${3:VariantB}",
+            "    ${4:VariantC}",
+            "}"
+        ],
+        "description": "Declare an enum with simple variants (v1.2.0)"
+    },
+    "Enum with data": {
+        "prefix": "enumd",
+        "body": [
+            "enum ${1:Shape} {",
+            "    ${2:Circle}(${3:radius}: ${4:number})",
+            "    ${5:Rectangle}(${6:width}: ${7:number}, ${8:height}: ${9:number})",
+            "}"
+        ],
+        "description": "Declare an enum with data-carrying variants (v1.2.0)"
+    },
+    "Enum mixed": {
+        "prefix": "enumm",
+        "body": [
+            "enum ${1:Result} {",
+            "    ${2:Ok}(${3:value}: ${4:string})",
+            "    ${5:Error}(${6:message}: ${7:string})",
+            "    ${8:Loading}",
+            "}"
+        ],
+        "description": "Declare an enum with mixed variants (data + simple) (v1.2.0)"
+    },
+    "Enum variant construction": {
+        "prefix": "enumv",
+        "body": [
+            "${1:EnumName}.${2:Variant}(${3:args})"
+        ],
+        "description": "Construct an enum variant with data (v1.2.0)"
+    },
+    "Switch on enum": {
+        "prefix": "switchenum",
+        "body": [
+            "switch ${1:value} {",
+            "    case ${2:EnumName}.${3:VariantA}(${4:field}):",
+            "        ${5:// handle variant}",
+            "    case ${6:EnumName}.${7:VariantB}(${8:field}):",
+            "        ${9:// handle variant}",
+            "}"
+        ],
+        "description": "Pattern match on enum variants with destructuring (v1.2.0)"
+    },
+    "Switch on enum (expression)": {
+        "prefix": "switchenume",
+        "body": [
+            "let ${1:result} = switch ${2:value} {",
+            "    ${3:EnumName}.${4:VariantA}(${5:field}) => ${6:expression},",
+            "    ${7:EnumName}.${8:VariantB}(${9:field}) => ${10:expression}",
+            "}"
+        ],
+        "description": "Switch expression on enum variants (v1.2.0)"
+    },
+
+    "Or fail (error propagation)": {
+        "prefix": "orfail",
+        "body": [
+            "let ${1:result} = ${2:fallibleCall()} or fail \"${3:Error message}\""
+        ],
+        "description": "Propagate error with custom message using or fail (v1.1.0)"
+    },
+    "Or value (default on error)": {
+        "prefix": "orval",
+        "body": [
+            "let ${1:result} = ${2:fallibleCall()} or ${3:defaultValue}"
+        ],
+        "description": "Provide default value when fallible call fails (v1.3.0)"
+    },
+    "Error binding": {
+        "prefix": "errbind",
+        "body": [
+            "let ${1:result}, err = ${2:fallibleCall()}",
+            "if err => fail \"${3:Error: }$${4:{err.message}}\""
+        ],
+        "description": "Bind result and error, check and propagate (v1.0.0)"
+    },
+    "Error binding with handling": {
+        "prefix": "errbindh",
+        "body": [
+            "let ${1:result}, err = ${2:fallibleCall()}",
+            "if err {",
+            "    ${3:// handle error}",
+            "}"
+        ],
+        "description": "Bind result and error with custom handling block (v1.0.0)"
+    },
+
+    "Dir.list": {
+        "prefix": "dirlist",
+        "body": [
+            "let ${1:entries} = Dir.list(\"${2:path}\")"
+        ],
+        "description": "List directory contents — returns [string] (v1.2.0)"
+    },
+    "Dir.isDir": {
+        "prefix": "dirisdir",
+        "body": [
+            "let ${1:isDir} = Dir.isDir(\"${2:path}\")"
+        ],
+        "description": "Check if path is a directory — returns bool (v1.2.0)"
+    },
+    "Dir.list with loop": {
+        "prefix": "dirloop",
+        "body": [
+            "let ${1:entries} = Dir.list(\"${2:path}\")",
+            "for ${3:entry} in ${1:entries} {",
+            "    ${4:print(entry)}",
+            "}"
+        ],
+        "description": "List directory and iterate over entries (v1.2.0)"
+    },
+
+    "Sys.args": {
+        "prefix": "sysargs",
+        "body": [
+            "let ${1:args} = Sys.args()"
+        ],
+        "description": "Get command-line arguments — returns [string] (v1.2.0)"
+    },
+    "Sys.env": {
+        "prefix": "sysenv",
+        "body": [
+            "let ${1:value} = Sys.env(\"${2:VAR_NAME}\")"
+        ],
+        "description": "Get environment variable value (v1.2.0)"
+    },
+    "Sys.exit": {
+        "prefix": "sysexit",
+        "body": [
+            "Sys.exit(${1:0})"
+        ],
+        "description": "Exit program with status code (v1.2.0)"
+    },
+    "Sys.args with parsing": {
+        "prefix": "sysargsp",
+        "body": [
+            "let args = Sys.args()",
+            "if args.length < ${1:2} {",
+            "    print(\"Usage: ${2:program} <${3:arg}>\")",
+            "    Sys.exit(1)",
+            "}",
+            "let ${4:input} = args[${5:1}]"
+        ],
+        "description": "Get CLI args with usage validation (v1.2.0)"
+    },
+
+    "String contains": {
+        "prefix": "strcontains",
+        "body": [
+            "${1:text}.contains(\"${2:search}\")"
+        ],
+        "description": "Check if string contains substring — returns bool (v1.2.0)"
+    },
+    "Array join": {
+        "prefix": "arrjoin",
+        "body": [
+            "${1:array}.join(\"${2:, }\")"
+        ],
+        "description": "Join string array with separator (v1.2.0)"
+    },
+    "Inclusive range for loop": {
+        "prefix": "forinc",
+        "body": [
+            "for ${1:i} in ${2:1}..=${3:10} {",
+            "    ${4:print(i)}",
+            "}"
+        ],
+        "description": "For loop with inclusive range ..= (v1.2.0)"
+    },
+    "Math.PI": {
+        "prefix": "mathpi",
+        "body": [
+            "Math.PI"
+        ],
+        "description": "Mathematical constant PI (3.14159...) (v1.2.0)"
+    },
+    "Math.E": {
+        "prefix": "mathe",
+        "body": [
+            "Math.E"
+        ],
+        "description": "Mathematical constant E (2.71828...) (v1.2.0)"
     }
 }
