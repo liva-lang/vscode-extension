@@ -11,10 +11,10 @@ This directory contains examples demonstrating Liva v0.8.0's module system.
 
 ```bash
 # From this directory
-livac main.liva --run
+livac run main.liva
 
 # Or with explicit output
-livac main.liva --output ./build
+livac build --output ./build main.liva
 ```
 
 ## Expected Output

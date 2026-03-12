@@ -11,7 +11,7 @@ The Liva VS Code extension (v0.0.5) now integrates seamlessly with the Liva comp
 The compiler now supports a `--json` flag that outputs structured error information:
 
 ```bash
-livac main.liva --json
+livac check --json main.liva
 ```
 
 Output example:

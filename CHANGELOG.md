@@ -37,7 +37,7 @@
 
 #### LSP Client Integration
 - **Language Server Protocol client**:
-  * Connects to `livac --lsp` server
+  * Connects to `livac lsp` server
   * Automatic startup on Liva file open
   * Configurable via `liva.lsp.enabled` setting
   * Restart command: `Liva: Restart Language Server`
@@ -85,7 +85,7 @@
 
 ### Technical Details
 - Uses `vscode-languageclient` for JSON-RPC communication
-- Server process: `livac --lsp` via stdio transport
+- Server process: `livac lsp` via stdio transport
 - Document sync: Full text synchronization
 - Symbol extraction from Liva AST
 - Textual reference finding with boundary checking

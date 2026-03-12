@@ -67,14 +67,14 @@ code --install-extension liva-vscode-0.13.0.vsix
 
 ## 🔌 Integración LSP
 
-La extensión actúa como **cliente LSP** que se comunica con el servidor LSP del compilador (`livac --lsp`).
+La extensión actúa como **cliente LSP** que se comunica con el servidor LSP del compilador (`livac lsp`).
 
 ```
 VS Code Extension (TypeScript)
         │
         │ JSON-RPC (stdio)
         ▼
-    livac --lsp (Rust)
+    livac lsp (Rust)
 ```
 
 ### Capabilities soportadas:

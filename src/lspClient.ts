@@ -26,7 +26,7 @@ export function activateLspClient(context: vscode.ExtensionContext, resolvedComp
     // Note: don't use TransportKind.stdio — it appends --stdio which livac doesn't accept
     const serverOptions: ServerOptions = {
         command: compilerPath,
-        args: ['--lsp'],
+        args: ['lsp'],
     };
 
     // Options to control the language client

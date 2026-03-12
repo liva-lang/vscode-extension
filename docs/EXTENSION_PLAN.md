@@ -196,7 +196,7 @@ vscode.languages.registerCompletionItemProvider('liva', {
 
 **Tasks:**
 - [ ] Implement document formatting provider
-- [ ] Call `livac --format` (if available) or implement formatter
+- [ ] Call `livac fmt` (if available) or implement formatter
 - [ ] Format on save option
 - [ ] Format selection option
 
