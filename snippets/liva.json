@@ -2160,5 +2160,94 @@
             "Math.E"
         ],
         "description": "Mathematical constant E (2.71828...) (v1.2.0)"
+    },
+
+    "Config.load": {
+        "prefix": "cfgload",
+        "body": [
+            "let ${1:config}, ${2:err} = Config.load(\"${3:.env}\")",
+            "if ${2:err} {",
+            "    ${4:Log.error(\"Config error:\", err)}",
+            "}"
+        ],
+        "description": "Load .env configuration file with error handling (v1.5.0)"
+    },
+    "Config.get": {
+        "prefix": "cfgget",
+        "body": [
+            "let ${1:value}, ${2:err} = Config.get(${3:config}, \"${4:KEY}\")"
+        ],
+        "description": "Get string value from config — returns (string, error) (v1.5.0)"
+    },
+    "Config.getInt": {
+        "prefix": "cfggetint",
+        "body": [
+            "let ${1:value}, ${2:err} = Config.getInt(${3:config}, \"${4:KEY}\")"
+        ],
+        "description": "Get integer value from config — returns (int, error) (v1.5.0)"
+    },
+    "Config.getBool": {
+        "prefix": "cfggetbool",
+        "body": [
+            "let ${1:value}, ${2:err} = Config.getBool(${3:config}, \"${4:KEY}\")"
+        ],
+        "description": "Get boolean value from config — returns (bool, error) (v1.5.0)"
+    },
+    "Config.getAll": {
+        "prefix": "cfggetall",
+        "body": [
+            "let ${1:all} = Config.getAll(${2:config})"
+        ],
+        "description": "Get all config entries as sorted Map<string, string> (v1.5.0)"
+    },
+    "Config full setup": {
+        "prefix": "cfgsetup",
+        "body": [
+            "let config, err = Config.load(\"${1:.env}\")",
+            "if err {",
+            "    Log.error(\"Config error:\", err)",
+            "}",
+            "",
+            "let ${2:host}, _ = Config.get(config, \"${3:HOST}\")",
+            "let ${4:port}, _ = Config.getInt(config, \"${5:PORT}\")",
+            "let ${6:debug}, _ = Config.getBool(config, \"${7:DEBUG}\")"
+        ],
+        "description": "Full config setup: load + get string, int, bool values (v1.5.0)"
+    },
+
+    "Log.info": {
+        "prefix": "loginfo",
+        "body": [
+            "Log.info(${1:\"message\"})"
+        ],
+        "description": "Log informational message with timestamp (v1.5.0)"
+    },
+    "Log.warn": {
+        "prefix": "logwarn",
+        "body": [
+            "Log.warn(${1:\"message\"})"
+        ],
+        "description": "Log warning message with timestamp (v1.5.0)"
+    },
+    "Log.error": {
+        "prefix": "logerror",
+        "body": [
+            "Log.error(${1:\"message\"})"
+        ],
+        "description": "Log error message with timestamp (v1.5.0)"
+    },
+    "Log.debug": {
+        "prefix": "logdebug",
+        "body": [
+            "Log.debug(${1:\"message\"})"
+        ],
+        "description": "Log debug message — only shown with --verbose (v1.5.0)"
+    },
+    "Log.setLevel": {
+        "prefix": "logsetlevel",
+        "body": [
+            "Log.setLevel(\"${1|debug,info,warn,error|}\")"
+        ],
+        "description": "Set minimum log level at runtime (v1.5.0)"
     }
 }

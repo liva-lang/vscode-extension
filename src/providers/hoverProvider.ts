@@ -23,6 +23,11 @@ export class LivaHoverProvider implements vscode.HoverProvider {
         const word = document.getText(range);
         const line = document.lineAt(position.line).text;
 
+        // Try dotted name (e.g., Config.load, Log.info, console.log)
+        const charPos = position.character;
+        const dottedRange = document.getWordRangeAtPosition(position, /\b[a-zA-Z_][a-zA-Z0-9_]*\.[a-zA-Z_][a-zA-Z0-9_]*/);
+        const dottedWord = dottedRange ? document.getText(dottedRange) : null;
+
         // Check for different symbol types
         const keywordInfo = this.getKeywordInfo(word);
         if (keywordInfo) {
@@ -32,6 +37,14 @@ export class LivaHoverProvider implements vscode.HoverProvider {
         const typeInfo = this.getTypeInfo(word);
         if (typeInfo) {
             return new vscode.Hover(typeInfo, range);
+        }
+
+        // Try dotted name first for built-ins (Config.load, Log.info, etc.)
+        if (dottedWord) {
+            const dottedInfo = this.getBuiltInFunctionInfo(dottedWord);
+            if (dottedInfo) {
+                return new vscode.Hover(dottedInfo, dottedRange!);
+            }
         }
 
         const builtInInfo = this.getBuiltInFunctionInfo(word);
@@ -274,6 +287,70 @@ export class LivaHoverProvider implements vscode.HoverProvider {
                 description: 'Removes and returns the last item from an array.',
                 returns: 'any',
                 example: 'let items = [1, 2, 3]\nlet last = pop(items)  // 3\n// items is now [1, 2]'
+            },
+
+            // Config module
+            'Config.load': {
+                signature: 'Config.load(path: string): (Map<string, string>, string)',
+                description: 'Loads and parses a `.env` file. Returns (config, error) tuple.',
+                returns: '(Map<string, string>, string)',
+                example: 'let config, err = Config.load(".env")\nif err {\n    Log.error("Config error:", err)\n}'
+            },
+            'Config.get': {
+                signature: 'Config.get(config: Map, key: string): (string, string)',
+                description: 'Retrieves a string value from the config map by key.',
+                returns: '(string, string)',
+                example: 'let host, err = Config.get(config, "HOST")\nif err {\n    print("Missing key:", err)\n}'
+            },
+            'Config.getInt': {
+                signature: 'Config.getInt(config: Map, key: string): (int, string)',
+                description: 'Retrieves and parses an integer value from the config map.',
+                returns: '(int, string)',
+                example: 'let port, err = Config.getInt(config, "PORT")'
+            },
+            'Config.getBool': {
+                signature: 'Config.getBool(config: Map, key: string): (bool, string)',
+                description: 'Retrieves a boolean value. Truthy: `true`, `1`, `yes`, `on` (case-insensitive).',
+                returns: '(bool, string)',
+                example: 'let debug, err = Config.getBool(config, "DEBUG")'
+            },
+            'Config.getAll': {
+                signature: 'Config.getAll(config: Map): Map<string, string>',
+                description: 'Returns all config entries as a sorted map (BTreeMap).',
+                returns: 'Map<string, string>',
+                example: 'let all = Config.getAll(config)'
+            },
+
+            // Log module
+            'Log.info': {
+                signature: 'Log.info(...args: any[])',
+                description: 'Logs an informational message with ISO 8601 timestamp to stderr. Supports variadic args and smart table rendering.',
+                returns: 'void',
+                example: 'Log.info("Server started")\nLog.info("User", name, "from", ip)'
+            },
+            'Log.warn': {
+                signature: 'Log.warn(...args: any[])',
+                description: 'Logs a warning message with timestamp to stderr.',
+                returns: 'void',
+                example: 'Log.warn("Disk space low:", usage, "%")'
+            },
+            'Log.error': {
+                signature: 'Log.error(...args: any[])',
+                description: 'Logs an error message with timestamp to stderr.',
+                returns: 'void',
+                example: 'Log.error("Connection failed:", err)'
+            },
+            'Log.debug': {
+                signature: 'Log.debug(...args: any[])',
+                description: 'Logs a debug message. Only shown when running with `--verbose` flag.',
+                returns: 'void',
+                example: 'Log.debug("Request payload:", data)'
+            },
+            'Log.setLevel': {
+                signature: 'Log.setLevel(level: string)',
+                description: 'Sets the minimum log level at runtime. Levels: `"debug"`, `"info"`, `"warn"`, `"error"`.',
+                returns: 'void',
+                example: 'Log.setLevel("debug")  // Show all messages'
             },
         };
 

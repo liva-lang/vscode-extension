@@ -378,6 +378,70 @@ export class LiveCompletionProvider implements vscode.CompletionItemProvider {
                 doc: 'Remove and return last item',
                 snippet: 'pop(${1:array})'
             },
+
+            // Config module
+            {
+                label: 'Config.load',
+                detail: 'Config.load(path): (Map, string)',
+                doc: '**Load .env configuration file**\n\nReads and parses a `.env` file (KEY=VALUE format).\n\nReturns `(config, error)` tuple.\n\nExample:\n```liva\nlet config, err = Config.load(".env")\nif err {\n    Log.error("Config error:", err)\n}\n```',
+                snippet: 'Config.load(${1:".env"})'
+            },
+            {
+                label: 'Config.get',
+                detail: 'Config.get(config, key): (string, string)',
+                doc: '**Get string value from config**\n\nRetrieves a string value by key.\n\nExample:\n```liva\nlet host, err = Config.get(config, "HOST")\n```',
+                snippet: 'Config.get(${1:config}, ${2:"KEY"})'
+            },
+            {
+                label: 'Config.getInt',
+                detail: 'Config.getInt(config, key): (int, string)',
+                doc: '**Get integer value from config**\n\nRetrieves and parses an integer value.\n\nExample:\n```liva\nlet port, err = Config.getInt(config, "PORT")\n```',
+                snippet: 'Config.getInt(${1:config}, ${2:"KEY"})'
+            },
+            {
+                label: 'Config.getBool',
+                detail: 'Config.getBool(config, key): (bool, string)',
+                doc: '**Get boolean value from config**\n\nRetrieves a boolean value. Truthy: `true`, `1`, `yes`, `on`.\n\nExample:\n```liva\nlet debug, err = Config.getBool(config, "DEBUG")\n```',
+                snippet: 'Config.getBool(${1:config}, ${2:"KEY"})'
+            },
+            {
+                label: 'Config.getAll',
+                detail: 'Config.getAll(config): Map<string, string>',
+                doc: '**Get all config entries**\n\nReturns all key-value pairs as a sorted map.\n\nExample:\n```liva\nlet all = Config.getAll(config)\n```',
+                snippet: 'Config.getAll(${1:config})'
+            },
+
+            // Log module
+            {
+                label: 'Log.info',
+                detail: 'Log.info(...args)',
+                doc: '**Log informational message**\n\nTimestamped info message to stderr. Supports variadic args.\n\nExample:\n```liva\nLog.info("Server started on port", port)\n```',
+                snippet: 'Log.info(${1:"message"})'
+            },
+            {
+                label: 'Log.warn',
+                detail: 'Log.warn(...args)',
+                doc: '**Log warning message**\n\nTimestamped warning to stderr.\n\nExample:\n```liva\nLog.warn("Disk space low:", pct, "%")\n```',
+                snippet: 'Log.warn(${1:"message"})'
+            },
+            {
+                label: 'Log.error',
+                detail: 'Log.error(...args)',
+                doc: '**Log error message**\n\nTimestamped error to stderr.\n\nExample:\n```liva\nLog.error("Connection failed:", err)\n```',
+                snippet: 'Log.error(${1:"message"})'
+            },
+            {
+                label: 'Log.debug',
+                detail: 'Log.debug(...args)',
+                doc: '**Log debug message**\n\nOnly shown with `--verbose` flag.\n\nExample:\n```liva\nLog.debug("Payload:", data)\n```',
+                snippet: 'Log.debug(${1:"message"})'
+            },
+            {
+                label: 'Log.setLevel',
+                detail: 'Log.setLevel(level: string)',
+                doc: '**Set minimum log level**\n\nLevels: `"debug"`, `"info"`, `"warn"`, `"error"`.\n\nExample:\n```liva\nLog.setLevel("debug")\n```',
+                snippet: 'Log.setLevel(${1:"debug"})'
+            },
         ];
 
         return functions.map(f => {

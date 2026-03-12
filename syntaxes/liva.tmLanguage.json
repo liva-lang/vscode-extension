@@ -342,6 +342,78 @@
                     }
                 },
                 {
+                    "comment": "Dir namespace and methods",
+                    "match": "\\b(Dir)\\s*\\.\\s*([a-zA-Z_][a-zA-Z0-9_]*)\\s*(?=\\()",
+                    "captures": {
+                        "1": {
+                            "name": "support.class.dir.liva"
+                        },
+                        "2": {
+                            "name": "support.function.dir.liva"
+                        }
+                    }
+                },
+                {
+                    "comment": "Config namespace and methods",
+                    "match": "\\b(Config)\\s*\\.\\s*([a-zA-Z_][a-zA-Z0-9_]*)\\s*(?=\\()",
+                    "captures": {
+                        "1": {
+                            "name": "support.class.config.liva"
+                        },
+                        "2": {
+                            "name": "support.function.config.liva"
+                        }
+                    }
+                },
+                {
+                    "comment": "Log namespace and methods",
+                    "match": "\\b(Log)\\s*\\.\\s*([a-zA-Z_][a-zA-Z0-9_]*)\\s*(?=\\()",
+                    "captures": {
+                        "1": {
+                            "name": "support.class.log.liva"
+                        },
+                        "2": {
+                            "name": "support.function.log.liva"
+                        }
+                    }
+                },
+                {
+                    "comment": "Math namespace and methods",
+                    "match": "\\b(Math)\\s*\\.\\s*([a-zA-Z_][a-zA-Z0-9_]*)\\s*(?=\\()",
+                    "captures": {
+                        "1": {
+                            "name": "support.class.math.liva"
+                        },
+                        "2": {
+                            "name": "support.function.math.liva"
+                        }
+                    }
+                },
+                {
+                    "comment": "Sys namespace and methods",
+                    "match": "\\b(Sys)\\s*\\.\\s*([a-zA-Z_][a-zA-Z0-9_]*)\\s*(?=\\()",
+                    "captures": {
+                        "1": {
+                            "name": "support.class.sys.liva"
+                        },
+                        "2": {
+                            "name": "support.function.sys.liva"
+                        }
+                    }
+                },
+                {
+                    "comment": "HTTP namespace and methods",
+                    "match": "\\b(HTTP)\\s*\\.\\s*([a-zA-Z_][a-zA-Z0-9_]*)\\s*(?=\\()",
+                    "captures": {
+                        "1": {
+                            "name": "support.class.http.liva"
+                        },
+                        "2": {
+                            "name": "support.function.http.liva"
+                        }
+                    }
+                },
+                {
                     "comment": "Built-in functions",
                     "match": "\\b(print|println|parseInt|parseFloat|toString|length|push|pop)\\s*(?=\\()",
                     "captures": {
