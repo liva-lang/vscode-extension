@@ -1985,8 +1985,8 @@
         "prefix": "enumd",
         "body": [
             "enum ${1:Shape} {",
-            "    ${2:Circle}(${3:radius}: ${4:number})",
-            "    ${5:Rectangle}(${6:width}: ${7:number}, ${8:height}: ${9:number})",
+            "    ${2:Circle}(${3:radius}: ${4:float})",
+            "    ${5:Rectangle}(${6:width}: ${7:float}, ${8:height}: ${9:float})",
             "}"
         ],
         "description": "Declare an enum with data-carrying variants (v1.2.0)"
@@ -2050,7 +2050,7 @@
         "prefix": "errbind",
         "body": [
             "let ${1:result}, err = ${2:fallibleCall()}",
-            "if err => fail \"${3:Error: }$${4:{err.message}}\""
+            "if err => fail \"${3:Error: }$${4:{err}}\""
         ],
         "description": "Bind result and error, check and propagate (v1.0.0)"
     },

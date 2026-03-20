@@ -11,7 +11,7 @@
 **vscode-extension** es la extensión de VS Code que proporciona soporte completo para el lenguaje Liva:
 
 - Syntax highlighting (incluyendo `::` method references)
-- Snippets (70+, incluyendo point-free y `::` variants)
+- Snippets (250, incluyendo point-free, `::` variants, Config, Log)
 - Cliente LSP integrado
 - Autocompletado
 - Go to Definition
@@ -39,7 +39,7 @@ syntaxes/
 └── liva.tmLanguage.json      # Syntax highlighting (TextMate)
 
 snippets/
-└── liva.json                 # 70+ code snippets
+└── liva.json                 # 250 code snippets
 ```
 
 ---
@@ -121,7 +121,7 @@ VS Code Extension (TypeScript)
 
 1. **El binario `livac`** debe estar en el PATH o en `bin/` para que el LSP funcione
 2. **lspClient.ts** maneja la conexión con el servidor LSP
-3. **Los snippets** están en `snippets/liva.json` - 90+ patterns (including Map<K,V> and Set<T> collection snippets)
+3. **Los snippets** están en `snippets/liva.json` - 250 patterns (including Map<K,V>, Set<T>, Config, Log snippets)
 4. Para probar cambios, usar F5 (Extension Development Host)
 
 ### v1.3.0 Changes (Map<K,V> & Set<T> Support)
@@ -129,3 +129,9 @@ VS Code Extension (TypeScript)
 - **Snippets:** 12 Map snippets (maplit, mapempty, mapget, mapset, maphas, mapdel, mapfe, mapkeys, mapvals, mapentries, fnmap, formap) + 12 Set snippets (setlit, setempty, setadd, sethas, setdel, setfe, setvals, setunion, setinter, setdiff, forset, fnset)
 - **Completions:** `Map` + `Set` type completions + `Map {}`/`Set {}` literal snippets
 - **Hover:** `Map` and `Set` type information with method lists
+
+### v0.13.0 Changes (Config & Log Support)
+- **Syntax highlighting:** Added namespace rules for Config, Log, Math, Dir, Sys, HTTP (support.class.namespace.liva)
+- **Snippets:** 6 Config snippets (cfgload, cfgget, cfggetint, cfggetbool, cfggetall, cfgsetup) + 5 Log snippets (loginfo, logwarn, logerror, logdebug, logsetlevel)
+- **Completions:** Config.load/get/getInt/getBool/getAll + Log.info/warn/error/debug/setLevel
+- **Hover:** Config and Log method documentation with dotted-name detection fix
