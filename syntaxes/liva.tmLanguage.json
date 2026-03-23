@@ -414,6 +414,114 @@
                     }
                 },
                 {
+                    "comment": "Regex namespace and methods",
+                    "match": "\\b(Regex)\\s*\\.\\s*([a-zA-Z_][a-zA-Z0-9_]*)\\s*(?=\\()",
+                    "captures": {
+                        "1": {
+                            "name": "support.class.regex.liva"
+                        },
+                        "2": {
+                            "name": "support.function.regex.liva"
+                        }
+                    }
+                },
+                {
+                    "comment": "Date namespace and methods",
+                    "match": "\\b(Date)\\s*\\.\\s*([a-zA-Z_][a-zA-Z0-9_]*)\\s*(?=\\()",
+                    "captures": {
+                        "1": {
+                            "name": "support.class.date.liva"
+                        },
+                        "2": {
+                            "name": "support.function.date.liva"
+                        }
+                    }
+                },
+                {
+                    "comment": "CSV namespace and methods",
+                    "match": "\\b(CSV)\\s*\\.\\s*([a-zA-Z_][a-zA-Z0-9_]*)\\s*(?=\\()",
+                    "captures": {
+                        "1": {
+                            "name": "support.class.csv.liva"
+                        },
+                        "2": {
+                            "name": "support.function.csv.liva"
+                        }
+                    }
+                },
+                {
+                    "comment": "Random namespace and methods",
+                    "match": "\\b(Random)\\s*\\.\\s*([a-zA-Z_][a-zA-Z0-9_]*)\\s*(?=\\()",
+                    "captures": {
+                        "1": {
+                            "name": "support.class.random.liva"
+                        },
+                        "2": {
+                            "name": "support.function.random.liva"
+                        }
+                    }
+                },
+                {
+                    "comment": "Crypto namespace and methods",
+                    "match": "\\b(Crypto)\\s*\\.\\s*([a-zA-Z_][a-zA-Z0-9_]*)\\s*(?=\\()",
+                    "captures": {
+                        "1": {
+                            "name": "support.class.crypto.liva"
+                        },
+                        "2": {
+                            "name": "support.function.crypto.liva"
+                        }
+                    }
+                },
+                {
+                    "comment": "Process namespace and methods",
+                    "match": "\\b(Process)\\s*\\.\\s*([a-zA-Z_][a-zA-Z0-9_]*)\\s*(?=\\()",
+                    "captures": {
+                        "1": {
+                            "name": "support.class.process.liva"
+                        },
+                        "2": {
+                            "name": "support.function.process.liva"
+                        }
+                    }
+                },
+                {
+                    "comment": "Server namespace and methods",
+                    "match": "\\b(Server)\\s*\\.\\s*([a-zA-Z_][a-zA-Z0-9_]*)\\s*(?=\\()",
+                    "captures": {
+                        "1": {
+                            "name": "support.class.server.liva"
+                        },
+                        "2": {
+                            "name": "support.function.server.liva"
+                        }
+                    }
+                },
+                {
+                    "comment": "Response namespace and methods",
+                    "match": "\\b(Response)\\s*\\.\\s*([a-zA-Z_][a-zA-Z0-9_]*)\\s*(?=\\()",
+                    "captures": {
+                        "1": {
+                            "name": "support.class.response.liva"
+                        },
+                        "2": {
+                            "name": "support.function.response.liva"
+                        }
+                    }
+                },
+                {
+                    "comment": "DB namespace and methods",
+                    "match": "\\b(DB)\\s*\\.\\s*([a-zA-Z_][a-zA-Z0-9_]*)\\s*(?=\\()",
+                    "captures": {
+                        "1": {
+                            "name": "support.class.db.liva"
+                        },
+                        "2": {
+                            "name": "support.function.db.liva"
+                        }
+                    }
+                },
+                {
                     "comment": "Built-in functions",
                     "match": "\\b(print|println|parseInt|parseFloat|toString|length|push|pop)\\s*(?=\\()",
                     "captures": {

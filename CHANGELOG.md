@@ -1,5 +1,44 @@
 # Changelog
 
+## [0.14.0] - 2026-03-23
+
+### 🗄️ DB Module + Missing Stdlib Syntax Highlighting
+
+### Added
+
+#### Syntax Highlighting (10 new namespaces)
+- **DB**: `DB.open()`, `DB.exec()`, `DB.query()`, `DB.close()`
+- **Regex**: `Regex.test()`, `Regex.match()`, `Regex.findAll()`, etc.
+- **Date**: `Date.now()`, `Date.new()`, `Date.parse()`, etc.
+- **CSV**: `CSV.read()`, `CSV.write()`, `CSV.parse()`, etc.
+- **Random**: `Random.nextInt()`, `Random.shuffle()`, `Random.uuid()`, etc.
+- **Crypto**: `Crypto.sha256()`, `Crypto.md5()`, `Crypto.base64Encode()`, etc.
+- **Process**: `Process.exec()`, `Process.spawn()`, `Process.pid()`, etc.
+- **Server**: `Server.create()`, `app.listen()`, etc.
+- **Response**: `Response.text()`, `Response.json()`, `Response.status()`
+- All namespaces use `support.class.*` / `support.function.*` scopes
+
+#### New Snippets (16 new, 266 total)
+- `dbopen` — Open SQLite database with error handling
+- `dbexec` — Execute SQL statement
+- `dbexecparams` — Execute parameterized SQL
+- `dbquery` — Query and iterate rows
+- `dbqueryparams` — Query with parameters
+- `dbclose` — Close database connection
+- `dbfull` — Complete DB setup (open, create table, insert, query, close)
+- `servercreate` — Create HTTP server with route
+- `serverroute` — Add HTTP route handler
+- `resjson` — JSON response
+- `sha256` — SHA-256 hash
+- `processexec` — Execute shell command
+- `randint` — Random integer
+- `regextest` — Test regex pattern
+- `datenow` — Get current date/time
+- `csvread` — Read CSV file
+
+### Fixed
+- Replaced all `if err != ""` with idiomatic `if err {` in docs, examples, and hover info
+
 ## [0.13.0] - 2026-02-11
 
 ### 🍬 Liva v1.1.0 Syntax Sugar Support
