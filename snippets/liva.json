@@ -2392,5 +2392,28 @@
             "let ${1:data}, ${2:err} = CSV.read(\"${3:file.csv}\")"
         ],
         "description": "Read CSV file (v1.6.0)"
+    },
+    "Defer expression": {
+        "prefix": "defer",
+        "body": [
+            "defer ${1:expression}"
+        ],
+        "description": "Defer cleanup — runs when scope exits"
+    },
+    "Defer block": {
+        "prefix": "deferb",
+        "body": [
+            "defer {",
+            "    ${1:// cleanup code}",
+            "}"
+        ],
+        "description": "Defer block — multiple cleanup statements"
+    },
+    "Defer DB close": {
+        "prefix": "deferdb",
+        "body": [
+            "defer DB.close(${1:db})"
+        ],
+        "description": "Defer database close"
     }
 }

@@ -232,7 +232,7 @@
                 {
                     "comment": "Control flow keywords",
                     "name": "keyword.control.flow.liva",
-                    "match": "\\b(if|else|while|for|in|switch|case|default|return|break|continue)\\b"
+                    "match": "\\b(if|else|while|for|in|switch|case|default|return|break|continue|defer)\\b"
                 },
                 {
                     "comment": "Fail keyword - special error handling",
