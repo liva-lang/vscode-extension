@@ -301,7 +301,7 @@ if err == "" {
 ```liva
 // Type 'jsonfile' → Tab
 let content, read_err = File.read("data.json")
-if read_err != "" {
+if read_err {
     console.error($"Read error: {read_err}")
 } else {
     let data, parse_err = JSON.parse(content)

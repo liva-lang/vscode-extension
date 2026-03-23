@@ -152,14 +152,14 @@ let names = users.map(({name}) => name)
 main() {
     // Simple GET with JSON parsing
     let response, err = HTTP.get("https://api.github.com/users/octocat")
-    if err != "" {
+    if err {
         console.error($"Request failed: {err}")
         return
     }
     
     // Parse JSON directly from response
     let json, parseErr = response.json()
-    if parseErr != "" {
+    if parseErr {
         console.error($"JSON error: {parseErr}")
         return
     }
@@ -179,11 +179,11 @@ User {
 
 main() {
     let response, err = HTTP.get("https://api.example.com/users/1")
-    if err != "" { return }
+    if err { return }
     
     // Automatic deserialization to User class
     let user: User, jsonErr = response.json()
-    if jsonErr != "" { return }
+    if jsonErr { return }
     
     console.log($"Name: {user.name}, Email: {user.email}")
 }
@@ -753,7 +753,7 @@ main() {
     // GET request with error binding
     let response, err = HTTP.get("https://api.example.com/users")
     
-    if err != "" {
+    if err {
         console.error($"Request failed: {err}")
         return
     }
@@ -792,11 +792,11 @@ let response, err = HTTP.delete("https://api.example.com/users/1")
 **Ergonomic response.json():**
 ```liva
 let response, err = HTTP.get("https://api.github.com/users/octocat")
-if err != "" { return }
+if err { return }
 
 // Parse JSON directly from response (like fetch API)
 let json, parseErr = response.json()
-if parseErr != "" { return }
+if parseErr { return }
 
 console.log($"Data: {json}")
 ```
@@ -811,11 +811,11 @@ User {
 
 main() {
     let response, err = HTTP.get("https://api.example.com/users/1")
-    if err != "" { return }
+    if err { return }
     
     // Automatic deserialization to User class
     let user: User, jsonErr = response.json()
-    if jsonErr != "" { return }
+    if jsonErr { return }
     
     console.log($"User: {user.name} at {user.company}")
 }
@@ -843,7 +843,7 @@ All HTTP methods return a tuple `(Response, String)`:
 ```liva
 let response, err = HTTP.get(url)
 
-if err != "" {
+if err {
     console.error($"Error: {err}")
     return
 }
@@ -868,7 +868,7 @@ ApiClient {
         let url = $"{this.baseUrl}/users/{id}"
         let response, err = HTTP.get(url)
         
-        if err != "" {
+        if err {
             console.error($"Request failed: {err}")
             return
         }
@@ -886,7 +886,7 @@ ApiClient {
         let url = $"{this.baseUrl}/users"
         let response, err = HTTP.post(url, userData)
         
-        if err != "" {
+        if err {
             console.error($"Failed to create user: {err}")
             return
         }

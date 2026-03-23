@@ -84,11 +84,11 @@ main() {
   let parValue, parErr = par compute(100)
   
   // Check errors
-  if err != "" {
+  if err {
     print($"Error: {err}")
   }
   
-  if asyncErr != "" {
+  if asyncErr {
     print($"Async error: {asyncErr}")
   }
 

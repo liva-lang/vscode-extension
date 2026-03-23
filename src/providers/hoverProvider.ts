@@ -381,7 +381,7 @@ export class LivaHoverProvider implements vscode.HoverProvider {
             'async': {
                 title: 'Async Execution',
                 description: 'Executes a function asynchronously without blocking. The result is lazily awaited when first used.',
-                example: 'let user = async fetchUser(1)\n// Execution starts, result awaited when used\nprint(user)  // Awaits here\n\n// With error binding:\nlet data, err = async loadData()\nif err != "" {\n    print($"Error: {err}")\n}'
+                example: 'let user = async fetchUser(1)\n// Execution starts, result awaited when used\nprint(user)  // Awaits here\n\n// With error binding:\nlet data, err = async loadData()\nif err {\n    print($"Error: {err}")\n}'
             },
             'par': {
                 title: 'Parallel Execution',
@@ -411,7 +411,7 @@ export class LivaHoverProvider implements vscode.HoverProvider {
             'fail': {
                 title: 'Fail Statement',
                 description: 'Raises an error in a fallible function. Must be handled with error binding.',
-                example: 'divide(a, b) {\n    if b == 0 fail "Division by zero"\n    return a / b\n}\n\nlet result, err = divide(10, 0)\nif err != "" {\n    print($"Error: {err}")\n}'
+                example: 'divide(a, b) {\n    if b == 0 fail "Division by zero"\n    return a / b\n}\n\nlet result, err = divide(10, 0)\nif err {\n    print($"Error: {err}")\n}'
             },
             'chunk': {
                 title: 'Chunk Size Policy',
