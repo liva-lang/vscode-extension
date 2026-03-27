@@ -226,6 +226,28 @@ export async function activate(context: vscode.ExtensionContext) {
         await checkLivaSyntax(filePath);
     });
 
+    const formatCommand = vscode.commands.registerCommand('liva.format', async () => {
+        const filePath = vscode.window.activeTextEditor?.document.fileName;
+
+        if (!filePath) {
+            vscode.window.showErrorMessage('No Liva file is currently open');
+            return;
+        }
+
+        await formatLivaFile(filePath);
+    });
+
+    const lintCommand = vscode.commands.registerCommand('liva.lint', async () => {
+        const filePath = vscode.window.activeTextEditor?.document.fileName;
+
+        if (!filePath) {
+            vscode.window.showErrorMessage('No Liva file is currently open');
+            return;
+        }
+
+        await lintLivaFile(filePath);
+    });
+
     // File watcher for auto-build on save
     const fileWatcher = vscode.workspace.onDidSaveTextDocument(async (document) => {
         if (document.languageId === 'liva' && getConfig<boolean>('autoBuild', true)) {
@@ -325,6 +347,8 @@ export async function activate(context: vscode.ExtensionContext) {
         compileCommand, 
         runCommand, 
         checkCommand, 
+        formatCommand,
+        lintCommand,
         updateCompilerCmd,
         fileWatcher, 
         changeListener, 
@@ -362,7 +386,7 @@ async function compileLivaFile(filePath: string, silent: boolean = false): Promi
         }
 
         const { stdout, stderr } = await execAsync(
-            `"${compilerPath}" "${filePath}" --output "${outputDir}" --json`
+            `"${compilerPath}" build "${filePath}" --output "${outputDir}" --json`
         );
 
         if (stdout && !silent) {
@@ -397,7 +421,7 @@ async function runLivaProgram(filePath: string): Promise<void> {
         vscode.window.showInformationMessage(`Running ${path.basename(filePath)}...`);
 
         const { stdout, stderr } = await execAsync(
-            `"${compilerPath}" "${filePath}" --output "${outputDir}" --run`
+            `"${compilerPath}" run "${filePath}" --output "${outputDir}"`
         );
 
         if (stdout) {
@@ -431,7 +455,7 @@ async function checkLivaSyntax(filePath: string): Promise<void> {
         vscode.window.showInformationMessage(`Checking syntax of ${path.basename(filePath)}...`);
 
         const { stdout, stderr } = await execAsync(
-            `"${compilerPath}" "${filePath}" --check --json`
+            `"${compilerPath}" check "${filePath}" --json`
         );
 
         if (stdout) {
@@ -453,6 +477,64 @@ async function checkLivaSyntax(filePath: string): Promise<void> {
 
         vscode.window.showErrorMessage(`Syntax check failed: ${diagnostics.length > 0 ? diagnostics[0].message : errorMessage}`);
         console.error('Liva syntax check error:', error);
+    }
+}
+
+async function formatLivaFile(filePath: string): Promise<void> {
+    const compilerPath = getConfig<string>('compiler.path', 'livac');
+
+    try {
+        vscode.window.showInformationMessage(`Formatting ${path.basename(filePath)}...`);
+
+        await execAsync(`"${compilerPath}" fmt "${filePath}"`);
+        vscode.window.showInformationMessage('File formatted successfully!');
+
+        // Revert the file in the editor to pick up changes from disk
+        await vscode.commands.executeCommand('workbench.action.files.revert');
+
+    } catch (error: any) {
+        const errorMessage = error.stderr || error.message || error.toString();
+        vscode.window.showErrorMessage(`Format failed: ${errorMessage}`);
+        console.error('Liva format error:', error);
+    }
+}
+
+async function lintLivaFile(filePath: string): Promise<void> {
+    const compilerPath = getConfig<string>('compiler.path', 'livac');
+
+    try {
+        vscode.window.showInformationMessage(`Linting ${path.basename(filePath)}...`);
+
+        const { stdout, stderr } = await execAsync(
+            `"${compilerPath}" lint "${filePath}" --json`
+        );
+
+        if (stdout) {
+            // Parse lint warnings and show in output channel
+            const outputChannel = vscode.window.createOutputChannel('Liva Lint');
+            outputChannel.clear();
+            outputChannel.appendLine('Lint results:');
+            outputChannel.appendLine(stdout);
+            outputChannel.show();
+        }
+
+        if (!stdout || stdout.trim() === '' || stdout.trim() === '[]') {
+            vscode.window.showInformationMessage('No lint warnings found!');
+        }
+
+    } catch (error: any) {
+        const errorMessage = error.stderr || error.message || error.toString();
+        // Lint might exit non-zero when warnings found — still show output
+        if (error.stdout) {
+            const outputChannel = vscode.window.createOutputChannel('Liva Lint');
+            outputChannel.clear();
+            outputChannel.appendLine('Lint warnings:');
+            outputChannel.appendLine(error.stdout);
+            outputChannel.show();
+        } else {
+            vscode.window.showErrorMessage(`Lint failed: ${errorMessage}`);
+        }
+        console.error('Liva lint error:', error);
     }
 }
 
@@ -493,7 +575,7 @@ async function validateLivaFile(document: vscode.TextDocument): Promise<void> {
         fs.writeFileSync(tmpFilePath, document.getText(), 'utf8');
         console.log(`[Liva] Created temp file: ${tmpFilePath}`);
         
-        const command = `"${compilerPath}" "${tmpFilePath}" --check --json`;
+        const command = `"${compilerPath}" check "${tmpFilePath}" --json`;
         console.log(`[Liva] Executing command: ${command}`);
         
         const { stdout, stderr } = await execAsync(command);

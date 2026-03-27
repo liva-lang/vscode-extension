@@ -1694,7 +1694,7 @@
     "HTTP GET request": {
         "prefix": "httpget",
         "body": [
-            "let ${1:response}, ${2:err} = async HTTP.get(${3:\"https://api.example.com/data\"})",
+            "let ${1:response}, ${2:err} = HTTP.get(${3:\"https://api.example.com/data\"})",
             "if ${2:err} != \"\" {",
             "    console.error(\\$\"HTTP Error: {${2:err}}\")",
             "} else {",
@@ -1706,14 +1706,14 @@
     "HTTP GET simple": {
         "prefix": "hget",
         "body": [
-            "let ${1:response}, ${2:err} = async HTTP.get(${3:url})"
+            "let ${1:response}, ${2:err} = HTTP.get(${3:url})"
         ],
         "description": "Simple HTTP GET request"
     },
     "HTTP POST request": {
         "prefix": "httppost",
         "body": [
-            "let ${1:response}, ${2:err} = async HTTP.post(${3:\"https://api.example.com/data\"}, ${4:body})",
+            "let ${1:response}, ${2:err} = HTTP.post(${3:\"https://api.example.com/data\"}, ${4:body})",
             "if ${2:err} != \"\" {",
             "    console.error(\\$\"HTTP Error: {${2:err}}\")",
             "} else {",
@@ -1725,14 +1725,14 @@
     "HTTP POST simple": {
         "prefix": "hpost",
         "body": [
-            "let ${1:response}, ${2:err} = async HTTP.post(${3:url}, ${4:body})"
+            "let ${1:response}, ${2:err} = HTTP.post(${3:url}, ${4:body})"
         ],
         "description": "Simple HTTP POST request"
     },
     "HTTP PUT request": {
         "prefix": "httpput",
         "body": [
-            "let ${1:response}, ${2:err} = async HTTP.put(${3:\"https://api.example.com/data/1\"}, ${4:body})",
+            "let ${1:response}, ${2:err} = HTTP.put(${3:\"https://api.example.com/data/1\"}, ${4:body})",
             "if ${2:err} != \"\" {",
             "    console.error(\\$\"HTTP Error: {${2:err}}\")",
             "} else {",
@@ -1744,14 +1744,14 @@
     "HTTP PUT simple": {
         "prefix": "hput",
         "body": [
-            "let ${1:response}, ${2:err} = async HTTP.put(${3:url}, ${4:body})"
+            "let ${1:response}, ${2:err} = HTTP.put(${3:url}, ${4:body})"
         ],
         "description": "Simple HTTP PUT request"
     },
     "HTTP DELETE request": {
         "prefix": "httpdelete",
         "body": [
-            "let ${1:response}, ${2:err} = async HTTP.delete(${3:\"https://api.example.com/data/1\"})",
+            "let ${1:response}, ${2:err} = HTTP.delete(${3:\"https://api.example.com/data/1\"})",
             "if ${2:err} != \"\" {",
             "    console.error(\\$\"HTTP Error: {${2:err}}\")",
             "} else {",
@@ -1763,14 +1763,14 @@
     "HTTP DELETE simple": {
         "prefix": "hdel",
         "body": [
-            "let ${1:response}, ${2:err} = async HTTP.delete(${3:url})"
+            "let ${1:response}, ${2:err} = HTTP.delete(${3:url})"
         ],
         "description": "Simple HTTP DELETE request"
     },
     "HTTP with JSON parse": {
         "prefix": "httpjson",
         "body": [
-            "let ${1:response}, ${2:http_err} = async HTTP.get(${3:\"https://api.example.com/data\"})",
+            "let ${1:response}, ${2:http_err} = HTTP.get(${3:\"https://api.example.com/data\"})",
             "",
             "if ${2:http_err} != \"\" {",
             "    console.error(\\$\"HTTP Error: {${2:http_err}}\")",
@@ -1790,7 +1790,7 @@
         "prefix": "httppostjson",
         "body": [
             "let ${1:json_body} = JSON.stringify(${2:data})",
-            "let ${3:response}, ${4:http_err} = async HTTP.post(${5:\"https://api.example.com/data\"}, ${1:json_body})",
+            "let ${3:response}, ${4:http_err} = HTTP.post(${5:\"https://api.example.com/data\"}, ${1:json_body})",
             "",
             "if ${4:http_err} != \"\" {",
             "    console.error(\\$\"HTTP Error: {${4:http_err}}\")",
@@ -1824,7 +1824,7 @@
     "HTTP typed JSON": {
         "prefix": "httptyped",
         "body": [
-            "let ${1:response}, ${2:http_err} = async HTTP.get(${3:\"https://api.example.com/data\"})",
+            "let ${1:response}, ${2:http_err} = HTTP.get(${3:\"https://api.example.com/data\"})",
             "",
             "if ${2:http_err} != \"\" {",
             "    console.error(\\$\"HTTP Error: {${2:http_err}}\")",
@@ -1856,7 +1856,7 @@
     "HTTP complete pattern": {
         "prefix": "httpfull",
         "body": [
-            "let ${1:response}, ${2:http_err} = async HTTP.get(${3:\"https://api.example.com/data\"})",
+            "let ${1:response}, ${2:http_err} = HTTP.get(${3:\"https://api.example.com/data\"})",
             "",
             "if ${2:http_err} != \"\" {",
             "    console.error(\\$\"HTTP Error: {${2:http_err}}\")",
@@ -1891,23 +1891,23 @@
             "    }",
             "    ",
             "    getAll() {",
-            "        return async HTTP.get(\\$\"{this.base_url}/${2:items}\")",
+            "        return HTTP.get(\\$\"{this.base_url}/${2:items}\")",
             "    }",
             "    ",
             "    getById(id: ${3:i32}) {",
-            "        return async HTTP.get(\\$\"{this.base_url}/${2:items}/{id}\")",
+            "        return HTTP.get(\\$\"{this.base_url}/${2:items}/{id}\")",
             "    }",
             "    ",
             "    create(data: string) {",
-            "        return async HTTP.post(\\$\"{this.base_url}/${2:items}\", data)",
+            "        return HTTP.post(\\$\"{this.base_url}/${2:items}\", data)",
             "    }",
             "    ",
             "    update(id: ${3:i32}, data: string) {",
-            "        return async HTTP.put(\\$\"{this.base_url}/${2:items}/{id}\", data)",
+            "        return HTTP.put(\\$\"{this.base_url}/${2:items}/{id}\", data)",
             "    }",
             "    ",
             "    delete(id: ${3:i32}) {",
-            "        return async HTTP.delete(\\$\"{this.base_url}/${2:items}/{id}\")",
+            "        return HTTP.delete(\\$\"{this.base_url}/${2:items}/{id}\")",
             "    }",
             "}"
         ],
@@ -2345,11 +2345,11 @@
         "description": "Add HTTP route handler (v1.7.0)"
     },
     "Response.json": {
-        "prefix": "resjson",
+        "prefix": "serverresjson",
         "body": [
             "Response.json(${1:\"{ }\"})"
         ],
-        "description": "JSON HTTP response (v1.7.0)"
+        "description": "JSON HTTP response (Server)"
     },
     "Crypto.sha256": {
         "prefix": "sha256",
@@ -2415,5 +2415,224 @@
             "defer DB.close(${1:db})"
         ],
         "description": "Defer database close"
+    },
+    "Use Rust crate": {
+        "prefix": "userust",
+        "body": [
+            "use rust \"${1:crate_name}\" version \"${2:1.0}\""
+        ],
+        "description": "Import a Rust crate for use in rust {} blocks"
+    },
+    "Use Rust crate with features": {
+        "prefix": "userustfeat",
+        "body": [
+            "use rust \"${1:crate_name}\" version \"${2:1.0}\" features [\"${3:feature}\"]"
+        ],
+        "description": "Import a Rust crate with features"
+    },
+    "For enumerate": {
+        "prefix": "forenum",
+        "body": [
+            "for ${1:i}, ${2:item} in ${3:array} {",
+            "    ${0}",
+            "}"
+        ],
+        "description": "For loop with index and item (enumerate)"
+    },
+    "Regex match": {
+        "prefix": "regexmatch",
+        "body": [
+            "let ${1:result}, ${2:err} = Regex.match(\"${3:pattern}\", ${4:text})"
+        ],
+        "description": "Regex.match — first match or error"
+    },
+    "Regex findAll": {
+        "prefix": "regexfindall",
+        "body": [
+            "let ${1:matches} = Regex.findAll(\"${2:pattern}\", ${3:text})"
+        ],
+        "description": "Regex.findAll — all matches as array"
+    },
+    "Regex replace": {
+        "prefix": "regexreplace",
+        "body": [
+            "let ${1:result} = Regex.replace(\"${2:pattern}\", ${3:text}, \"${4:replacement}\")"
+        ],
+        "description": "Regex.replace — replace first match"
+    },
+    "Regex split": {
+        "prefix": "regexsplit",
+        "body": [
+            "let ${1:parts} = Regex.split(\"${2:pattern}\", ${3:text})"
+        ],
+        "description": "Regex.split — split text by pattern"
+    },
+    "Date new": {
+        "prefix": "datenew",
+        "body": [
+            "let ${1:date} = Date.new(${2:year}, ${3:month}, ${4:day})"
+        ],
+        "description": "Date.new — create date from year/month/day"
+    },
+    "Date parse": {
+        "prefix": "dateparse",
+        "body": [
+            "let ${1:date}, ${2:err} = Date.parse(\"${3:2026-01-15}\", \"${4:%Y-%m-%d}\")"
+        ],
+        "description": "Date.parse — parse date from string with pattern"
+    },
+    "Date format": {
+        "prefix": "datefmt",
+        "body": [
+            "let ${1:formatted} = ${2:date}.format(\"${3:%Y-%m-%d %H:%M:%S}\")"
+        ],
+        "description": "Date format — format date to string"
+    },
+    "Date diff": {
+        "prefix": "datediff",
+        "body": [
+            "let ${1:days} = ${2:date1}.diff(${3:date2}, \"${4:days}\")"
+        ],
+        "description": "Date diff — difference between two dates"
+    },
+    "Date timestamp": {
+        "prefix": "datetimestamp",
+        "body": [
+            "let ${1:ts} = Date.timestamp()"
+        ],
+        "description": "Date.timestamp — current unix timestamp (ms)"
+    },
+    "Random float": {
+        "prefix": "randfloat",
+        "body": [
+            "let ${1:val} = Random.nextFloat(${2:0.0}, ${3:1.0})"
+        ],
+        "description": "Random.nextFloat — random float in range"
+    },
+    "Random choice": {
+        "prefix": "randchoice",
+        "body": [
+            "let ${1:item} = Random.choice(${2:array})"
+        ],
+        "description": "Random.choice — pick random element from array"
+    },
+    "Random shuffle": {
+        "prefix": "randshuffle",
+        "body": [
+            "let ${1:shuffled} = Random.shuffle(${2:array})"
+        ],
+        "description": "Random.shuffle — randomly reorder array"
+    },
+    "Random UUID": {
+        "prefix": "randuuid",
+        "body": [
+            "let ${1:id} = Random.uuid()"
+        ],
+        "description": "Random.uuid — generate UUID v4 string"
+    },
+    "Crypto MD5": {
+        "prefix": "md5",
+        "body": [
+            "let ${1:hash} = Crypto.md5(${2:data})"
+        ],
+        "description": "Crypto.md5 — MD5 hash"
+    },
+    "Crypto base64 encode": {
+        "prefix": "base64encode",
+        "body": [
+            "let ${1:encoded} = Crypto.base64Encode(${2:data})"
+        ],
+        "description": "Crypto.base64Encode — base64 encode"
+    },
+    "Crypto base64 decode": {
+        "prefix": "base64decode",
+        "body": [
+            "let ${1:decoded}, ${2:err} = Crypto.base64Decode(${3:encoded})"
+        ],
+        "description": "Crypto.base64Decode — base64 decode (fallible)"
+    },
+    "Process spawn": {
+        "prefix": "processspawn",
+        "body": [
+            "let ${1:pid}, ${2:err} = Process.spawn(\"${3:command}\")"
+        ],
+        "description": "Process.spawn — spawn background process, returns PID"
+    },
+    "Process PID": {
+        "prefix": "processpid",
+        "body": [
+            "let ${1:pid} = Process.pid()"
+        ],
+        "description": "Process.pid — current process ID"
+    },
+    "CSV write": {
+        "prefix": "csvwrite",
+        "body": [
+            "let ${1:_}, ${2:err} = CSV.write(\"${3:output.csv}\", ${4:data})"
+        ],
+        "description": "CSV.write — write 2D array to CSV file"
+    },
+    "CSV parse": {
+        "prefix": "csvparse",
+        "body": [
+            "let ${1:data} = CSV.parse(${2:csvString})"
+        ],
+        "description": "CSV.parse — parse CSV string to 2D array"
+    },
+    "CSV stringify": {
+        "prefix": "csvstringify",
+        "body": [
+            "let ${1:csvStr} = CSV.stringify(${2:data})"
+        ],
+        "description": "CSV.stringify — convert 2D array to CSV string"
+    },
+    "CSV readTable": {
+        "prefix": "csvreadtable",
+        "body": [
+            "let ${1:table}, ${2:err} = CSV.readTable(\"${3:data.csv}\")"
+        ],
+        "description": "CSV.readTable — read CSV with headers as Table"
+    },
+    "CSV writeTable": {
+        "prefix": "csvwritetable",
+        "body": [
+            "let ${1:_}, ${2:err} = CSV.writeTable(\"${3:output.csv}\", ${4:table})"
+        ],
+        "description": "CSV.writeTable — write Table to CSV file"
+    },
+    "File readLines": {
+        "prefix": "filereadlines",
+        "body": [
+            "let ${1:lines}, ${2:err} = File.readLines(\"${3:path}\")"
+        ],
+        "description": "File.readLines — read file as array of lines"
+    },
+    "File writeLines": {
+        "prefix": "filewritelines",
+        "body": [
+            "let ${1:_}, ${2:err} = File.writeLines(\"${3:path}\", ${4:lines})"
+        ],
+        "description": "File.writeLines — write array of lines to file"
+    },
+    "File copy": {
+        "prefix": "filecopy",
+        "body": [
+            "let ${1:_}, ${2:err} = File.copy(\"${3:src}\", \"${4:dest}\")"
+        ],
+        "description": "File.copy — copy file"
+    },
+    "Dir create": {
+        "prefix": "dircreate",
+        "body": [
+            "let ${1:_}, ${2:err} = Dir.create(\"${3:path}\")"
+        ],
+        "description": "Dir.create — create directory"
+    },
+    "Dir listRecursive": {
+        "prefix": "dirlistrec",
+        "body": [
+            "let ${1:files}, ${2:err} = Dir.listRecursive(\"${3:path}\")"
+        ],
+        "description": "Dir.listRecursive — list all files recursively"
     }
 }

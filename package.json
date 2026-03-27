@@ -110,6 +110,14 @@
         "title": "Check Liva Syntax"
       },
       {
+        "command": "liva.format",
+        "title": "Format Liva File"
+      },
+      {
+        "command": "liva.lint",
+        "title": "Lint Liva File"
+      },
+      {
         "command": "liva.restartLsp",
         "title": "Restart Liva Language Server"
       },

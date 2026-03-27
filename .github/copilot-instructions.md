@@ -1,8 +1,9 @@
 # 🎨 VS Code Extension Context
 
 > **Proyecto:** vscode-extension - Soporte Liva para VS Code/Cursor  
-> **Versión:** 0.13.0  
+> **Versión:** 0.14.0  
 > **Lenguaje:** TypeScript  
+> **Liva compiler:** v2.0.0-dev (tag: v1.5.0)  
 
 ---
 
@@ -10,13 +11,14 @@
 
 **vscode-extension** es la extensión de VS Code que proporciona soporte completo para el lenguaje Liva:
 
-- Syntax highlighting (incluyendo `::` method references)
-- Snippets (250, incluyendo point-free, `::` variants, Config, Log)
+- Syntax highlighting (incluyendo `::` method references, `defer`, `rust {}`)
+- 300 snippets (stdlib P0/P1/P2, HTTP Server, DB, Config, Log, defer, etc.)
 - Cliente LSP integrado
 - Autocompletado
 - Go to Definition
 - Hover con tipos
 - Diagnósticos en tiempo real
+- Comandos: compile, run, check, format, lint
 
 ---
 
@@ -26,6 +28,7 @@
 src/
 ├── extension.ts              # Punto de entrada, activación
 ├── lspClient.ts              # Cliente LSP (vscode-languageclient)
+├── compilerInstaller.ts      # Auto-instalación del compilador
 └── providers/
     ├── completionProvider.ts     # Autocompletado
     ├── definitionProvider.ts     # Go to Definition + References
@@ -39,7 +42,7 @@ syntaxes/
 └── liva.tmLanguage.json      # Syntax highlighting (TextMate)
 
 snippets/
-└── liva.json                 # 250 code snippets
+└── liva.json                 # 300 code snippets
 ```
 
 ---
@@ -121,17 +124,7 @@ VS Code Extension (TypeScript)
 
 1. **El binario `livac`** debe estar en el PATH o en `bin/` para que el LSP funcione
 2. **lspClient.ts** maneja la conexión con el servidor LSP
-3. **Los snippets** están en `snippets/liva.json` - 250 patterns (including Map<K,V>, Set<T>, Config, Log snippets)
+3. **Los snippets** están en `snippets/liva.json` - 300 patterns (stdlib P0/P1/P2, Server, DB, Config, Log, defer, rust, Map, Set, Regex, Date, CSV, Random, Crypto, Process)
 4. Para probar cambios, usar F5 (Extension Development Host)
-
-### v1.3.0 Changes (Map<K,V> & Set<T> Support)
-- **Syntax highlighting:** `Map` and `Set` added as `support.type.collection.liva` in tmLanguage
-- **Snippets:** 12 Map snippets (maplit, mapempty, mapget, mapset, maphas, mapdel, mapfe, mapkeys, mapvals, mapentries, fnmap, formap) + 12 Set snippets (setlit, setempty, setadd, sethas, setdel, setfe, setvals, setunion, setinter, setdiff, forset, fnset)
-- **Completions:** `Map` + `Set` type completions + `Map {}`/`Set {}` literal snippets
-- **Hover:** `Map` and `Set` type information with method lists
-
-### v0.13.0 Changes (Config & Log Support)
-- **Syntax highlighting:** Added namespace rules for Config, Log, Math, Dir, Sys, HTTP (support.class.namespace.liva)
-- **Snippets:** 6 Config snippets (cfgload, cfgget, cfggetint, cfggetbool, cfggetall, cfgsetup) + 5 Log snippets (loginfo, logwarn, logerror, logdebug, logsetlevel)
-- **Completions:** Config.load/get/getInt/getBool/getAll + Log.info/warn/error/debug/setLevel
-- **Hover:** Config and Log method documentation with dotted-name detection fix
+5. **CLI usa subcomandos**: `livac build`, `run`, `check`, `fmt`, `lint`, `lsp` (NO flags legacy como `--run`)
+6. **HTTP calls auto-await**: usar `HTTP.get(url)` sin prefijo `async`
