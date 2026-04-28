@@ -271,7 +271,7 @@
                 },
                 {
                     "comment": "Logical operators - and/or/not",
-                    "name": "keyword.operator.logical.liva",
+                    "name": "keyword.control.logical.liva",
                     "match": "\\b(and|or|not)\\b"
                 }
             ]
