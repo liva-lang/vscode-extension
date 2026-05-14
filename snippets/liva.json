@@ -1981,6 +1981,17 @@
         ],
         "description": "Declare an enum with simple variants (v1.2.0)"
     },
+    "Class extension (extend)": {
+        "prefix": "extend",
+        "body": [
+            "extend ${1:ClassName} {",
+            "    ${2:methodName}(${3:params}): ${4:returnType} {",
+            "        $0",
+            "    }",
+            "}"
+        ],
+        "description": "Add methods to an existing class from another file (v2.1)"
+    },
     "Enum with data": {
         "prefix": "enumd",
         "body": [

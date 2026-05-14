@@ -96,6 +96,18 @@
                     }
                 },
                 {
+                    "comment": "Class extension: extend Name { ... }",
+                    "match": "\\b(extend)\\s+([A-Z][a-zA-Z0-9_]*)\\s*\\{",
+                    "captures": {
+                        "1": {
+                            "name": "keyword.declaration.liva"
+                        },
+                        "2": {
+                            "name": "entity.name.type.class.liva"
+                        }
+                    }
+                },
+                {
                     "comment": "Class or interface implementing other interfaces",
                     "match": "\\b([A-Z][a-zA-Z0-9_]*)\\s*:\\s*([A-Z][a-zA-Z0-9_,\\s]*)\\s*\\{",
                     "captures": {
