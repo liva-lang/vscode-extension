@@ -264,7 +264,7 @@
                 {
                     "comment": "Declaration keywords",
                     "name": "keyword.declaration.liva",
-                    "match": "\\b(let|const|enum|constructor|this)\\b"
+                    "match": "\\b(let|const|enum|extend|constructor|this)\\b"
                 },
                 {
                     "comment": "Module and import keywords",

@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.14.1] - 2026-05-18
+
+### Fixed
+- `extend` keyword now always highlighted as `keyword.declaration` (previously
+  only colored when the full `extend Name {` form appeared on a single line —
+  multi-line and incomplete forms were rendered as plain text).
+
 ## [0.14.0] - 2026-03-23
 
 ### 🗄️ DB Module + Missing Stdlib Syntax Highlighting
