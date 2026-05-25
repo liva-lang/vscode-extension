@@ -1,5 +1,19 @@
 # Changelog
 
+## [0.15.0] - 2026-05-25
+
+### Added — Liva v2.3 tooling integration
+
+Five new commands wired to the v2.3 CLI subcommands:
+
+- `Liva: Run Tests` — runs `livac test` in the workspace.
+- `Liva: Run Tests with Coverage` — runs `livac test --coverage` (uses `cargo-llvm-cov`).
+- `Liva: Run Benchmarks` — runs `livac bench`.
+- `Liva: Generate Documentation` — runs `livac doc` to build API docs.
+- `Liva: Start REPL` — launches the `rustyline`-based REPL in an integrated terminal.
+
+All commands are surfaced through the command palette and execute via the configured `liva.compiler.path`.
+
 ## [0.14.1] - 2026-05-18
 
 ### Fixed

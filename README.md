@@ -1,6 +1,6 @@
 # Liva Language Support
 
-**Version 0.14.0** — Complete IDE experience for Liva v2.0 in Visual Studio Code and Cursor.
+**Version 0.15.0** — Complete IDE experience for Liva v2.3 in Visual Studio Code and Cursor.
 
 ## Features
 
@@ -20,6 +20,11 @@
 | `Liva: Check Syntax` | Check for errors without compiling (`livac check`) |
 | `Liva: Format File` | Format with `livac fmt` |
 | `Liva: Lint File` | Lint with `livac lint` (W001-W004) |
+| `Liva: Run Tests` | Run test files (`livac test`) |
+| `Liva: Run Tests with Coverage` | Run tests with coverage report (`livac test --coverage`) |
+| `Liva: Run Benchmarks` | Run benchmarks (`livac bench`) |
+| `Liva: Generate Documentation` | Build API docs (`livac doc`) |
+| `Liva: Start REPL` | Launch the interactive REPL (`livac repl`) |
 | `Liva: Restart Language Server` | Restart the LSP server |
 | `Liva: Update Compiler` | Update `livac` to latest version |
 
@@ -88,7 +93,7 @@ main() {
 cd vscode-extension
 npm install && npm run compile
 npx vsce package
-code --install-extension liva-vscode-0.14.0.vsix
+code --install-extension liva-vscode-0.15.0.vsix
 ```
 
 ### Compiler
