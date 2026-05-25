@@ -1,5 +1,30 @@
 # Changelog
 
+## [0.17.0] - 2026-05-25
+
+### Added — Inlay Hints + Test Explorer
+
+**Inlay Hints** (`LivaInlayHintsProvider`):
+
+- Parameter-name hints at call sites for user-defined functions
+  (discovered in the same file) and a curated set of stdlib helpers
+  (`push`, `map`, `filter`, `reduce`, `split`, `join`, ...).
+- Type hints after `let name = <literal>` when the literal type is
+  unambiguous (string, int, float, bool, array, map).
+- Zero-cost regex implementation, no LSP roundtrip.
+- Toggle via `editor.inlayHints.enabled` in VS Code settings.
+
+**Test Explorer** (`LivaTestController`):
+
+- Native VS Code Testing UI integration — tests show up in the
+  Test Explorer side panel and the run gutter.
+- Discovers `describe("...") / test("...")` Jest-style suites and
+  legacy `test_xxx()` functions across the workspace.
+- Two profiles: `Run` and `Run with Coverage`.
+- Runs `livac test <file>` per file; parses ✓/✗ markers and exit
+  code to mark items pass/fail.
+- File watcher keeps the tree in sync on save/create/delete.
+
 ## [0.16.0] - 2026-05-25
 
 ### Added — CodeLens

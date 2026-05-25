@@ -12,6 +12,8 @@ import { LivaDocumentSymbolProvider } from './providers/symbolProvider';
 import { InterfaceValidationProvider } from './providers/interfaceValidator';
 import { FallibleFunctionValidator } from './providers/fallibleValidator';
 import { LivaCodeLensProvider } from './providers/codeLensProvider';
+import { LivaInlayHintsProvider } from './providers/inlayHintsProvider';
+import { LivaTestController } from './providers/testController';
 
 const execAsync = promisify(exec);
 
@@ -370,6 +372,15 @@ export async function activate(context: vscode.ExtensionContext) {
         new LivaCodeLensProvider(),
     );
 
+    // Register Inlay Hints provider (parameter names + literal types)
+    const inlayHintsProvider = vscode.languages.registerInlayHintsProvider(
+        { language: 'liva', scheme: 'file' },
+        new LivaInlayHintsProvider(),
+    );
+
+    // Register Test Controller (VS Code Testing UI integration)
+    new LivaTestController(context, getConfig<string>('compiler.path', 'livac'));
+
     context.subscriptions.push(
         compileCommand, 
         runCommand, 
@@ -394,7 +405,8 @@ export async function activate(context: vscode.ExtensionContext) {
         referenceProvider,
         symbolProvider,
         codeActionProvider,
-        codeLensProvider
+        codeLensProvider,
+        inlayHintsProvider
     );
 }
 
