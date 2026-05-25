@@ -2645,5 +2645,96 @@
             "let ${1:files}, ${2:err} = Dir.listRecursive(\"${3:path}\")"
         ],
         "description": "Dir.listRecursive — list all files recursively"
+    },
+    "Jest test import": {
+        "prefix": "testimport",
+        "body": [
+            "import { describe, test, beforeEach, afterEach, expect } from \"liva/test\""
+        ],
+        "description": "Import the Jest-style test API"
+    },
+    "Jest describe block": {
+        "prefix": "describe",
+        "body": [
+            "describe(\"${1:suite name}\", () => {",
+            "    test(\"${2:it does the thing}\", () => {",
+            "        expect(${3:actual}).toBe(${4:expected})",
+            "    })$0",
+            "})"
+        ],
+        "description": "Jest-style describe block with one test"
+    },
+    "Jest test (arrow)": {
+        "prefix": "jtest",
+        "body": [
+            "test(\"${1:it does the thing}\", () => {",
+            "    expect(${2:actual}).toBe(${3:expected})$0",
+            "})"
+        ],
+        "description": "Jest-style test() with arrow function"
+    },
+    "beforeEach hook": {
+        "prefix": "beforeeach",
+        "body": [
+            "beforeEach(() => {",
+            "    ${1:// setup}$0",
+            "})"
+        ],
+        "description": "Jest beforeEach lifecycle hook"
+    },
+    "afterEach hook": {
+        "prefix": "aftereach",
+        "body": [
+            "afterEach(() => {",
+            "    ${1:// teardown}$0",
+            "})"
+        ],
+        "description": "Jest afterEach lifecycle hook"
+    },
+    "beforeAll hook": {
+        "prefix": "beforeall",
+        "body": [
+            "beforeAll(() => {",
+            "    ${1:// once before all tests}$0",
+            "})"
+        ],
+        "description": "Jest beforeAll lifecycle hook"
+    },
+    "afterAll hook": {
+        "prefix": "afterall",
+        "body": [
+            "afterAll(() => {",
+            "    ${1:// once after all tests}$0",
+            "})"
+        ],
+        "description": "Jest afterAll lifecycle hook"
+    },
+    "Expect assertion": {
+        "prefix": "expect",
+        "body": [
+            "expect(${1:actual}).${2|toBe,toEqual,toContain,toBeTruthy,toBeFalsy,toBeNull,toBeGreaterThan,toBeLessThan,not.toBe|}(${3:expected})"
+        ],
+        "description": "Jest expect() with matcher picker"
+    },
+    "Benchmark function": {
+        "prefix": "bench",
+        "body": [
+            "fn bench_${1:name}() {",
+            "    ${2:// hot loop — keep allocations out of the timed region}$0",
+            "}"
+        ],
+        "description": "bench_* function picked up by `livac bench`"
+    },
+    "Doc comment": {
+        "prefix": "doc",
+        "body": [
+            "/// ${1:Short summary.}",
+            "///",
+            "/// # Examples",
+            "/// ```",
+            "/// ${2:assert_eq(fn(...), result)}",
+            "/// ```$0"
+        ],
+        "description": "Doc-comment block consumed by `livac doc`"
     }
 }
