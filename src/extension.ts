@@ -248,6 +248,26 @@ export async function activate(context: vscode.ExtensionContext) {
         await lintLivaFile(filePath);
     });
 
+    const testCommand = vscode.commands.registerCommand('liva.test', async () => {
+        await runLivaTests(false);
+    });
+
+    const testCoverageCommand = vscode.commands.registerCommand('liva.testCoverage', async () => {
+        await runLivaTests(true);
+    });
+
+    const benchCommand = vscode.commands.registerCommand('liva.bench', async () => {
+        await runLivaBench();
+    });
+
+    const docCommand = vscode.commands.registerCommand('liva.doc', async () => {
+        await runLivaDoc();
+    });
+
+    const replCommand = vscode.commands.registerCommand('liva.repl', async () => {
+        await startLivaRepl();
+    });
+
     // File watcher for auto-build on save
     const fileWatcher = vscode.workspace.onDidSaveTextDocument(async (document) => {
         if (document.languageId === 'liva' && getConfig<boolean>('autoBuild', true)) {
@@ -349,6 +369,11 @@ export async function activate(context: vscode.ExtensionContext) {
         checkCommand, 
         formatCommand,
         lintCommand,
+        testCommand,
+        testCoverageCommand,
+        benchCommand,
+        docCommand,
+        replCommand,
         updateCompilerCmd,
         fileWatcher, 
         changeListener, 
@@ -536,6 +561,72 @@ async function lintLivaFile(filePath: string): Promise<void> {
         }
         console.error('Liva lint error:', error);
     }
+}
+
+// ---------------------------------------------------------------
+// v2.3 commands: test / testCoverage / bench / doc / repl
+// All long-running / interactive commands use an integrated
+// terminal so output streams in real time.
+// ---------------------------------------------------------------
+
+function getOrCreateLivaTerminal(name: string): vscode.Terminal {
+    const existing = vscode.window.terminals.find(t => t.name === name);
+    if (existing) {
+        existing.show();
+        return existing;
+    }
+    const t = vscode.window.createTerminal({ name });
+    t.show();
+    return t;
+}
+
+function workspaceCwd(): string | undefined {
+    const folders = vscode.workspace.workspaceFolders;
+    if (!folders || folders.length === 0) {
+        return undefined;
+    }
+    return folders[0].uri.fsPath;
+}
+
+async function runLivaTests(coverage: boolean): Promise<void> {
+    const compilerPath = getConfig<string>('compiler.path', 'livac');
+    const cwd = workspaceCwd();
+    if (!cwd) {
+        vscode.window.showErrorMessage('Open a workspace folder to run Liva tests');
+        return;
+    }
+    const terminal = getOrCreateLivaTerminal(coverage ? 'Liva Test (coverage)' : 'Liva Test');
+    const flag = coverage ? ' --coverage' : '';
+    terminal.sendText(`"${compilerPath}" test${flag}`);
+}
+
+async function runLivaBench(): Promise<void> {
+    const compilerPath = getConfig<string>('compiler.path', 'livac');
+    const cwd = workspaceCwd();
+    if (!cwd) {
+        vscode.window.showErrorMessage('Open a workspace folder to run Liva benchmarks');
+        return;
+    }
+    const terminal = getOrCreateLivaTerminal('Liva Bench');
+    terminal.sendText(`"${compilerPath}" bench`);
+}
+
+async function runLivaDoc(): Promise<void> {
+    const compilerPath = getConfig<string>('compiler.path', 'livac');
+    const cwd = workspaceCwd();
+    if (!cwd) {
+        vscode.window.showErrorMessage('Open a workspace folder to generate Liva docs');
+        return;
+    }
+    const terminal = getOrCreateLivaTerminal('Liva Doc');
+    terminal.sendText(`"${compilerPath}" doc`);
+}
+
+async function startLivaRepl(): Promise<void> {
+    const compilerPath = getConfig<string>('compiler.path', 'livac');
+    // REPL needs a dedicated interactive terminal — reuse if already open
+    const terminal = getOrCreateLivaTerminal('Liva REPL');
+    terminal.sendText(`"${compilerPath}" repl`);
 }
 
 async function validateLivaFile(document: vscode.TextDocument): Promise<void> {
