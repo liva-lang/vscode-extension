@@ -11,6 +11,7 @@ import { LivaDefinitionProvider, LivaReferenceProvider } from './providers/defin
 import { LivaDocumentSymbolProvider } from './providers/symbolProvider';
 import { InterfaceValidationProvider } from './providers/interfaceValidator';
 import { FallibleFunctionValidator } from './providers/fallibleValidator';
+import { LivaCodeLensProvider } from './providers/codeLensProvider';
 
 const execAsync = promisify(exec);
 
@@ -363,6 +364,12 @@ export async function activate(context: vscode.ExtensionContext) {
     const fallibleValidator = new FallibleFunctionValidator();
     fallibleValidator.activate(context);
 
+    // Register CodeLens provider (Run / Build / Check / Tests / Bench / Doc)
+    const codeLensProvider = vscode.languages.registerCodeLensProvider(
+        { language: 'liva', scheme: 'file' },
+        new LivaCodeLensProvider(),
+    );
+
     context.subscriptions.push(
         compileCommand, 
         runCommand, 
@@ -386,7 +393,8 @@ export async function activate(context: vscode.ExtensionContext) {
         definitionProvider,
         referenceProvider,
         symbolProvider,
-        codeActionProvider
+        codeActionProvider,
+        codeLensProvider
     );
 }
 

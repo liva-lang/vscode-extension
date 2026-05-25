@@ -1,5 +1,21 @@
 # Changelog
 
+## [0.16.0] - 2026-05-25
+
+### Added — CodeLens
+
+A new CodeLens provider surfaces inline run actions on top of detected
+constructs in any `.liva` file:
+
+- **`main()`** → `▶ Run`, `⚙ Build`, `✓ Check`
+- **`describe(...)` / `test(...)` / `test_xxx()`** → `▶ Run Tests`, `⊕ With Coverage`
+- **`bench_xxx()`** → `⏱ Run Benchmarks`
+- **`///` doc-comments** → `📄 Generate Docs`
+
+The provider is regex-based and zero-cost (no compiler invocation),
+and is registered for the `liva` language on `file` scheme documents.
+All actions reuse the existing `liva.*` commands.
+
 ## [0.15.0] - 2026-05-25
 
 ### Added — Liva v2.3 tooling integration
