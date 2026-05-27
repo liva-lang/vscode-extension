@@ -1,6 +1,6 @@
 # Liva Language Support
 
-**Version 0.15.0** — Complete IDE experience for Liva v2.3 in Visual Studio Code and Cursor.
+**Version 0.17.1** — Complete IDE experience for Liva v2.4 in Visual Studio Code and Cursor.
 
 ## Features
 
@@ -93,7 +93,7 @@ main() {
 cd vscode-extension
 npm install && npm run compile
 npx vsce package
-code --install-extension liva-vscode-0.15.0.vsix
+code --install-extension liva-vscode-0.17.1.vsix
 ```
 
 ### Compiler

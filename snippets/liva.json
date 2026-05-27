@@ -2057,6 +2057,13 @@
         ],
         "description": "Provide default value when fallible call fails (v1.3.0)"
     },
+    "Null-coalescing operator (??)": {
+        "prefix": "coalesce",
+        "body": [
+            "let ${1:value} = ${2:maybeNullable} ?? ${3:fallback}"
+        ],
+        "description": "Null-coalescing: use right-hand side when left is None/null (v2.4.0)"
+    },
     "Error binding": {
         "prefix": "errbind",
         "body": [

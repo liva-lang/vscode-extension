@@ -1,9 +1,12 @@
 # 🎨 VS Code Extension Context
 
 > **Proyecto:** vscode-extension - Soporte Liva para VS Code/Cursor  
-> **Versión:** 0.14.0  
+> **Versión:** 0.17.0  
 > **Lenguaje:** TypeScript  
-> **Liva compiler:** v2.0.0-dev (tag: v1.5.0)  
+> **Liva compiler:** v2.4.0 (released 2026-05-27)  
+> **Última actualización:** 2026-05-27
+>
+> Features clave v0.15-v0.17: comandos `liva.test`/`liva.bench`/`liva.doc`/`liva.repl`/`liva.testCoverage`; 309 snippets (incluye `describe`, `jtest`, `beforeeach`, `aftereach`, `expect`, `bench`); CodeLens (▶ Run, ▶ Run Test, ▶ Bench); Inlay Hints; Test Explorer (TestController API). LSP server (livac LSP gen-2) expone: completion · hover (cross-file) · signature · definition · implementation · references · document/workspace symbols · document highlight · selection range · folding range · document link · rename (workspace-wide) · code actions (W001/W002/W003/W007 quick fixes) · formatting · diagnostics (errors + linter W001-W008).  
 
 ---
 

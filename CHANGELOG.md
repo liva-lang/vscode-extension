@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.17.1] - 2026-05-27
+
+### Added — Liva v2.4.0 support
+
+- **Syntax highlighting** for null-coalescing operator `??`
+  (`keyword.operator.coalesce.liva`).
+- **Snippet** `coalesce` → `let value = maybeNullable ?? fallback` (v2.4.0).
+
+### Compatibility
+
+- Aligned with Liva compiler **v2.4.0** (released 2026-05-27).
+
 ## [0.17.0] - 2026-05-25
 
 ### Added — Inlay Hints + Test Explorer

@@ -620,6 +620,11 @@
                     "match": "\\.\\."
                 },
                 {
+                    "comment": "Null-coalescing operator (since v2.4)",
+                    "name": "keyword.operator.coalesce.liva",
+                    "match": "\\?\\?"
+                },
+                {
                     "comment": "Comparison operators",
                     "name": "keyword.operator.comparison.liva",
                     "match": "(==|!=|<=|>=|<|>)"
