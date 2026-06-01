@@ -1,5 +1,19 @@
 # Changelog
 
+## [0.17.2] - 2026-06-01
+
+### Added — Liva v2.7.x support
+
+- **Snippets** for the new `Sys` primitives shipped in Liva v2.7.0:
+  `sysexe` → `Sys.exe()`, `sysos` → `Sys.os()`, `sysarch` → `Sys.arch()`.
+
+### Compatibility
+
+- Aligned with Liva compiler **v2.7.2** (released 2026-06-01).
+- Tracks the v2.5–2.7 line: gen-2 self-host binary ships on every platform,
+  `livac update` rewritten in Liva, desktop-examples codegen sweep, chained
+  iterator-method `filter()` codegen hotfix.
+
 ## [0.17.1] - 2026-05-27
 
 ### Added — Liva v2.4.0 support

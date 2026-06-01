@@ -2129,6 +2129,27 @@
         ],
         "description": "Exit program with status code (v1.2.0)"
     },
+    "Sys.exe": {
+        "prefix": "sysexe",
+        "body": [
+            "let ${1:path} = Sys.exe()"
+        ],
+        "description": "Absolute path of the running executable (v2.7.0)"
+    },
+    "Sys.os": {
+        "prefix": "sysos",
+        "body": [
+            "let ${1:os} = Sys.os()"
+        ],
+        "description": "Operating-system identifier — \"linux\" | \"macos\" | \"windows\" | ... (v2.7.0)"
+    },
+    "Sys.arch": {
+        "prefix": "sysarch",
+        "body": [
+            "let ${1:arch} = Sys.arch()"
+        ],
+        "description": "CPU architecture identifier — \"x86_64\" | \"aarch64\" | ... (v2.7.0)"
+    },
     "Sys.args with parsing": {
         "prefix": "sysargsp",
         "body": [
