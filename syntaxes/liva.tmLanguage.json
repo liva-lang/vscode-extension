@@ -146,6 +146,37 @@
         "strings": {
             "patterns": [
                 {
+                    "comment": "Triple-quote template string $\"\"\"...\"\"\" (multi-line, interpolation)",
+                    "name": "string.template.triple.liva",
+                    "begin": "\\$\"\"\"",
+                    "end": "\"\"\"",
+                    "patterns": [
+                        {
+                            "name": "meta.embedded.expression.liva",
+                            "begin": "\\{",
+                            "end": "\\}",
+                            "patterns": [
+                                { "include": "#literals" },
+                                { "include": "#keywords" },
+                                { "include": "#identifiers" },
+                                { "include": "#operators" }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "comment": "Triple-quote string \"\"\"...\"\"\" (multi-line, no escapes)",
+                    "name": "string.quoted.triple.liva",
+                    "begin": "\"\"\"",
+                    "end": "\"\"\""
+                },
+                {
+                    "comment": "Raw string r\"...\" (no escape processing)",
+                    "name": "string.quoted.raw.liva",
+                    "begin": "\\br\"",
+                    "end": "\""
+                },
+                {
                     "comment": "String template with interpolation $\"text {expr}\"",
                     "name": "string.template.liva",
                     "begin": "\\$\"",
