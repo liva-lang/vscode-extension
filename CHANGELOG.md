@@ -1,5 +1,20 @@
 # Changelog
 
+## [0.17.3] - 2026-06-04
+
+### Added — Liva v2.8.x support
+
+- **Syntax highlighting** for triple-quoted strings (`"""..."""`) and raw
+  strings, shipped with Liva v2.8 Plan 2 (string literals).
+
+### Compatibility
+
+- Aligned with Liva compiler **v2.8.15** (released 2026-06-04).
+- Tracks the v2.8 line: lazy `Iterator<T>` (range/of/generate + map/filter/
+  take/drop + toArray/forEach/reduce), user-defined generics with auto
+  `Eq+Hash` for Map keys, interface-as-type coercion, and identifier-
+  sanitization memoization. Roadmap v3.x: 16/16 shipped (MVP).
+
 ## [0.17.2] - 2026-06-01
 
 ### Added — Liva v2.7.x support
